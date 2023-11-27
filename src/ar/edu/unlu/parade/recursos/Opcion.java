@@ -1,0 +1,21 @@
+package ar.edu.unlu.parade.recursos;
+
+public enum Opcion {
+    MENU_PRINCIPAL,
+    REGLAS,
+    HISTORICO,
+    CREACION_ARCHIVO,
+    SETEO_PARTIDA,
+    MENU_TURNO,
+    ADD_NOMBRE,
+    SELECICON_CARTA,
+    RANKING,
+    MOSTRAR_AREA,
+    MOSTRAR_MANO,
+    MOSTRAR_DESFILE,
+    GANADOR_PARTIDA,
+    EMPATE_JUGADORES,
+    DESCARTE_Y_FINAL,
+    ULTIMO_TURNO
+
+}
