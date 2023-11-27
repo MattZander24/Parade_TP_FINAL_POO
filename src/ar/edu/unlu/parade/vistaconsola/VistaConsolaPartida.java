@@ -67,7 +67,7 @@ public class VistaConsolaPartida {
     public void verReglas () {
         System.out.println("\n");
 
-        String rutaArchivo = "C:\\Users\\MATT\\IdeaProjects\\Parade_TP_Final\\src\\ar\\edu\\unlu\\parade\\recursos\\reglas.txt";
+        String rutaArchivo = "src\\ar\\edu\\unlu\\parade\\recursos\\reglas.txt";
 
         File archivo = new File(rutaArchivo);
 
