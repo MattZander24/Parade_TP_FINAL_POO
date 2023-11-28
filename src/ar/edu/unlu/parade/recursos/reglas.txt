@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 INTRODUCCION
 -Ha comenzado el carnaval en el Pais de las Maravillas. Todos ya disfrazados, las calles decoradas y la emoción se siente en el aire. Eres uno de los organizadores y necesitas
 encontrar más personas que deseen ingresar al carnaval, por lo tanto, estás haciendo lo imposible para motivarlos y lograr que se unan a la fiesta. Si tan solo la gente que ya
@@ -68,7 +67,7 @@ GANADOR
 REGLAS PARA 2 JUGADORES
 - La única regla que cambia en esta modalidad es la que determina las mayorías en la puntuación final. Un jugador obtendrá la mayoría solo si tiene al menos 2 cartas más
 de un color que el otro jugador.
-=======
+
 INTRODUCCION
 -Ha comenzado el carnaval en el Pais de las Maravillas. Todos ya disfrazados, las calles decoradas y la emoción se siente en el aire. Eres uno de los organizadores y necesitas
 encontrar más personas que deseen ingresar al carnaval, por lo tanto, estás haciendo lo imposible para motivarlos y lograr que se unan a la fiesta. Si tan solo la gente que ya
@@ -138,4 +137,3 @@ GANADOR
 REGLAS PARA 2 JUGADORES
 - La única regla que cambia en esta modalidad es la que determina las mayorías en la puntuación final. Un jugador obtendrá la mayoría solo si tiene al menos 2 cartas más
 de un color que el otro jugador.
->>>>>>> origin/master
