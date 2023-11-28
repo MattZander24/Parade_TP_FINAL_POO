@@ -169,8 +169,8 @@ public class Partida {
             Jugador j1 = jugadoresPartida.get(0);
             Jugador j2 = jugadoresPartida.get(1);
             for (Color c : Color.values()) {
-                int cantidadActualJ1 = CantidadCartasColorJugador(j1, c);
-                int cantidadActualJ2 = CantidadCartasColorJugador(j2, c);
+                int cantidadActualJ1 = cantidadCartasColorJugador(j1, c);
+                int cantidadActualJ2 = cantidadCartasColorJugador(j2, c);
                 if (cantidadActualJ1-cantidadActualJ2 >= 2) {
                     anularColor(j1, c);
                 }
@@ -185,13 +185,13 @@ public class Partida {
                 int maxCantColor = 0;
                 for (Jugador j : jugadoresPartida) {
                     j.areaJugador.ordenar();
-                    int cantidadActual = CantidadCartasColorJugador(j, c);
+                    int cantidadActual = cantidadCartasColorJugador(j, c);
                     if (cantidadActual > maxCantColor) {
                         maxCantColor = cantidadActual;
                     }
                 }
                 for (Jugador j : jugadoresPartida) {
-                    int cantidadAComparar = CantidadCartasColorJugador(j, c);
+                    int cantidadAComparar = cantidadCartasColorJugador(j, c);
                     if (cantidadAComparar == maxCantColor) {
                         anularColor(j, c);
                     }
@@ -209,7 +209,7 @@ public class Partida {
         }
     }
 
-    public int CantidadCartasColorJugador (Jugador j, Color color) {
+    public int cantidadCartasColorJugador(Jugador j, Color color) {
         int cantidad = 0;
         for (Carta c : j.areaJugador.cartas) {
             if (c.getColor() == color) {

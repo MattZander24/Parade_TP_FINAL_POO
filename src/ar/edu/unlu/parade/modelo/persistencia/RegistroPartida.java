@@ -6,20 +6,20 @@ import java.util.ArrayList;
 
 public class RegistroPartida implements Serializable {
 
-    private ArrayList <RegistroJugadores> RankingJugador;
+    private ArrayList <RegistroJugadores> rankingJugador;
     private LocalDateTime fechaYHoraPartida;
 
     public RegistroPartida(ArrayList<RegistroJugadores> rankingJugador) {
-        RankingJugador = rankingJugador;
+        this.rankingJugador = rankingJugador;
         this.fechaYHoraPartida = LocalDateTime.now();
     }
 
     public ArrayList<RegistroJugadores> getRankingJugador() {
-        return RankingJugador;
+        return rankingJugador;
     }
 
     public void setRankingJugador(ArrayList<RegistroJugadores> rankingJugador) {
-        RankingJugador = rankingJugador;
+        this.rankingJugador = rankingJugador;
     }
 
     public LocalDateTime getFechaYHoraPartida() {
