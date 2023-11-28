@@ -21,7 +21,7 @@ public class VistaConsolaParade implements Observer {
         this.vca = new VistaConsolaAreaDeJuego();
         this.vcd = new VistaConsolaDesfile();
         this.vcm = new VistaConsolaMano();
-        this.vcp = new VistaConsolaPartida(vca, vcd, vcm);
+        this.vcp = new VistaConsolaPartida();
     }
 
     @Override

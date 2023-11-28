@@ -15,16 +15,6 @@ import java.util.Scanner;
 
 public class VistaConsolaPartida {
 
-    private VistaConsolaAreaDeJuego vca;
-    private VistaConsolaDesfile vcd;
-    private VistaConsolaMano vcm;
-
-    public VistaConsolaPartida(VistaConsolaAreaDeJuego vca, VistaConsolaDesfile vcd, VistaConsolaMano vcm) {
-        this.vca = vca;
-        this.vcd = vcd;
-        this.vcm = vcm;
-    }
-
     public void menuPrincipal (ControladorParade c) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
