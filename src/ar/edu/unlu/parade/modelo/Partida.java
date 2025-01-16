@@ -42,33 +42,52 @@ public class Partida {
 
     public void comenzarJuego () throws IOException, ClassNotFoundException {
         boolean finturnos = false;
-        while (!finturnos) {
+        Jugador jugadorFinal = null;
+        do {
             for (Jugador j : jugadoresPartida) {
                 turno(j);
                 mazoJuego.transferirCartas(j.manoJugador, 1);
                 if (j.areaJugador.tieneSeisColores()) {
+                    jugadorFinal = j;
+                    finturnos = true;
+                    break;
+                }
+                if (mazoJuego.estaTerminado()) {
+                    jugadorFinal = j;
                     finturnos = true;
                     break;
                 }
             }
-            if (finturnos) {
-                break;
-            }
-            finturnos = (finturnos || mazoJuego.estaTerminado());
-        }
+        } while (!finturnos);
 
         modelo.ultimoTurno();
 
-        for (Jugador j : jugadoresPartida) {
-            turno(j);
+        int indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
+        int indiceUltimoTurno = indiceFinal;
+
+        for (int i = 0; i < jugadoresPartida.size(); i++) {
+            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                indiceUltimoTurno = 0;
+            }
+            else {
+                indiceUltimoTurno += 1;
+            }
+            turno(jugadoresPartida.get(indiceUltimoTurno));
         }
-        for (Jugador j : jugadoresPartida) {
-            descarteFinal(j);
+
+        indiceUltimoTurno = indiceFinal;
+        for (int i = 0; i < jugadoresPartida.size(); i++) {
+            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                indiceUltimoTurno = 0;
+            }
+            else {
+                indiceUltimoTurno += 1;
+            }
+            descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
         }
 
         puntuacion();
         registrarPartida();
-
     }
 
     public void turno (Jugador j) {

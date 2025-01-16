@@ -207,7 +207,7 @@ public class VistaConsolaPartida {
     }
 
     public void ultimoTurno () {
-        System.out.println("\n  - ULTIMO TURNO -");
+        System.out.println("\n  - ULTIMO TURNO -\n");
     }
 
     public void mensajeDescarteFinal (Jugador j) {
@@ -220,7 +220,7 @@ public class VistaConsolaPartida {
     }
 
     public void mensajeEmpateEntreJugadores (ArrayList<Jugador> ganadores) {
-        System.out.println("¡Se ha producido un empate!\n");
+        System.out.println("\n¡Se ha producido un empate!\n");
         for (Jugador j : ganadores) {
             System.out.println("Uno de los ganadores de la partida es " +  j.definicionJugador("el ", "") + " con " + j.getPuntos() + " PUNTOS...");
         }
