@@ -261,6 +261,7 @@ public class Partida {
                 regJugadoresPartida.add(new RegistroJugadores(j.definicionJugador("", ""), j.getPuntos(), j.getPosicion()));
             }
             RegistroPartida partida = new RegistroPartida(regJugadoresPartida);
+            assert partidas != null;
             partidas.getPartidas().add(partida);
 
             fileOutputStream = new FileOutputStream("partidas.txt");
