@@ -81,7 +81,12 @@ public class ControladorParade {
     }
 
     public void guardarYSalir () {
-        m.guardarYSalir();
+        try {
+            m.guardarYSalir();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            //nada porque ya lo controla la funcion interna
+        }
     }
 
 }

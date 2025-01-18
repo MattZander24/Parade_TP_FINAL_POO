@@ -1,9 +1,6 @@
 package ar.edu.unlu.parade.modelo;
 
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
+import ar.edu.unlu.parade.modelo.persistencia.*;
 import ar.edu.unlu.parade.recursos.Observable;
 import ar.edu.unlu.parade.recursos.Observer;
 import ar.edu.unlu.parade.recursos.Opcion;
@@ -219,7 +216,36 @@ public class ModeloParade implements Observable {
         }
     }
 
-    public void guardarYSalir () {
+    public void guardarYSalir () throws IOException, ClassNotFoundException {
+        /*FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        ConjuntoPartidas partidas = null;
+        try {
+            fileInputStream = new FileInputStream("partidas_guardadas.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            partidas = (ConjuntoPartidas) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            ArrayList<Partida> cPartidas = new ArrayList<Partida>();
+            partidas = new ConjuntoPartidas(cPartidas);
+            mensajeCreacionArchivo();
+        }
+        finally {
+            //assert partidas.getPartidas() != null;
+            assert partidas != null;
+            partidas.getPartidas().add(partida);
 
+            fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(partidas);
+            objectOutputStream.close();
+            partida.volverAlMenu();
+        }*/
+
+        partida.volverAlMenu();
+        notificarObservadores(Opcion.GUARDAR_Y_SALIR);
     }
 }

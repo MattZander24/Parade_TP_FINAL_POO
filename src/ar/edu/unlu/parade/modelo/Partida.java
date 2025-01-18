@@ -16,6 +16,9 @@ public class Partida implements Serializable {
     Mazo mazoJuego;
     Desfile desfileJuego;
 
+    boolean terminada = false;
+    boolean salirAlMenu = false;
+
     public Partida(int cantidadJugadores, boolean agregarNombre, ModeloParade modelo) {
         jugadoresPartida = new ArrayList<Jugador>();
         Jugador.resetearIDGen();
@@ -47,6 +50,9 @@ public class Partida implements Serializable {
         do {
             for (Jugador j : jugadoresPartida) {
                 turno(j);
+                if (salirAlMenu) {
+                    break;
+                }
                 mazoJuego.transferirCartas(j.manoJugador, 1);
                 if (j.areaJugador.tieneSeisColores()) {
                     jugadorFinal = j;
@@ -59,37 +65,43 @@ public class Partida implements Serializable {
                     break;
                 }
             }
+            if (salirAlMenu) {
+                break;
+            }
         } while (!finturnos);
 
-        modelo.ultimoTurno();
+        if (!salirAlMenu) {
 
-        int indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
-        int indiceUltimoTurno = indiceFinal;
+            modelo.ultimoTurno();
 
-        for (int i = 0; i < jugadoresPartida.size(); i++) {
-            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
-                indiceUltimoTurno = 0;
+            int indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
+            int indiceUltimoTurno = indiceFinal;
+
+            for (int i = 0; i < jugadoresPartida.size(); i++) {
+                if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                    indiceUltimoTurno = 0;
+                } else {
+                    indiceUltimoTurno += 1;
+                }
+                turno(jugadoresPartida.get(indiceUltimoTurno));
             }
-            else {
-                indiceUltimoTurno += 1;
+
+            indiceUltimoTurno = indiceFinal;
+            for (int i = 0; i < jugadoresPartida.size(); i++) {
+                if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                    indiceUltimoTurno = 0;
+                } else {
+                    indiceUltimoTurno += 1;
+                }
+                descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
             }
-            turno(jugadoresPartida.get(indiceUltimoTurno));
+
+            puntuacion();
+            terminada = true;
+
+            registrarPartida();
+            registrarJugadores();
         }
-
-        indiceUltimoTurno = indiceFinal;
-        for (int i = 0; i < jugadoresPartida.size(); i++) {
-            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
-                indiceUltimoTurno = 0;
-            }
-            else {
-                indiceUltimoTurno += 1;
-            }
-            descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
-        }
-
-        puntuacion();
-        registrarPartida();
-        registrarJugadores();
     }
 
     public void turno (Jugador j) {
@@ -308,5 +320,9 @@ public class Partida implements Serializable {
             objectOutputStream.writeObject(jugadores);
             objectOutputStream.close();
         }
+    }
+
+    public void volverAlMenu() {
+        salirAlMenu = true;
     }
 }

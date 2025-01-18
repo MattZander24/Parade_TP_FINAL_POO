@@ -42,6 +42,8 @@ public class VistaConsolaParade implements Observer {
                 break;
             case ULTIMO_TURNO:
                 vcp.ultimoTurno();
+            case GUARDAR_Y_SALIR:
+                vcp.mensajeGuardarYSalir();
             default:
                 break;
         }

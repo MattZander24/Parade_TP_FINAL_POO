@@ -17,6 +17,7 @@ public enum Opcion {
     GANADOR_PARTIDA,
     EMPATE_JUGADORES,
     DESCARTE_Y_FINAL,
-    ULTIMO_TURNO
+    ULTIMO_TURNO,
+    GUARDAR_Y_SALIR
 
 }

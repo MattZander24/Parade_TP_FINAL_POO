@@ -158,6 +158,10 @@ public class VistaConsolaPartida {
         System.out.println("----------------------------------------------\n");
     }
 
+    public void mensajeGuardarYSalir () {
+        System.out.println("\nPartida guardada correctamente. Volviendo al Menú Principal...\n");
+    }
+
     public void verHistorico (RegistroConjuntoPartidas r) {
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
@@ -241,6 +245,7 @@ public class VistaConsolaPartida {
     public void menuTurno (ControladorParade c, Jugador j) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
+        boolean gys = false;
 
         do {
             System.out.print("\n");
@@ -272,13 +277,32 @@ public class VistaConsolaPartida {
                     c.mostrarJugadores();
                     break;
                 case 6:
-                    c.guardarYSalir();
-                    break;
+                    System.out.println("Desea Guardar y Salir?");
+                    System.out.println("1 - SI");
+                    System.out.println("2 - NO");
+                    System.out.print("Seleccione una opción: ");
+                    int confirmacion = scanner.nextInt();
+                    while (confirmacion < 1 || confirmacion > 2) {
+                        System.out.println("\nOpcion incorrecta, la cantidad de opciones debe ir de 1 a 2...");
+                        System.out.println("Desea Guardar y Salir?");
+                        System.out.println("1 - SI");
+                        System.out.println("2 - NO");
+                        System.out.print("Seleccione una opción: ");
+                        confirmacion = scanner.nextInt();
+                    }
+                    if (confirmacion == 1) {
+                        gys = true;
+                        c.guardarYSalir();
+                        break;
+                    } else if (confirmacion == 2) {
+                        System.out.println("\nOperación cancelada. Volviendo al menú...\n");
+                        break;
+                    }
                 default:
                     System.out.println("\nPor favor, seleccione una opción correcta\n");
                     break;
             }
-        } while (opcion != 1 && opcion != 6);
+        } while (opcion != 1 && !gys);
 
     }
 
