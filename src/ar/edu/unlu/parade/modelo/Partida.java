@@ -1,5 +1,6 @@
 package ar.edu.unlu.parade.modelo;
 
+import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
@@ -7,7 +8,7 @@ import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
 import java.io.*;
 import java.util.*;
 
-public class Partida {
+public class Partida implements Serializable {
 
     ModeloParade modelo;
     ArrayList<Jugador> jugadoresPartida;
@@ -88,6 +89,7 @@ public class Partida {
 
         puntuacion();
         registrarPartida();
+        registrarJugadores();
     }
 
     public void turno (Jugador j) {
@@ -267,6 +269,43 @@ public class Partida {
             fileOutputStream = new FileOutputStream("partidas.txt");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(partidas);
+            objectOutputStream.close();
+        }
+    }
+
+    public void registrarJugadores() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        RegistroConjuntoJugadores jugadores = null;
+        try {
+            fileInputStream = new FileInputStream("jugadores.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            jugadores = (RegistroConjuntoJugadores) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            ArrayList<RegistroJugadores> registroJugadores = new ArrayList<RegistroJugadores>();
+            jugadores = new RegistroConjuntoJugadores(registroJugadores);
+            //modelo.mensajeCreacionArchivo();
+        }
+        finally {
+            //ArrayList<RegistroJugadores> regJugadoresPartida = new ArrayList<RegistroJugadores>();
+            for (Jugador j : jugadoresPartida) {
+                //regJugadoresPartida.add(new RegistroJugadores(j.definicionJugador("", ""), j.getPuntos(), j.getPosicion()));
+                jugadores.getJugadores().add(new RegistroJugadores(j.definicionJugador("", ""), j.getPuntos(), j.getPosicion()));
+            }
+
+            //RegistroPartida partida = new RegistroPartida(regJugadoresPartida);
+            //assert partidas != null;
+            //partidas.getPartidas().add(partida);
+
+            jugadores.ordenarJugadores();
+
+            fileOutputStream = new FileOutputStream("jugadores.txt");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(jugadores);
             objectOutputStream.close();
         }
     }

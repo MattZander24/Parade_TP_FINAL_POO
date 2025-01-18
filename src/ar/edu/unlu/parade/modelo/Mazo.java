@@ -1,9 +1,10 @@
 package ar.edu.unlu.parade.modelo;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumSet;
 
-public class Mazo extends PilaCartas {
+public class Mazo extends PilaCartas implements Serializable {
 
     private boolean generado;
 

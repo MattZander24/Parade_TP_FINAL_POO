@@ -1,6 +1,8 @@
 package ar.edu.unlu.parade.modelo;
 
+import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
+import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
 import ar.edu.unlu.parade.recursos.Observable;
 import ar.edu.unlu.parade.recursos.Observer;
@@ -161,5 +163,63 @@ public class ModeloParade implements Observable {
 
     public void ultimoTurno() {
         notificarObservadores(Opcion.ULTIMO_TURNO);
+    }
+
+    public void cargarPartida () {
+        /*
+        Desplegar la lista de las partidas inconclusas, detallando la fecha y hora en que se guardó
+        y la lista de jugadores (nombres) que tiene la partida, con un índice numérico, que será el
+        índice por el cual el jugador elegirá qué partida cargar, más una última opción de volver.
+        */
+
+        /*
+        Partidas Inconclusas:
+
+            1- Partida guardada el dd/mm/aaaa a las hh:mm
+                Jugadores:
+                    1. J1
+                    2. J2
+                    3. J3
+
+            2- Partida guardada el dd/mm/aaaa a las hh:mm
+                Jugadores:
+                    1. J1
+                    2. J2
+
+            3- Salir
+        */
+    }
+
+    public void top5Historico () throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        RegistroConjuntoJugadores jugadores = null;
+        try {
+            fileInputStream = new FileInputStream("jugadores.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            jugadores = (RegistroConjuntoJugadores) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            ArrayList<RegistroJugadores> registroJugadores = new ArrayList<RegistroJugadores>();
+            jugadores = new RegistroConjuntoJugadores(registroJugadores);
+            notificarObservadores(Opcion.CREACION_ARCHIVO);
+            fileOutputStream = new FileOutputStream("jugadores.txt");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(jugadores);
+            objectOutputStream.close();
+        }
+        catch (IOException e) {
+            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
+        }
+        finally {
+            notificarObservadores(Opcion.TOP5, jugadores);
+        }
+    }
+
+    public void guardarYSalir () {
+
     }
 }

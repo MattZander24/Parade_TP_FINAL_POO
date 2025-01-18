@@ -1,6 +1,8 @@
 package ar.edu.unlu.parade.modelo;
 
-public class Mano extends ListaCartas {
+import java.io.Serializable;
+
+public class Mano extends ListaCartas implements Serializable {
 
     public Mano() {
         super();

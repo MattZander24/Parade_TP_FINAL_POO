@@ -2,6 +2,7 @@ package ar.edu.unlu.parade.vistaconsola;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.modelo.*;
+import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.recursos.Observer;
 import ar.edu.unlu.parade.recursos.Opcion;
@@ -79,6 +80,9 @@ public class VistaConsolaParade implements Observer {
                 break;
             case HISTORICO:
                 vcp.verHistorico((RegistroConjuntoPartidas) o);
+                break;
+            case TOP5:
+                vcp.verTop5((RegistroConjuntoJugadores) o);
                 break;
             default:
                 break;

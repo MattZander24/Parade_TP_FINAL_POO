@@ -1,8 +1,9 @@
 package ar.edu.unlu.parade.modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Jugador {
+public class Jugador implements Serializable {
     Mano manoJugador;
     AreaDeJuego areaJugador;
     private int puntos;

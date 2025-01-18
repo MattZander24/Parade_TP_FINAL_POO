@@ -1,6 +1,8 @@
 package ar.edu.unlu.parade.modelo;
 
-public class Desfile extends ListaCartas {
+import java.io.Serializable;
+
+public class Desfile extends ListaCartas implements Serializable {
     public Desfile() {
         super();
     }

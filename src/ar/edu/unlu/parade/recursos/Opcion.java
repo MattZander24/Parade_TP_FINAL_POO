@@ -4,6 +4,7 @@ public enum Opcion {
     MENU_PRINCIPAL,
     REGLAS,
     HISTORICO,
+    TOP5,
     CREACION_ARCHIVO,
     SETEO_PARTIDA,
     MENU_TURNO,

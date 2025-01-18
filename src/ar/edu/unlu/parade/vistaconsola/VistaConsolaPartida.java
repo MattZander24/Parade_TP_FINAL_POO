@@ -3,6 +3,7 @@ package ar.edu.unlu.parade.vistaconsola;
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.modelo.DestinoCarta;
 import ar.edu.unlu.parade.modelo.Jugador;
+import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
@@ -22,9 +23,11 @@ public class VistaConsolaPartida {
         do {
             System.out.println("PARADE - MODO CONSOLA");
             System.out.println("\t1. Nueva Partida");
-            System.out.println("\t2. Reglas");
-            System.out.println("\t3. Historial");
-            System.out.println("\t4. Salir");
+            System.out.println("\t2. Cargar Partida");
+            System.out.println("\t3. Reglas");
+            System.out.println("\t4. Historial de partidas");
+            System.out.println("\t5. Top 5 Histórico");
+            System.out.println("\t6. Salir");
             System.out.print("Seleccione una opción: ");
 
             opcion = scanner.nextInt();
@@ -34,12 +37,18 @@ public class VistaConsolaPartida {
                     c.iniciarJuego();
                     break;
                 case 2:
-                    c.verReglas();
+                    c.cargarPartida();
                     break;
                 case 3:
-                    c.verHistorico();
+                    c.verReglas();
                     break;
                 case 4:
+                    c.verHistorico();
+                    break;
+                case 5:
+                    c.top5Historico();
+                    break;
+                case 6:
                     System.out.println("\nSaliendo del juego...\n");
                     c.terminarPartida();
                     break;
@@ -48,7 +57,7 @@ public class VistaConsolaPartida {
                     break;
             }
 
-        } while (opcion != 4);
+        } while (opcion != 6);
 
         scanner.close();
 
@@ -171,6 +180,27 @@ public class VistaConsolaPartida {
         }
     }
 
+    public void verTop5 (RegistroConjuntoJugadores j) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
+        String fechaHoraFormateada;
+        if (!(j.getJugadores().isEmpty())) {
+            //Hacer solo el top 5
+            for (int i = 0; i < 5; i++) {
+                fechaHoraFormateada = j.getJugadores().get(i).getFechaYHoraPartida().format(formato);
+                System.out.print("\n");
+                System.out.println(i+1 + "- Partida jugada el " + fechaHoraFormateada + ":");
+                System.out.println("\t" + j.getJugadores().get(i).getDefinicionJugador() + " - " + j.getJugadores().get(i).getPuntosJugador() + "pts.");
+                System.out.print("\n");
+
+            }
+            System.out.print("\n");
+            FuncionesConsola.PulseEnter();
+        }
+        else {
+            System.out.println("\nEl Top 5 de mejores puntajes esta vacío...\n");
+        }
+    }
+
     public void configuracionPartida (ControladorParade c) {
         Scanner scanner = new Scanner(System.in);
         int cantidadJugadores;
@@ -220,6 +250,7 @@ public class VistaConsolaPartida {
             System.out.println("\t3. Ver desfile");
             System.out.println("\t4. Ver area de juego");
             System.out.println("\t5. Ver jugadores y sus areas de juego");
+            System.out.println("\t6. Guardar y Salir");
             System.out.print("Seleccione una opción: ");
 
             opcion = scanner.nextInt();
@@ -240,11 +271,14 @@ public class VistaConsolaPartida {
                 case 5:
                     c.mostrarJugadores();
                     break;
+                case 6:
+                    c.guardarYSalir();
+                    break;
                 default:
                     System.out.println("\nPor favor, seleccione una opción correcta\n");
                     break;
             }
-        } while (opcion != 1);
+        } while (opcion != 1 && opcion != 6);
 
     }
 

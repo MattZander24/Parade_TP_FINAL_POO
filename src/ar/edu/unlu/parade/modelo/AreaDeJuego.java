@@ -1,8 +1,9 @@
 package ar.edu.unlu.parade.modelo;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class AreaDeJuego extends ListaCartas {
+public class AreaDeJuego extends ListaCartas implements Serializable {
 
     public AreaDeJuego() {
         super();

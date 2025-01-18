@@ -67,4 +67,21 @@ public class ControladorParade {
         m.mostrarMano(j);
     }
 
+    public void cargarPartida () {
+        m.cargarPartida();
+    }
+
+    public void top5Historico () {
+        try {
+            m.top5Historico();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            //nada porque ya lo controla la funcion interna
+        }
+    }
+
+    public void guardarYSalir () {
+        m.guardarYSalir();
+    }
+
 }

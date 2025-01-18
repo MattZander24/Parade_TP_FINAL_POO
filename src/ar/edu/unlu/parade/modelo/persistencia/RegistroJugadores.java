@@ -1,16 +1,19 @@
 package ar.edu.unlu.parade.modelo.persistencia;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class RegistroJugadores implements Serializable {
     private String definicionJugador;
     private int puntosJugador;
     private int posicionJugador;
+    private LocalDateTime fechaYHoraPartida;
 
     public RegistroJugadores(String definicionJugador, int puntosJugador, int posicionJugador) {
         this.definicionJugador = definicionJugador;
         this.puntosJugador = puntosJugador;
         this.posicionJugador = posicionJugador;
+        this.fechaYHoraPartida = LocalDateTime.now();
     }
 
     public String getDefinicionJugador() {
@@ -35,5 +38,13 @@ public class RegistroJugadores implements Serializable {
 
     public void setPosicionJugador(int posicionJugador) {
         this.posicionJugador = posicionJugador;
+    }
+
+    public LocalDateTime getFechaYHoraPartida() {
+        return fechaYHoraPartida;
+    }
+
+    public void setFechaYHoraPartida(LocalDateTime fechaYHoraPartida) {
+        this.fechaYHoraPartida = fechaYHoraPartida;
     }
 }
