@@ -6,6 +6,7 @@ import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Partida implements Serializable {
@@ -18,6 +19,8 @@ public class Partida implements Serializable {
 
     boolean terminada = false;
     boolean salirAlMenu = false;
+
+    private LocalDateTime fechaYHoraGuardado;
 
     public Partida(int cantidadJugadores, boolean agregarNombre, ModeloParade modelo) {
         jugadoresPartida = new ArrayList<Jugador>();
@@ -33,6 +36,24 @@ public class Partida implements Serializable {
         this.pilaPartida = new PilaDeDescarte();
         this.mazoJuego = new Mazo();
         this.desfileJuego = new Desfile();
+
+        this.fechaYHoraGuardado = LocalDateTime.now();
+    }
+
+    public LocalDateTime getFechaYHoraPartida() {
+        return fechaYHoraGuardado;
+    }
+
+    public void setFechaYHoraPartida(LocalDateTime fechaYHoraPartida) {
+        this.fechaYHoraGuardado = fechaYHoraPartida;
+    }
+
+    public ArrayList<Jugador> getJugadores() {
+        return jugadoresPartida;
+    }
+
+    public void setJugadores(ArrayList<Jugador> jugadoresPartida) {
+        this.jugadoresPartida = jugadoresPartida;
     }
 
     public void inicializar () {
@@ -320,6 +341,10 @@ public class Partida implements Serializable {
             objectOutputStream.writeObject(jugadores);
             objectOutputStream.close();
         }
+    }
+
+    public void guardarFechaYHora() {
+        fechaYHoraGuardado = LocalDateTime.now();
     }
 
     public void volverAlMenu() {

@@ -162,29 +162,43 @@ public class ModeloParade implements Observable {
         notificarObservadores(Opcion.ULTIMO_TURNO);
     }
 
-    public void cargarPartida () {
-        /*
-        Desplegar la lista de las partidas inconclusas, detallando la fecha y hora en que se guardó
-        y la lista de jugadores (nombres) que tiene la partida, con un índice numérico, que será el
-        índice por el cual el jugador elegirá qué partida cargar, más una última opción de volver.
-        */
+    public void cargarPartida () throws IOException, ClassNotFoundException {
 
-        /*
-        Partidas Inconclusas:
+        FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        ConjuntoPartidas partidas = null;
+        try {
+            fileInputStream = new FileInputStream("partidas_guardadas.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            partidas = (ConjuntoPartidas) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            ArrayList<Partida> cPartidas = new ArrayList<Partida>();
+            partidas = new ConjuntoPartidas(cPartidas);
+            notificarObservadores(Opcion.CREACION_ARCHIVO);
+            fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(partidas);
+            objectOutputStream.close();
+        }
+        catch (IOException e) {
+            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
+        }
+        finally {
+            notificarObservadores(Opcion.CARGAR_PARTIDA, partidas);
+        }
+    }
 
-            1- Partida guardada el dd/mm/aaaa a las hh:mm
-                Jugadores:
-                    1. J1
-                    2. J2
-                    3. J3
-
-            2- Partida guardada el dd/mm/aaaa a las hh:mm
-                Jugadores:
-                    1. J1
-                    2. J2
-
-            3- Salir
-        */
+    public void reiniciarPartida () {
+        //NO ESTOY SEGURO DE QUE ESTO FUNCIONE
+        try {
+            partida.comenzarJuego();
+        } catch (IOException | ClassNotFoundException e) {
+            //nada porque ya lo controla la funcion interna
+        }
     }
 
     public void top5Historico () throws IOException, ClassNotFoundException {
@@ -217,7 +231,9 @@ public class ModeloParade implements Observable {
     }
 
     public void guardarYSalir () throws IOException, ClassNotFoundException {
-        /*FileInputStream fileInputStream;
+        partida.guardarFechaYHora();
+
+        FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
@@ -231,7 +247,7 @@ public class ModeloParade implements Observable {
         catch (FileNotFoundException e) {
             ArrayList<Partida> cPartidas = new ArrayList<Partida>();
             partidas = new ConjuntoPartidas(cPartidas);
-            mensajeCreacionArchivo();
+            notificarObservadores(Opcion.CREACION_ARCHIVO);
         }
         finally {
             //assert partidas.getPartidas() != null;
@@ -242,8 +258,7 @@ public class ModeloParade implements Observable {
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(partidas);
             objectOutputStream.close();
-            partida.volverAlMenu();
-        }*/
+        }
 
         partida.volverAlMenu();
         notificarObservadores(Opcion.GUARDAR_Y_SALIR);

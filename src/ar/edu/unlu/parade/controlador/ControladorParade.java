@@ -3,6 +3,7 @@ package ar.edu.unlu.parade.controlador;
 import ar.edu.unlu.parade.modelo.DestinoCarta;
 import ar.edu.unlu.parade.modelo.Jugador;
 import ar.edu.unlu.parade.modelo.ModeloParade;
+import ar.edu.unlu.parade.modelo.Partida;
 
 import java.io.IOException;
 
@@ -68,7 +69,16 @@ public class ControladorParade {
     }
 
     public void cargarPartida () {
-        m.cargarPartida();
+        try {
+            m.cargarPartida();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            //nada porque ya lo controla la funcion interna
+        }
+    }
+
+    public void reiniciarPartida (Partida p) {
+        m.reiniciarPartida();
     }
 
     public void top5Historico () {

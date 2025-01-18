@@ -1,6 +1,8 @@
 package ar.edu.unlu.parade.modelo;
 
-public class PilaDeDescarte extends PilaCartas {
+import java.io.Serializable;
+
+public class PilaDeDescarte extends PilaCartas implements Serializable {
     public PilaDeDescarte() {
         super();
     }

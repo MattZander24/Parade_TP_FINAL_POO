@@ -3,11 +3,10 @@ package ar.edu.unlu.parade.vistaconsola;
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.modelo.DestinoCarta;
 import ar.edu.unlu.parade.modelo.Jugador;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
+import ar.edu.unlu.parade.modelo.Partida;
+import ar.edu.unlu.parade.modelo.persistencia.*;
 
+import javax.naming.ldap.Control;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
@@ -240,6 +239,45 @@ public class VistaConsolaPartida {
         }
 
         c.iniciarPartida(cantidadJugadores, agregarNombre);
+    }
+
+    void cargarPartida (ControladorParade c, ConjuntoPartidas cp) {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
+        String fechaHoraFormateada;
+        int indice = 1;
+        if (!(cp.getPartidas().isEmpty())) {
+            for (Partida partida : cp.getPartidas()) {
+                fechaHoraFormateada = partida.getFechaYHoraPartida().format(formato);
+                System.out.print("\n");
+                System.out.println(indice + "- Partida guardada el " + fechaHoraFormateada + "...");
+                System.out.println("\tJugadores:");
+                for (Jugador j : partida.getJugadores()) {
+                    System.out.println("\t" + j.getPosicion() + ". " + j.definicionJugador("L ", " "));
+                }
+                indice++;
+            }
+            System.out.println(indice + "- Salir");
+            System.out.print("\n");
+
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+
+            while (opcion < 1 || opcion > indice) {
+                System.out.print("\nOpción incorrecta, por favor ingrese una opción valida...");
+                System.out.print("Seleccione una opción: ");
+                opcion = scanner.nextInt();
+            }
+            if (opcion != indice) {
+                Partida p = cp.getPartidas().get(opcion-1);
+                c.reiniciarPartida (p);
+            }
+        }
+        else {
+            System.out.println("\nNo hay ninguna partida guardada para cargar...\n");
+        }
     }
 
     public void menuTurno (ControladorParade c, Jugador j) {

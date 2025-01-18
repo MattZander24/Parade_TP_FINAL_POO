@@ -18,6 +18,7 @@ public enum Opcion {
     EMPATE_JUGADORES,
     DESCARTE_Y_FINAL,
     ULTIMO_TURNO,
-    GUARDAR_Y_SALIR
+    GUARDAR_Y_SALIR,
+    CARGAR_PARTIDA
 
 }

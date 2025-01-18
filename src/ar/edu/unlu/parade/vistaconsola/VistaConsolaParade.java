@@ -2,6 +2,7 @@ package ar.edu.unlu.parade.vistaconsola;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.modelo.*;
+import ar.edu.unlu.parade.modelo.persistencia.ConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.recursos.Observer;
@@ -85,6 +86,9 @@ public class VistaConsolaParade implements Observer {
                 break;
             case TOP5:
                 vcp.verTop5((RegistroConjuntoJugadores) o);
+                break;
+            case CARGAR_PARTIDA:
+                vcp.cargarPartida(c, (ConjuntoPartidas) o);
                 break;
             default:
                 break;
