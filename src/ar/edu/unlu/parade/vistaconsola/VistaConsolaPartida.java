@@ -248,17 +248,21 @@ public class VistaConsolaPartida {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
         String fechaHoraFormateada;
         int indice = 1;
+        int indice2;
         if (!(cp.getPartidas().isEmpty())) {
             for (Partida partida : cp.getPartidas()) {
                 fechaHoraFormateada = partida.getFechaYHoraPartida().format(formato);
                 System.out.print("\n");
                 System.out.println(indice + "- Partida guardada el " + fechaHoraFormateada + "...");
                 System.out.println("\tJugadores:");
+                indice2 = 1;
                 for (Jugador j : partida.getJugadores()) {
-                    System.out.println("\t" + j.getPosicion() + ". " + j.definicionJugador("L ", " "));
+                    System.out.println("\t" + indice2 + ". " + j.definicionJugador("", ""));
+                    indice2++;
                 }
                 indice++;
             }
+            System.out.print("\n");
             System.out.println(indice + "- Salir");
             System.out.print("\n");
 

@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Partida implements Serializable {
 
-    ModeloParade modelo;
+    transient ModeloParade modelo;
     ArrayList<Jugador> jugadoresPartida;
     PilaDeDescarte pilaPartida;
     Mazo mazoJuego;
@@ -349,5 +349,6 @@ public class Partida implements Serializable {
 
     public void volverAlMenu() {
         salirAlMenu = true;
+        System.out.println("LLEGA 2");
     }
 }

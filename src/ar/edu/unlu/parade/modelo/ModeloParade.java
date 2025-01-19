@@ -251,16 +251,20 @@ public class ModeloParade implements Observable {
         }
         finally {
             //assert partidas.getPartidas() != null;
+            System.out.println("LLEGA 3");
             assert partidas != null;
+            System.out.println("LLEGA 4");
             partidas.getPartidas().add(partida);
+            System.out.println("LLEGA 5");
 
             fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(partidas);
+            System.out.println("LLEGA 6");
             objectOutputStream.close();
+            System.out.println("LLEGA 1");
+            partida.volverAlMenu();
+            notificarObservadores(Opcion.GUARDAR_Y_SALIR);
         }
-
-        partida.volverAlMenu();
-        notificarObservadores(Opcion.GUARDAR_Y_SALIR);
     }
 }
