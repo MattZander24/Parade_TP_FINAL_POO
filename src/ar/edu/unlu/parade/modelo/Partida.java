@@ -19,6 +19,7 @@ public class Partida implements Serializable {
 
     private static int iDPartidaGen = 1;
     private int iDPartida;
+    private int indiceTurno;
     boolean salirAlMenu = false;
 
     private LocalDateTime fechaYHoraGuardado;
@@ -40,6 +41,7 @@ public class Partida implements Serializable {
 
         this.iDPartida = iDPartidaGen;
         iDPartidaGen++;
+        this.indiceTurno = 0;
         this.fechaYHoraGuardado = LocalDateTime.now();
     }
 
@@ -77,21 +79,27 @@ public class Partida implements Serializable {
         boolean finturnos = false;
         Jugador jugadorFinal = null;
         do {
-            for (Jugador j : jugadoresPartida) {
-                turno(j);
+            for (int i = 0; i < jugadoresPartida.size(); i++) {
+                turno(jugadoresPartida.get(indiceTurno));
                 if (salirAlMenu) {
                     break;
                 }
-                mazoJuego.transferirCartas(j.manoJugador, 1);
-                if (j.areaJugador.tieneSeisColores()) {
-                    jugadorFinal = j;
+                mazoJuego.transferirCartas(jugadoresPartida.get(indiceTurno).manoJugador, 1);
+                if (jugadoresPartida.get(indiceTurno).areaJugador.tieneSeisColores()) {
+                    jugadorFinal = jugadoresPartida.get(indiceTurno);
                     finturnos = true;
                     break;
                 }
                 if (mazoJuego.estaTerminado()) {
-                    jugadorFinal = j;
+                    jugadorFinal = jugadoresPartida.get(indiceTurno);
                     finturnos = true;
                     break;
+                }
+                if (indiceTurno == jugadoresPartida.size()-1) {
+                    indiceTurno = 0;
+                }
+                else {
+                    indiceTurno++;
                 }
             }
             if (salirAlMenu) {
