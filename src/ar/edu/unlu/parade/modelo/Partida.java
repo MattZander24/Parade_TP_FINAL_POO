@@ -120,7 +120,7 @@ public class Partida implements Serializable {
                 } else {
                     indiceUltimoTurno += 1;
                 }
-                turno(jugadoresPartida.get(indiceUltimoTurno));
+                turnoFinal(jugadoresPartida.get(indiceUltimoTurno));
             }
 
             indiceUltimoTurno = indiceFinal;
@@ -144,6 +144,10 @@ public class Partida implements Serializable {
 
     public void turno (Jugador j) {
         modelo.menuTurno(j);
+    }
+
+    public void turnoFinal (Jugador j) {
+        modelo.menuTurnoFinal(j);
     }
 
     public void evaluarDesfile (Carta cartaSeleccionada, Jugador j) {

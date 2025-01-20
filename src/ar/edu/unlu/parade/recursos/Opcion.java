@@ -8,6 +8,7 @@ public enum Opcion {
     CREACION_ARCHIVO,
     SETEO_PARTIDA,
     MENU_TURNO,
+    MENU_TURNO_FINAL,
     ADD_NOMBRE,
     SELECICON_CARTA,
     RANKING,

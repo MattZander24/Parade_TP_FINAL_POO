@@ -348,6 +348,45 @@ public class VistaConsolaPartida {
 
     }
 
+    public void menuTurnoFinal (ControladorParade c, Jugador j) {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.print("\n");
+            System.out.println("TURNO DE" + j.definicionJugador("L ", " "));
+            System.out.println("\t1. Seleccionar carta para jugar");
+            System.out.println("\t2. Ver mano");
+            System.out.println("\t3. Ver desfile");
+            System.out.println("\t4. Ver area de juego");
+            System.out.println("\t5. Ver jugadores y sus areas de juego");
+            System.out.print("Seleccione una opción: ");
+
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    c.seleccionarCarta(j);
+                    break;
+                case 2:
+                    c.mostrarMano(j);
+                    break;
+                case 3:
+                    c.mostrarDesfile();
+                    break;
+                case 4:
+                    c.mostrarAreaDeJuego(j);
+                    break;
+                case 5:
+                    c.mostrarJugadores();
+                    break;
+                default:
+                    System.out.println("\nPor favor, seleccione una opción correcta\n");
+                    break;
+            }
+        } while (opcion != 1);
+    }
+
     public void agregarNombre (ControladorParade c, Jugador jugador) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el nombre del jugador n°" + jugador.getIdJugador() + ": ");

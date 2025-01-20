@@ -103,6 +103,10 @@ public class ModeloParade implements Observable {
         notificarObservadores(Opcion.MENU_TURNO, j);
     }
 
+    public void menuTurnoFinal (Jugador j) {
+        notificarObservadores(Opcion.MENU_TURNO_FINAL, j);
+    }
+
     public void seleccionarCarta(Jugador j, DestinoCarta d) {
         notificarObservadores(Opcion.SELECICON_CARTA,j, d);
     }
