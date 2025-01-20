@@ -93,7 +93,7 @@ public class ModeloParade implements Observable {
         partida = new Partida(cantidadJugadores, agregarNombre, this);
         partida.inicializar();
         try {
-            partida.comenzarJuego();
+            partida.comenzarJuego(this, false);
         } catch (IOException | ClassNotFoundException e) {
             //nada porque ya lo controla la funcion interna
         }
@@ -192,10 +192,10 @@ public class ModeloParade implements Observable {
         }
     }
 
-    public void reiniciarPartida () {
-        //NO ESTOY SEGURO DE QUE ESTO FUNCIONE
+    public void reiniciarPartida (Partida p) {
+        partida = p;
         try {
-            partida.comenzarJuego();
+            partida.comenzarJuego(this, true);
         } catch (IOException | ClassNotFoundException e) {
             //nada porque ya lo controla la funcion interna
         }
@@ -250,21 +250,43 @@ public class ModeloParade implements Observable {
             notificarObservadores(Opcion.CREACION_ARCHIVO);
         }
         finally {
-            //assert partidas.getPartidas() != null;
-            System.out.println("LLEGA 3");
             assert partidas != null;
-            System.out.println("LLEGA 4");
-            partidas.getPartidas().add(partida);
-            System.out.println("LLEGA 5");
+            partidas.agregarOActualizarPartida(partida);
 
             fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(partidas);
-            System.out.println("LLEGA 6");
             objectOutputStream.close();
-            System.out.println("LLEGA 1");
+
             partida.volverAlMenu();
             notificarObservadores(Opcion.GUARDAR_Y_SALIR);
         }
+    }
+
+    public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException {
+
+        FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        ConjuntoPartidas partidas = null;
+
+        try {
+            fileInputStream = new FileInputStream("partidas_guardadas.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            partidas = (ConjuntoPartidas) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            partidas = new ConjuntoPartidas(new ArrayList<>());
+        }
+
+        assert partidas != null;
+        partidas.eliminarPartidasTerminadas(idPartida);
+
+        fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(partidas);
+        objectOutputStream.close();
     }
 }

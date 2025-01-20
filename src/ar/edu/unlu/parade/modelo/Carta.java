@@ -1,6 +1,8 @@
 package ar.edu.unlu.parade.modelo;
 
-public class Carta {
+import java.io.Serializable;
+
+public class Carta implements Serializable {
     private int valor; //VALORES POSIBLES SOLO DE 0 a 10
     private Color color;
     private boolean anulada;

@@ -17,7 +17,8 @@ public class Partida implements Serializable {
     Mazo mazoJuego;
     Desfile desfileJuego;
 
-    boolean terminada = false;
+    private static int iDPartidaGen = 1;
+    private int iDPartida;
     boolean salirAlMenu = false;
 
     private LocalDateTime fechaYHoraGuardado;
@@ -37,6 +38,8 @@ public class Partida implements Serializable {
         this.mazoJuego = new Mazo();
         this.desfileJuego = new Desfile();
 
+        this.iDPartida = iDPartidaGen;
+        iDPartidaGen++;
         this.fechaYHoraGuardado = LocalDateTime.now();
     }
 
@@ -47,6 +50,8 @@ public class Partida implements Serializable {
     public void setFechaYHoraPartida(LocalDateTime fechaYHoraPartida) {
         this.fechaYHoraGuardado = fechaYHoraPartida;
     }
+
+    public int getIdPartida() { return iDPartida; }
 
     public ArrayList<Jugador> getJugadores() {
         return jugadoresPartida;
@@ -65,7 +70,10 @@ public class Partida implements Serializable {
         }
     }
 
-    public void comenzarJuego () throws IOException, ClassNotFoundException {
+    public void comenzarJuego (ModeloParade m, boolean reasignar) throws IOException, ClassNotFoundException {
+        if (reasignar) {
+            modelo = m;
+        }
         boolean finturnos = false;
         Jugador jugadorFinal = null;
         do {
@@ -118,7 +126,8 @@ public class Partida implements Serializable {
             }
 
             puntuacion();
-            terminada = true;
+
+            m.finalizarPartida(iDPartida);
 
             registrarPartida();
             registrarJugadores();
@@ -349,6 +358,5 @@ public class Partida implements Serializable {
 
     public void volverAlMenu() {
         salirAlMenu = true;
-        System.out.println("LLEGA 2");
     }
 }

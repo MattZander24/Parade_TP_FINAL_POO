@@ -1,3 +1,5 @@
 package ar.edu.unlu.parade.modelo;
 
-public enum DestinoCarta { EVALUAR, DESCARTAR }
+import java.io.Serializable;
+
+public enum DestinoCarta implements Serializable { EVALUAR, DESCARTAR }

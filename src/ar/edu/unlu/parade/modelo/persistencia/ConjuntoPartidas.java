@@ -19,4 +19,18 @@ public class ConjuntoPartidas implements Serializable {
     public void setPartidas(ArrayList<Partida> partidas) {
         this.partidas = partidas;
     }
+
+    public void agregarOActualizarPartida(Partida partida) {
+        for (int i = 0; i < partidas.size(); i++) {
+            if (partidas.get(i).getIdPartida() == partida.getIdPartida()) {
+                partidas.set(i, partida);
+                return;
+            }
+        }
+        partidas.add(partida);
+    }
+
+    public void eliminarPartidasTerminadas(int idPartida) {
+        partidas.removeIf(partida -> partida.getIdPartida() == idPartida);
+    }
 }

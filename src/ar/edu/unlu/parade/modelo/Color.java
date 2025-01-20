@@ -1,3 +1,5 @@
 package ar.edu.unlu.parade.modelo;
 
-enum Color { VERDE, AMARILLO, ROJO, VIOLETA, AZUL, NEGRO }
+import java.io.Serializable;
+
+enum Color implements Serializable { VERDE, AMARILLO, ROJO, VIOLETA, AZUL, NEGRO }

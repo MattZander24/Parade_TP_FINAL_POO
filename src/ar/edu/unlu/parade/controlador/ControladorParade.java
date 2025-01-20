@@ -78,7 +78,7 @@ public class ControladorParade {
     }
 
     public void reiniciarPartida (Partida p) {
-        m.reiniciarPartida();
+        m.reiniciarPartida(p);
     }
 
     public void top5Historico () {

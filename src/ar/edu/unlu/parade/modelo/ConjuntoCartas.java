@@ -1,5 +1,7 @@
 package ar.edu.unlu.parade.modelo;
 
+import java.io.Serializable;
+
 public interface ConjuntoCartas {
 
     public void transferirCartas (ConjuntoCartas c, Object o);

@@ -1,8 +1,9 @@
 package ar.edu.unlu.parade.modelo;
 
+import java.io.Serializable;
 import java.util.Stack;
 
-public class PilaCartas implements ConjuntoCartas {
+public class PilaCartas implements ConjuntoCartas, Serializable {
     Stack<Carta> cartas;
     public PilaCartas() {
         this.cartas = new Stack<>();
