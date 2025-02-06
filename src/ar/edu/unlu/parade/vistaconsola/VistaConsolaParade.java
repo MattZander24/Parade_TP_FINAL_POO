@@ -32,7 +32,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         this.c = c;
     }
 
-    public void menuPrincipal (ControladorParade c) {
+    public void menuPrincipal () {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -277,7 +277,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         }
     }
 
-    public void configuracionPartida (ControladorParade c) {
+    public void configuracionPartida () {
         Scanner scanner = new Scanner(System.in);
         int cantidadJugadores;
         int jugadoresConNombre;
@@ -314,7 +314,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         c.iniciarPartida(cantidadJugadores, agregarNombre);
     }
 
-    public void cargarPartida (ControladorParade c/*, ConjuntoPartidas cp*/) throws IOException {
+    public void cargarPartida (/*, ConjuntoPartidas cp*/) throws IOException {
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
         FileOutputStream fileOutputStream;
@@ -384,7 +384,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         }
     }
 
-    public void menuTurno (ControladorParade c, Jugador j) {
+    public void menuTurno (Jugador j) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
         boolean gys = false;
@@ -448,7 +448,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
 
     }
 
-    public void menuTurnoFinal (ControladorParade c, Jugador j) {
+    public void menuTurnoFinal (Jugador j) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -487,7 +487,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         } while (opcion != 1);
     }
 
-    public void agregarNombre (ControladorParade c, Jugador jugador) {
+    public void agregarNombre (Jugador jugador) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el nombre del jugador n°" + jugador.getIdJugador() + ": ");
         String nombreJugador = scanner.nextLine();
@@ -495,7 +495,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         c.setNombre(jugador, nombreJugador);
     }
 
-    public void seleccionCarta (ControladorParade c, Jugador j, DestinoCarta d) {
+    public void seleccionCarta (Jugador j, DestinoCarta d) {
         c.mostrarMano(j);
 
         Scanner scanner = new Scanner(System.in);

@@ -18,6 +18,11 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
 
     public ModeloParade() {
         //observadores = new ArrayList<Observer>();
+        try {
+            iniciarAplicacion();
+        } catch (RemoteException e) {
+            throw new RuntimeException();
+        }
     }
 
     public Partida getPartida() {
@@ -56,7 +61,8 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
     */
 
     public void iniciarAplicacion() throws RemoteException {
-        notificarObservadores(Opcion.MENU_PRINCIPAL);
+        //notificarObservadores(Opcion.MENU_PRINCIPAL);
+        iniciarJuego();
     }
 
     public void iniciarJuego () throws RemoteException {

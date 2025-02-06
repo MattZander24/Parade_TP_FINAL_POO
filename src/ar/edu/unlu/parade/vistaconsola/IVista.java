@@ -21,7 +21,7 @@ public interface IVista {
 
     public void setC(ControladorParade c);
 
-    public void menuPrincipal (ControladorParade c);
+    public void menuPrincipal ();
 
     public void verReglas ();
 
@@ -33,17 +33,17 @@ public interface IVista {
 
     public void verTop5 (/*RegistroConjuntoJugadores j*/) throws IOException;
 
-    public void configuracionPartida (ControladorParade c);
+    public void configuracionPartida ();
 
-    public void cargarPartida (ControladorParade c/*, ConjuntoPartidas cp*/) throws IOException;
+    public void cargarPartida (/*, ConjuntoPartidas cp*/) throws IOException;
 
-    public void menuTurno (ControladorParade c, Jugador j);
+    public void menuTurno (Jugador j);
 
-    public void menuTurnoFinal (ControladorParade c, Jugador j);
+    public void menuTurnoFinal (Jugador j);
 
-    public void agregarNombre (ControladorParade c, Jugador jugador);
+    public void agregarNombre (Jugador jugador);
 
-    public void seleccionCarta (ControladorParade c, Jugador j, DestinoCarta d);
+    public void seleccionCarta (Jugador j, DestinoCarta d);
 
     public void ultimoTurno ();
 

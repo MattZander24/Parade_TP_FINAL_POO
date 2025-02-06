@@ -202,7 +202,7 @@ public class ControladorParade implements IControladorRemoto {
             Opcion opcion = (Opcion) cambio;
             switch (opcion) {
                 case MENU_PRINCIPAL:
-                    v.menuPrincipal(this);
+                    v.menuPrincipal();
                     break;
                 case REGLAS:
                     v.verReglas();
@@ -211,7 +211,7 @@ public class ControladorParade implements IControladorRemoto {
                     v.mensajeCreacionArchivo();
                     break;
                 case SETEO_PARTIDA:
-                    v.configuracionPartida(this);
+                    v.configuracionPartida();
                     break;
                 case ULTIMO_TURNO:
                     v.ultimoTurno();
@@ -220,10 +220,10 @@ public class ControladorParade implements IControladorRemoto {
                     v.mensajeGuardarYSalir();
                     break;
                 case MENU_TURNO:
-                    v.menuTurno(this, jugadorLocal);
+                    v.menuTurno(jugadorLocal);
                     break;
                 case MENU_TURNO_FINAL:
-                    v.menuTurnoFinal(this, jugadorLocal);
+                    v.menuTurnoFinal(jugadorLocal);
                     break;
                 case DESCARTE_Y_FINAL:
                     v.mensajeDescarteFinal(jugadorLocal);
@@ -238,7 +238,7 @@ public class ControladorParade implements IControladorRemoto {
                     v.mostrarD(m.getPartida().getDesfileJuego());
                     break;
                 case ADD_NOMBRE:
-                    v.agregarNombre(this, jugadorLocal);
+                    v.agregarNombre(jugadorLocal);
                     break;
                 case GANADOR_PARTIDA:
                     v.mensajeGanador(m.getPartida().getGanadores().get(0));
@@ -265,16 +265,16 @@ public class ControladorParade implements IControladorRemoto {
                     break;
                 case CARGAR_PARTIDA:
                     try {
-                        v.cargarPartida(this/*, (ConjuntoPartidas) o*/);
+                        v.cargarPartida(/*, (ConjuntoPartidas) o*/);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
                 case SELECICON_EVALUAR:
-                    v.seleccionCarta(this, jugadorLocal, DestinoCarta.EVALUAR);
+                    v.seleccionCarta(jugadorLocal, DestinoCarta.EVALUAR);
                     break;
                 case SELECICON_DESCARTAR:
-                    v.seleccionCarta(this, jugadorLocal, DestinoCarta.DESCARTAR);
+                    v.seleccionCarta(jugadorLocal, DestinoCarta.DESCARTAR);
                     break;
                 default:
                     break;

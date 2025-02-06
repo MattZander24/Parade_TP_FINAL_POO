@@ -62,7 +62,8 @@ public class Cliente {
         IVista vista;
 
         if (interfaz.equals("Consola")) {
-            vista = new VistaConsolaParade(controlador);
+            vista = new VistaConsolaParade();
+            vista.setC(controlador);
         } else if (interfaz.equals("Consola (con UI mejorada)")) {
             //vista = new VistaConsolaMejorada(controlador);
             vista = null;
@@ -74,7 +75,8 @@ public class Cliente {
         try {
             cliente.iniciar(controlador);
             //vista.iniciarVista();
-            vista.actualizar(Opcion.MENU_PRINCIPAL);
+            //vista.actualizar(Opcion.MENU_PRINCIPAL);
+            vista.menuPrincipal();
         } catch (RemoteException | RMIMVCException e) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Uno de los puertos seleccionados ya se encuentra en uso. Vuelva a intentar unirse con otro.", "Error al unirse el servidor", JOptionPane.ERROR_MESSAGE);
             //new MenuMolino();
