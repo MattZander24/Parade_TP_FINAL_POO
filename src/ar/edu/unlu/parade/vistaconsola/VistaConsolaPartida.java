@@ -1,6 +1,7 @@
-package ar.edu.unlu.parade.vistaconsola;
+/*package ar.edu.unlu.parade.vistaconsola;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
+import ar.edu.unlu.parade.modelo.Desfile;
 import ar.edu.unlu.parade.modelo.DestinoCarta;
 import ar.edu.unlu.parade.modelo.Jugador;
 import ar.edu.unlu.parade.modelo.Partida;
@@ -10,10 +11,22 @@ import javax.naming.ldap.Control;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.JulianFields;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class VistaConsolaPartida {
+
+    private ControladorParade c;
+    private VistaConsolaAreaDeJuego vca;
+    private VistaConsolaDesfile vcd;
+    private VistaConsolaMano vcm;
+
+    public VistaConsolaPartida () {
+        this.vca = new VistaConsolaAreaDeJuego();
+        this.vcd = new VistaConsolaDesfile();
+        this.vcm = new VistaConsolaMano();
+    }
 
     public void menuPrincipal (ControladorParade c) {
         Scanner scanner = new Scanner(System.in);
@@ -77,7 +90,7 @@ public class VistaConsolaPartida {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.print("\n");*/
+        System.out.print("\n"); //TERMINAR
 
         System.out.println("INTRODUCCION\n" +
                 "-Ha comenzado el carnaval en el Pais de las Maravillas. Todos ya disfrazados, las calles decoradas y la emoción se siente en el aire. Eres uno de los organizadores y necesitas\n" +
@@ -446,4 +459,17 @@ public class VistaConsolaPartida {
         System.out.print("\n");
         FuncionesConsola.PulseEnter();
     }
+
+    public void mostrarADJ (Jugador j) {
+        vca.mostrar(j);
+    }
+
+    public void mostrarD (Desfile d) {
+        vcd.mostrar(d);
+    }
+
+    public void mostrarM (Jugador j) {
+        vcm.mostrar(j);
+    }
 }
+*/

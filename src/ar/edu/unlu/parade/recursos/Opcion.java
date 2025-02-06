@@ -1,6 +1,8 @@
 package ar.edu.unlu.parade.recursos;
 
-public enum Opcion {
+import java.io.Serializable;
+
+public enum Opcion implements Serializable {
     MENU_PRINCIPAL,
     REGLAS,
     HISTORICO,
@@ -10,7 +12,8 @@ public enum Opcion {
     MENU_TURNO,
     MENU_TURNO_FINAL,
     ADD_NOMBRE,
-    SELECICON_CARTA,
+    SELECICON_EVALUAR,
+    SELECICON_DESCARTAR,
     RANKING,
     MOSTRAR_AREA,
     MOSTRAR_MANO,

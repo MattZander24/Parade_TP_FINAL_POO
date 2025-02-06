@@ -6,6 +6,7 @@ import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class Partida implements Serializable {
 
     transient ModeloParade modelo;
     ArrayList<Jugador> jugadoresPartida;
+    ArrayList<Jugador> ganadores;
     PilaDeDescarte pilaPartida;
     Mazo mazoJuego;
     Desfile desfileJuego;
@@ -24,8 +26,9 @@ public class Partida implements Serializable {
 
     private LocalDateTime fechaYHoraGuardado;
 
-    public Partida(int cantidadJugadores, boolean agregarNombre, ModeloParade modelo) {
-        jugadoresPartida = new ArrayList<Jugador>();
+    public Partida(int cantidadJugadores, boolean agregarNombre, ModeloParade modelo) throws RemoteException {
+        this.jugadoresPartida = new ArrayList<Jugador>();
+        this.ganadores = new ArrayList<Jugador>();
         Jugador.resetearIDGen();
         this.modelo = modelo;
 
@@ -61,6 +64,22 @@ public class Partida implements Serializable {
 
     public void setJugadores(ArrayList<Jugador> jugadoresPartida) {
         this.jugadoresPartida = jugadoresPartida;
+    }
+
+    public ArrayList<Jugador> getGanadores() {
+        return ganadores;
+    }
+
+    public void setGanadores(ArrayList<Jugador> ganadores) {
+        this.ganadores = ganadores;
+    }
+
+    public Desfile getDesfileJuego() {
+        return desfileJuego;
+    }
+
+    public void setDesfileJuego(Desfile desfileJuego) {
+        this.desfileJuego = desfileJuego;
     }
 
     public void inicializar () {
@@ -142,11 +161,11 @@ public class Partida implements Serializable {
         }
     }
 
-    public void turno (Jugador j) {
+    public void turno (Jugador j) throws RemoteException {
         modelo.menuTurno(j);
     }
 
-    public void turnoFinal (Jugador j) {
+    public void turnoFinal (Jugador j) throws RemoteException {
         modelo.menuTurnoFinal(j);
     }
 
@@ -168,11 +187,11 @@ public class Partida implements Serializable {
         j.manoJugador.transferirCartas(desfileJuego, cartaSeleccionada);
     }
 
-    public void descarteFinal (Jugador j) {
+    public void descarteFinal (Jugador j) throws RemoteException {
         modelo.mensajeDescarteFinal(j);
 
-        modelo.seleccionarCarta(j, DestinoCarta.DESCARTAR);
-        modelo.seleccionarCarta(j, DestinoCarta.DESCARTAR);
+        modelo.descartarCarta();
+        modelo.descartarCarta();
 
         for (Carta c : j.manoJugador.cartas) {
             j.manoJugador.transferirCartas(j.areaJugador, c);
@@ -181,7 +200,7 @@ public class Partida implements Serializable {
 
     }
 
-    public void puntuacion () {
+    public void puntuacion () throws RemoteException {
         //anular las cartas de x color si el jugador es el que
         // mas cartas tiene del color x en su area de juego:
         anularCartas();
@@ -194,7 +213,7 @@ public class Partida implements Serializable {
 
         //seleccion de jugador ganador
         //  -el que menos puntos tiene
-        ArrayList<Jugador> ganadores = new ArrayList<Jugador>();
+        //ArrayList<Jugador> ganadores = new ArrayList<Jugador>();
         for (Jugador j:jugadoresPartida) {
             if (ganadores.isEmpty()) {
                 ganadores.add(j);
@@ -210,12 +229,16 @@ public class Partida implements Serializable {
             }
         }
 
+        /*for (Jugador j:jugadoresPartida) {
+            j.setEsGanador(true);
+        }*/
+
         if (ganadores.size() > 1) {
-            modelo.mensajeEmpate(ganadores);
+            modelo.mensajeEmpate(/*ganadores*/);
         }
         else {
-            Jugador ganadorUnico = ganadores.get(0);
-            modelo.mensajeGanador(ganadorUnico);
+            //Jugador ganadorUnico = ganadores.get(0);
+            modelo.mensajeGanador(/*ganadorUnico*/);
         }
 
         //ordenar el array jugadroes de < puntuacion a mayor

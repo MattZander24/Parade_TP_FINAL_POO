@@ -11,6 +11,7 @@ public class Jugador implements Serializable {
     private int idJugador;
     private String nombre;
     private int posicion;
+    private boolean esGanador;
 
     public Jugador() {
         this.idJugador = idJugadorGen;
@@ -20,6 +21,7 @@ public class Jugador implements Serializable {
         this.areaJugador = new AreaDeJuego();
         this.nombre = "";
         this.posicion = 0;
+        this.esGanador = false;
     }
 
     public int getPuntos() {
@@ -52,6 +54,14 @@ public class Jugador implements Serializable {
 
     public Mano getManoJugador() {
         return manoJugador;
+    }
+
+    public boolean esGanador() {
+        return esGanador;
+    }
+
+    public void setEsGanador(boolean esGanador) {
+        this.esGanador = esGanador;
     }
 
     public AreaDeJuego getAreaJugador() {

@@ -4,24 +4,38 @@ import ar.edu.unlu.parade.modelo.persistencia.*;
 import ar.edu.unlu.parade.recursos.Observable;
 import ar.edu.unlu.parade.recursos.Observer;
 import ar.edu.unlu.parade.recursos.Opcion;
+import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class ModeloParade implements Observable {
+public class ModeloParade extends ObservableRemoto implements IModelo/*, Observable*/ {
 
     private Partida partida;
-    private ArrayList<Observer> observadores;
+
+    //private ArrayList<Observer> observadores;
 
     public ModeloParade() {
-        observadores = new ArrayList<Observer>();
+        //observadores = new ArrayList<Observer>();
     }
 
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
+    }
+
+    /*
     @Override
     public void agregarObserver(Observer o) {
         observadores.add(o);
     }
+    */
 
+    /*
     private void notificarObservadores(Opcion opcion) {
         for(Observer o : observadores){
             o.notificar(opcion);
@@ -39,57 +53,33 @@ public class ModeloParade implements Observable {
             o.notificar(opcion, object, object2);
         }
     }
+    */
 
-    public void iniciarAplicacion() {
+    public void iniciarAplicacion() throws RemoteException {
         notificarObservadores(Opcion.MENU_PRINCIPAL);
     }
 
-    public void iniciarJuego () {
+    public void iniciarJuego () throws RemoteException {
         notificarObservadores(Opcion.SETEO_PARTIDA);
     }
 
-    public void verReglas() {
+    public void verReglas() throws RemoteException {
         notificarObservadores(Opcion.REGLAS);
     }
 
-    public void verHistorico () throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-        RegistroConjuntoPartidas partidas = null;
-        try {
-            fileInputStream = new FileInputStream("partidas.txt");
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            partidas = (RegistroConjuntoPartidas) objectInputStream.readObject();
-            objectInputStream.close();
-        }
-        catch (FileNotFoundException e) {
-            ArrayList<RegistroPartida> registroPartidas = new ArrayList<RegistroPartida>();
-            partidas = new RegistroConjuntoPartidas(registroPartidas);
-            notificarObservadores(Opcion.CREACION_ARCHIVO);
-            fileOutputStream = new FileOutputStream("partidas.txt");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(partidas);
-            objectOutputStream.close();
-        }
-        catch (IOException e) {
-            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
-        }
-        finally {
-            notificarObservadores(Opcion.HISTORICO, partidas);
-        }
+    public void verHistorico () throws IOException, ClassNotFoundException, RemoteException {
+        notificarObservadores(Opcion.HISTORICO);
     }
 
-    public void mensajeCreacionArchivo () {
+    public void mensajeCreacionArchivo () throws RemoteException {
         notificarObservadores(Opcion.CREACION_ARCHIVO);
     }
 
-    public void terminarPartida () {
+    public void terminarPartida () throws RemoteException {
         System.exit(0);
     }
 
-    public void iniciarPartida (int cantidadJugadores, boolean agregarNombre) {
+    public void iniciarPartida (int cantidadJugadores, boolean agregarNombre) throws RemoteException {
         partida = new Partida(cantidadJugadores, agregarNombre, this);
         partida.inicializar();
         try {
@@ -99,19 +89,23 @@ public class ModeloParade implements Observable {
         }
     }
 
-    public void menuTurno (Jugador j) {
-        notificarObservadores(Opcion.MENU_TURNO, j);
+    public void menuTurno (Jugador j) throws RemoteException {
+        notificarObservadores(Opcion.MENU_TURNO);
     }
 
-    public void menuTurnoFinal (Jugador j) {
-        notificarObservadores(Opcion.MENU_TURNO_FINAL, j);
+    public void menuTurnoFinal (Jugador j) throws RemoteException {
+        notificarObservadores(Opcion.MENU_TURNO_FINAL);
     }
 
-    public void seleccionarCarta(Jugador j, DestinoCarta d) {
-        notificarObservadores(Opcion.SELECICON_CARTA,j, d);
+    public void evaluarCarta(/*Jugador j, DestinoCarta d*/) throws RemoteException {
+        notificarObservadores(Opcion.SELECICON_EVALUAR);
     }
 
-    public void devolverCarta(Jugador j, int opcionCarta, DestinoCarta d) {
+    public void descartarCarta(/*Jugador j, DestinoCarta d*/) throws RemoteException {
+        notificarObservadores(Opcion.SELECICON_DESCARTAR);
+    }
+
+    public void devolverCarta(Jugador j, int opcionCarta, DestinoCarta d) throws RemoteException {
         Carta cartaSeleccionada = j.manoJugador.cartas.get(opcionCarta);
 
         switch (d) {
@@ -120,83 +114,57 @@ public class ModeloParade implements Observable {
         }
     }
 
-    public void mensajeDescarteFinal (Jugador j) {
-        notificarObservadores(Opcion.DESCARTE_Y_FINAL, j);
+    public void mensajeDescarteFinal (Jugador j) throws RemoteException {
+        notificarObservadores(Opcion.DESCARTE_Y_FINAL);
     }
 
-    public void mensajeGanador (Jugador j) {
-        notificarObservadores(Opcion.GANADOR_PARTIDA, j);
+    public void mensajeGanador (/*Jugador j*/) throws RemoteException {
+        notificarObservadores(Opcion.GANADOR_PARTIDA/*, j*/);
     }
 
-    public void mensajeEmpate (ArrayList<Jugador> ganadores) {
-        notificarObservadores(Opcion.EMPATE_JUGADORES, ganadores);
+    public void mensajeEmpate (/*ArrayList<Jugador> ganadores*/) throws RemoteException {
+        notificarObservadores(Opcion.EMPATE_JUGADORES/*, ganadores*/);
     }
 
-    public void mensajeGanadorYRanking () {
-        notificarObservadores(Opcion.RANKING, partida.jugadoresPartida);
+    public void mensajeGanadorYRanking () throws RemoteException {
+        notificarObservadores(Opcion.RANKING);
     }
 
-    public void pedirNombre (Jugador j) {
-        notificarObservadores(Opcion.ADD_NOMBRE, j);
+    public void pedirNombre (Jugador j) throws RemoteException {
+        notificarObservadores(Opcion.ADD_NOMBRE);
     }
 
-    public void setNombre (Jugador j, String nombre) {
+    public void setNombre (Jugador j, String nombre) throws RemoteException {
         j.setNombre(nombre);
     }
 
-    public void mostrarDesfile () {
-        notificarObservadores(Opcion.MOSTRAR_DESFILE, partida.desfileJuego);
+    public void mostrarDesfile () throws RemoteException {
+        notificarObservadores(Opcion.MOSTRAR_DESFILE);
     }
 
-    public void mostrarAreaDeJuego (Jugador j) {
-        notificarObservadores(Opcion.MOSTRAR_AREA, j);
+    public void mostrarAreaDeJuego (Jugador j) throws RemoteException {
+        notificarObservadores(Opcion.MOSTRAR_AREA);
     }
 
-    public void mostrarJugadores () {
+    public void mostrarJugadores () throws RemoteException {
         for (Jugador j : partida.jugadoresPartida) {
-            notificarObservadores(Opcion.MOSTRAR_AREA, j);
+            notificarObservadores(Opcion.MOSTRAR_AREA);
         }
     }
 
-    public void mostrarMano (Jugador j) {
-        notificarObservadores(Opcion.MOSTRAR_MANO, j);
+    public void mostrarMano (Jugador j) throws RemoteException {
+        notificarObservadores(Opcion.MOSTRAR_MANO);
     }
 
-    public void ultimoTurno() {
+    public void ultimoTurno() throws RemoteException {
         notificarObservadores(Opcion.ULTIMO_TURNO);
     }
 
-    public void cargarPartida () throws IOException, ClassNotFoundException {
-
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-        ConjuntoPartidas partidas = null;
-        try {
-            fileInputStream = new FileInputStream("partidas_guardadas.txt");
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            partidas = (ConjuntoPartidas) objectInputStream.readObject();
-            objectInputStream.close();
-        }
-        catch (FileNotFoundException e) {
-            ArrayList<Partida> cPartidas = new ArrayList<Partida>();
-            partidas = new ConjuntoPartidas(cPartidas);
-            notificarObservadores(Opcion.CREACION_ARCHIVO);
-            fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(partidas);
-            objectOutputStream.close();
-        }
-        catch (IOException e) {
-            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
-        }
-        finally {
-            notificarObservadores(Opcion.CARGAR_PARTIDA, partidas);
-        }
+    public void cargarPartida () throws IOException, ClassNotFoundException, RemoteException {
+        notificarObservadores(Opcion.CARGAR_PARTIDA);
     }
 
-    public void reiniciarPartida (Partida p) {
+    public void reiniciarPartida (Partida p) throws RemoteException {
         partida = p;
         try {
             partida.comenzarJuego(this, true);
@@ -205,36 +173,11 @@ public class ModeloParade implements Observable {
         }
     }
 
-    public void top5Historico () throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-        RegistroConjuntoJugadores jugadores = null;
-        try {
-            fileInputStream = new FileInputStream("jugadores.txt");
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            jugadores = (RegistroConjuntoJugadores) objectInputStream.readObject();
-            objectInputStream.close();
-        }
-        catch (FileNotFoundException e) {
-            ArrayList<RegistroJugadores> registroJugadores = new ArrayList<RegistroJugadores>();
-            jugadores = new RegistroConjuntoJugadores(registroJugadores);
-            notificarObservadores(Opcion.CREACION_ARCHIVO);
-            fileOutputStream = new FileOutputStream("jugadores.txt");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(jugadores);
-            objectOutputStream.close();
-        }
-        catch (IOException e) {
-            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
-        }
-        finally {
-            notificarObservadores(Opcion.TOP5, jugadores);
-        }
+    public void top5Historico () throws IOException, ClassNotFoundException, RemoteException {
+        notificarObservadores(Opcion.TOP5);
     }
 
-    public void guardarYSalir () throws IOException, ClassNotFoundException {
+    public void guardarYSalir () throws IOException, ClassNotFoundException, RemoteException {
         partida.guardarFechaYHora();
 
         FileInputStream fileInputStream;
@@ -267,7 +210,7 @@ public class ModeloParade implements Observable {
         }
     }
 
-    public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException {
+    public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException, RemoteException {
 
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
