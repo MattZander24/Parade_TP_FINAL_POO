@@ -1,18 +1,19 @@
 package ar.edu.unlu.parade.online;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
-import ar.edu.unlu.parade.recursos.Opcion;
-import ar.edu.unlu.parade.vistaconsola.IVista;
-import ar.edu.unlu.parade.vistaconsola.VistaConsolaParade;
+import ar.edu.unlu.parade.interfaces.IVista;
+import ar.edu.unlu.parade.vistaconsola.VistaConsola;
+import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
+import ar.edu.unlu.rmimvc.cliente.Cliente;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Cliente {
-    public Cliente() {
+public class ClienteParade {
+    public ClienteParade() {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("Interfáz gráfica");
         opciones.add("Consola");
@@ -62,29 +63,36 @@ public class Cliente {
         IVista vista;
 
         if (interfaz.equals("Consola")) {
-            vista = new VistaConsolaParade();
+            //vista = new VistaConsolaParade();
+            vista = new VistaConsola();
             vista.setC(controlador);
+
+            System.out.println("CONSOLA");
         } else if (interfaz.equals("Consola (con UI mejorada)")) {
             //vista = new VistaConsolaMejorada(controlador);
             vista = null;
+
+            System.out.println("CONSOLA MEJORADA");
         } else {
             //vista = new VistaInterfazGrafica(controlador);
             vista = null;
+
+            System.out.println("GRAFICA");
         }
-        ar.edu.unlu.rmimvc.cliente.Cliente cliente = new ar.edu.unlu.rmimvc.cliente.Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
+        Cliente cliente = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
         try {
             cliente.iniciar(controlador);
             //vista.iniciarVista();
             //vista.actualizar(Opcion.MENU_PRINCIPAL);
-            vista.menuPrincipal();
+            vista.iniciarVista();
         } catch (RemoteException | RMIMVCException e) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Uno de los puertos seleccionados ya se encuentra en uso. Vuelva a intentar unirse con otro.", "Error al unirse el servidor", JOptionPane.ERROR_MESSAGE);
-            //new MenuMolino();
+            new menuParade();
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        new Cliente();
+        new ClienteParade();
     }
 }

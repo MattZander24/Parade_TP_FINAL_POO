@@ -1,5 +1,7 @@
 package ar.edu.unlu.parade.modelo;
 
+import ar.edu.unlu.parade.enumerados.Color;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumSet;

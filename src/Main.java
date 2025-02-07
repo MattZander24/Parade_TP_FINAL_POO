@@ -13,7 +13,6 @@ public class Main {
 
         new menuParade();
 
-
         /*m.agregarObserver(v1);
         m.iniciarAplicacion();*/
     }

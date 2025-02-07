@@ -1,4 +1,4 @@
-package ar.edu.unlu.parade.recursos;
+package ar.edu.unlu.parade.enumerados;
 
 import java.io.Serializable;
 

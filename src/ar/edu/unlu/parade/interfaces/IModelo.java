@@ -1,18 +1,17 @@
-package ar.edu.unlu.parade.modelo;
+package ar.edu.unlu.parade.interfaces;
 
-import ar.edu.unlu.parade.modelo.persistencia.*;
-import ar.edu.unlu.parade.recursos.Opcion;
+import ar.edu.unlu.parade.enumerados.DestinoCarta;
+import ar.edu.unlu.parade.modelo.Jugador;
+import ar.edu.unlu.parade.modelo.Partida;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
 import java.io.*;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 public interface IModelo extends IObservableRemoto {
 
-    public Partida getPartida();
-
-    public void setPartida(Partida partida);
+    public Partida getPartida() throws RemoteException;
+    public void setPartida(Partida partida) throws RemoteException;
     public void iniciarAplicacion() throws RemoteException;
 
     public void iniciarJuego () throws RemoteException;

@@ -1,4 +1,4 @@
-package ar.edu.unlu.parade.recursos;
+package ar.edu.unlu.parade.interfaces;
 
 //Debe ser implementada por el modelo
 public interface Observable {

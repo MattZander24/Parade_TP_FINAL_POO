@@ -1,4 +1,4 @@
-package ar.edu.unlu.parade.modelo;
+package ar.edu.unlu.parade.enumerados;
 
 import java.io.Serializable;
 

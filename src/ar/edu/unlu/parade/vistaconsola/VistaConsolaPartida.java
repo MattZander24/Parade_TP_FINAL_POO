@@ -2,7 +2,7 @@
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.modelo.Desfile;
-import ar.edu.unlu.parade.modelo.DestinoCarta;
+import ar.edu.unlu.parade.enumerados.DestinoCarta;
 import ar.edu.unlu.parade.modelo.Jugador;
 import ar.edu.unlu.parade.modelo.Partida;
 import ar.edu.unlu.parade.modelo.persistencia.*;

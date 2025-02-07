@@ -1,18 +1,14 @@
-package ar.edu.unlu.parade.vistaconsola;
+package ar.edu.unlu.parade.interfaces;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
+import ar.edu.unlu.parade.enumerados.EstadoPartida;
 import ar.edu.unlu.parade.modelo.Desfile;
-import ar.edu.unlu.parade.modelo.DestinoCarta;
+import ar.edu.unlu.parade.enumerados.DestinoCarta;
 import ar.edu.unlu.parade.modelo.Jugador;
-import ar.edu.unlu.parade.modelo.Partida;
-import ar.edu.unlu.parade.modelo.persistencia.*;
-import ar.edu.unlu.parade.recursos.Opcion;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public interface IVista {
     /*public void actualizar (Opcion opcion);*/
@@ -20,6 +16,10 @@ public interface IVista {
     public ControladorParade getC();
 
     public void setC(ControladorParade c);
+
+    public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException;
+
+    public void iniciarVista();
 
     public void menuPrincipal ();
 

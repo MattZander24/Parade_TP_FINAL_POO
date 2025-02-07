@@ -1,5 +1,6 @@
 package ar.edu.unlu.parade.modelo;
 
+import ar.edu.unlu.parade.enumerados.Color;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;

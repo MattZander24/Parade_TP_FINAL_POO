@@ -1,7 +1,7 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
-import ar.edu.unlu.parade.online.Cliente;
-import ar.edu.unlu.parade.online.Servidor;
+import ar.edu.unlu.parade.online.ClienteParade;
+import ar.edu.unlu.parade.online.ServidorParade;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,32 +42,34 @@ public class menuParade extends JFrame{
 
         // Eventos
         bIniciarRed.addActionListener(e -> {
-            new Servidor();
+            new ServidorParade();
         });
         bUnirseRed.addActionListener(e -> {
             dispose();
-            new Cliente();
+            new ClienteParade();
         });
-        /*bReanudar.addActionListener(e -> {
+        bReanudar.addActionListener(e -> {/*
             ArrayList<PartidaGuardada> partidasGuardadas = Persistencia.cargarPartidasGuardadas();
             if (partidasGuardadas.isEmpty()) {
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas en el ordenador", "¡AVISO!", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 dispose();
                 new ListaPartidasGuardadas(partidasGuardadas);
-            }
+            }*/
         });
-        bTopJugadores.addActionListener(e -> {
+        bTopJugadores.addActionListener(e -> {/*
             ArrayList<Jugador> mejoresJugadores = Persistencia.cargarJugadoresHistorico();
             if (mejoresJugadores.isEmpty()) {
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado Jugadores en este ordenador.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 new MejoresJugadoresDialog(null, mejoresJugadores);
-            }
+            }*/
         });
         bHistorialPartidas.addActionListener(e -> {
+            /*
 
-        });*/
+            */
+        });
         bReglas.addActionListener(e -> {
             String[] paginas = {
                     "INTRODUCCION\n" +
@@ -145,7 +147,7 @@ public class menuParade extends JFrame{
                 String botonTexto = (indice == paginas.length - 1) ? "Fin" : "Siguiente"; // Cambia el texto en la última página
 
                 int opcion = JOptionPane.showOptionDialog(
-                        null, paginas[indice], "Mensaje con Páginas",
+                        null, paginas[indice], "Reglas del juego",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                         null, new String[]{botonTexto}, botonTexto
                 );
@@ -169,7 +171,7 @@ public class menuParade extends JFrame{
     }
 
     private void initElements() {
-        icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/bann.jpg")).getImage();
+        icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/LogoParade.png")).getImage();
         Image originalImage = icono;
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();

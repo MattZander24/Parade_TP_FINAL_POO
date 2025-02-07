@@ -1,6 +1,6 @@
-package ar.edu.unlu.parade.modelo;
+package ar.edu.unlu.parade.interfaces;
 
-import java.io.Serializable;
+import ar.edu.unlu.parade.modelo.Carta;
 
 public interface ConjuntoCartas {
 

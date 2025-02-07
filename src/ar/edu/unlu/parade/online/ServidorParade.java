@@ -3,16 +3,17 @@ package ar.edu.unlu.parade.online;
 import ar.edu.unlu.parade.modelo.ModeloParade;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
+import ar.edu.unlu.rmimvc.servidor.Servidor;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Servidor {
+public class ServidorParade {
     /**
      * Se inicia un servidor limpio. Es decir, es una partida en 0, sin nada cargado. Un modelo limpio.
      */
-    public Servidor() {
+    public ServidorParade() {
         ArrayList<String> ips = Util.getIpDisponibles();
         String ip = (String) JOptionPane.showInputDialog(
                 null,
@@ -31,6 +32,7 @@ public class Servidor {
                 8888
         );
         ModeloParade modelo = new ModeloParade();
+        //ar.edu.unlu.rmimvc.servidor.Servidor servidor = new ar.edu.unlu.rmimvc.servidor.Servidor(ip, Integer.parseInt(port));
         ar.edu.unlu.rmimvc.servidor.Servidor servidor = new ar.edu.unlu.rmimvc.servidor.Servidor(ip, Integer.parseInt(port));
         try {
             servidor.iniciar(modelo);
@@ -47,7 +49,7 @@ public class Servidor {
      *
      * @param modelo Es el Modelo que se va utilizar para reanudar la partida.
      */
-    public Servidor(ModeloParade modelo) {
+    public ServidorParade(ModeloParade modelo) {
         ArrayList<String> ips = Util.getIpDisponibles();
         String ip = (String) JOptionPane.showInputDialog(
                 null,
@@ -65,7 +67,7 @@ public class Servidor {
                 null,
                 8888
         );
-        ar.edu.unlu.rmimvc.servidor.Servidor servidor = new ar.edu.unlu.rmimvc.servidor.Servidor(ip, Integer.parseInt(port));
+        Servidor servidor = new Servidor(ip, Integer.parseInt(port));
         try {
             servidor.iniciar(modelo);
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se ha iniciado correctamente el servidor.\nPara unirte a la partida, volvé al menú principal y seleccioná la opción 'Unirse a un servidor',\ncompletando con los datos de tu computadora/red.'", "Servidor iniciado.", JOptionPane.INFORMATION_MESSAGE);
@@ -76,6 +78,6 @@ public class Servidor {
     }
 
     public static void main(String[] args) {
-        new Servidor();
+        new ServidorParade();
     }
 }

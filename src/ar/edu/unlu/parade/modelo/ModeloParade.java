@@ -1,9 +1,9 @@
 package ar.edu.unlu.parade.modelo;
 
+import ar.edu.unlu.parade.enumerados.DestinoCarta;
+import ar.edu.unlu.parade.interfaces.IModelo;
 import ar.edu.unlu.parade.modelo.persistencia.*;
-import ar.edu.unlu.parade.recursos.Observable;
-import ar.edu.unlu.parade.recursos.Observer;
-import ar.edu.unlu.parade.recursos.Opcion;
+import ar.edu.unlu.parade.enumerados.Opcion;
 import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 import java.io.*;

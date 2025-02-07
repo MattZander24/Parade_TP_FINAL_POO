@@ -1,5 +1,6 @@
 package ar.edu.unlu.parade.vistaconsola;
 
+import ar.edu.unlu.parade.interfaces.Mostrable;
 import ar.edu.unlu.parade.modelo.Carta;
 import ar.edu.unlu.parade.modelo.Jugador;
 import ar.edu.unlu.parade.modelo.Mano;

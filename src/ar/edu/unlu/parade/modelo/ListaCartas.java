@@ -1,5 +1,7 @@
 package ar.edu.unlu.parade.modelo;
 
+import ar.edu.unlu.parade.interfaces.ConjuntoCartas;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

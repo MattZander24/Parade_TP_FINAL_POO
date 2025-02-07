@@ -1,12 +1,14 @@
 package ar.edu.unlu.parade.vistaconsola;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
+import ar.edu.unlu.parade.enumerados.DestinoCarta;
+import ar.edu.unlu.parade.enumerados.EstadoPartida;
+import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.parade.modelo.*;
 import ar.edu.unlu.parade.modelo.persistencia.*;
-import ar.edu.unlu.parade.recursos.Observer;
-import ar.edu.unlu.parade.recursos.Opcion;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -30,6 +32,16 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
 
     public void setC(ControladorParade c) {
         this.c = c;
+    }
+
+    @Override
+    public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException {
+        System.out.println("Not Intended");
+    }
+
+    @Override
+    public void iniciarVista() {
+        System.out.println("Not Intended");
     }
 
     public void menuPrincipal () {

@@ -1,23 +1,23 @@
 package ar.edu.unlu.parade.controlador;
 
+import ar.edu.unlu.parade.enumerados.DestinoCarta;
+import ar.edu.unlu.parade.enumerados.EstadoPartida;
+import ar.edu.unlu.parade.interfaces.IModelo;
 import ar.edu.unlu.parade.modelo.*;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
-import ar.edu.unlu.parade.recursos.Opcion;
-import ar.edu.unlu.parade.vistaconsola.IVista;
+import ar.edu.unlu.parade.enumerados.Opcion;
+import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
 import java.io.*;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 public class ControladorParade implements IControladorRemoto {
 
     private IModelo m;
-
     private IVista v;
     private Jugador jugadorLocal;
+    private EstadoPartida estadoActual;
 
     public ControladorParade(/*ModeloParade m*/) {
         //this.m = m;
@@ -31,11 +31,27 @@ public class ControladorParade implements IControladorRemoto {
         this.v = v;
     }
 
+    private void cambiarEstadoYActualizarVista(EstadoPartida nuevoEstado) throws RemoteException {
+        estadoActual = nuevoEstado;
+        v.actualizarVistaParaAccion(nuevoEstado);
+    }
+
     public void iniciarJuego () {
         try {
             m.iniciarJuego();
         }
         catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void aplicacionCerrada() throws RemoteException {
+        try {
+            if (m != null) {
+                m.removerObservador(this);
+                //m.removerJugador(jugadorLocal);
+            }
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

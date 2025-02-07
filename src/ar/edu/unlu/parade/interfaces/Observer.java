@@ -1,4 +1,6 @@
-package ar.edu.unlu.parade.recursos;
+package ar.edu.unlu.parade.interfaces;
+
+import ar.edu.unlu.parade.enumerados.Opcion;
 
 //Debe ser implementada por las vistas
 public interface Observer {
