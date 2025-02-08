@@ -36,6 +36,8 @@ public class VistaConsola extends JFrame implements IVista {
     private VistaConsolaDesfile vcd;
     private VistaConsolaMano vcm;
 
+    private int indiceInput = -1;
+
     public VistaConsola() {
         this.vca = new VistaConsolaAreaDeJuego();
         this.vcd = new VistaConsolaDesfile();
@@ -109,14 +111,10 @@ public class VistaConsola extends JFrame implements IVista {
 
         JButton botonEnviarMovimiento = new JButton("Enviar opcion");
         botonEnviarMovimiento.addActionListener(e -> {
-            /*try {
-                controlador.casillaSeleccionadaDesdeLaVista(generarCoordenada(fila.getText(), columna.getText()));
-                // Reiniciamos el contenido.
-                opcion.setText("");
-                //columna.setText("");
-            } catch (RemoteException ex) {
-                throw new RuntimeException(ex);
-            }*/
+            inputOpcion(Integer.parseInt(opcion.getText()));
+            // Reiniciamos el contenido.
+            opcion.setText("");
+            //columna.setText("");
         });
         optionsPanel.add(textFieldsPanel);
         optionsPanel.add(botonEnviarMovimiento);
@@ -164,6 +162,17 @@ public class VistaConsola extends JFrame implements IVista {
             }
         });
         setVisible(true);
+    }
+
+    public void inputOpcion (int opcion) {
+        switch (indiceInput) {
+            case 1:
+                menuTurnoOpcion(opcion);
+                break;
+            default:
+                System.out.println("DEFAULT");
+                break;
+        }
     }
 
     public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException {
@@ -629,11 +638,10 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     public void menuTurno (Jugador j) {
-        Scanner scanner = new Scanner(System.in);
-        int opcion;
-        boolean gys = false;
+        limpiarPantalla();
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            indiceInput = 1;
 
-        do {
             println("\n");
             println("TURNO DE" + j.definicionJugador("L ", " "));
             println("\t1. Seleccionar carta para jugar");
@@ -643,60 +651,64 @@ public class VistaConsola extends JFrame implements IVista {
             println("\t5. Ver jugadores y sus areas de juego");
             println("\t6. Guardar y Salir");
             println("Seleccione una opción: ");
+        }
+        else {
+            println("Actualmente es turno de otro jugador, espera hasta que sea tu turno");
+        }
+    }
 
-            opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    c.seleccionarCarta(j);
-                    break;
-                case 2:
-                    c.mostrarMano(j);
-                    break;
-                case 3:
-                    c.mostrarDesfile();
-                    break;
-                case 4:
-                    c.mostrarAreaDeJuego(j);
-                    break;
-                case 5:
-                    c.mostrarJugadores();
-                    break;
-                case 6:
+    public void menuTurnoOpcion (int opcion) {
+        Jugador j = c.getJugadorLocal();
+        boolean gys = false;
+        switch (opcion) {
+            case 1:
+                c.seleccionarCarta(j);
+                break;
+            case 2:
+                c.mostrarMano(j);
+                break;
+            case 3:
+                c.mostrarDesfile();
+                break;
+            case 4:
+                c.mostrarAreaDeJuego(j);
+                break;
+            case 5:
+                c.mostrarJugadores();
+                break;
+            case 6:
+                println("Desea Guardar y Salir?");
+                println("1 - SI");
+                println("2 - NO");
+                println("Seleccione una opción: ");
+                //TODO ACA HARDCODEÉ
+                int confirmacion = 2;
+                while (confirmacion < 1 || confirmacion > 2) {
+                    println("\nOpcion incorrecta, la cantidad de opciones debe ir de 1 a 2...");
                     println("Desea Guardar y Salir?");
                     println("1 - SI");
                     println("2 - NO");
                     println("Seleccione una opción: ");
-                    int confirmacion = scanner.nextInt();
-                    while (confirmacion < 1 || confirmacion > 2) {
-                        println("\nOpcion incorrecta, la cantidad de opciones debe ir de 1 a 2...");
-                        println("Desea Guardar y Salir?");
-                        println("1 - SI");
-                        println("2 - NO");
-                        println("Seleccione una opción: ");
-                        confirmacion = scanner.nextInt();
-                    }
-                    if (confirmacion == 1) {
-                        gys = true;
-                        c.guardarYSalir();
-                        break;
-                    } else if (confirmacion == 2) {
-                        println("\nOperación cancelada. Volviendo al menú...\n");
-                        break;
-                    }
-                default:
-                    println("\nPor favor, seleccione una opción correcta\n");
+                    //confirmacion = scanner.nextInt();
+                }
+                if (confirmacion == 1) {
+                    gys = true;
+                    c.guardarYSalir();
                     break;
-            }
-        } while (opcion != 1 && !gys);
-
+                } else if (confirmacion == 2) {
+                    println("\nOperación cancelada. Volviendo al menú...\n");
+                    break;
+                }
+            default:
+                println("\nPor favor, seleccione una opción correcta\n");
+                break;
+        }
     }
 
     public void menuTurnoFinal (Jugador j) {
-        Scanner scanner = new Scanner(System.in);
-        int opcion;
-
-        do {
+        limpiarPantalla();
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            indiceInput = 2;
             println("\n");
             println("TURNO DE" + j.definicionJugador("L ", " "));
             println("\t1. Seleccionar carta para jugar");
@@ -705,30 +717,34 @@ public class VistaConsola extends JFrame implements IVista {
             println("\t4. Ver area de juego");
             println("\t5. Ver jugadores y sus areas de juego");
             println("Seleccione una opción: ");
+        }
+        else {
+            println("Actualmente es turno de otro jugador, espera hasta que sea tu turno");
+        }
+    }
 
-            opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    c.seleccionarCarta(j);
-                    break;
-                case 2:
-                    c.mostrarMano(j);
-                    break;
-                case 3:
-                    c.mostrarDesfile();
-                    break;
-                case 4:
-                    c.mostrarAreaDeJuego(j);
-                    break;
-                case 5:
-                    c.mostrarJugadores();
-                    break;
-                default:
-                    println("\nPor favor, seleccione una opción correcta\n");
-                    break;
-            }
-        } while (opcion != 1);
+    public void menuTurnoFinalOpcion(int opcion) {
+        Jugador j = c.getJugadorLocal();
+        switch (opcion) {
+            case 1:
+                c.seleccionarCarta(j);
+                break;
+            case 2:
+                c.mostrarMano(j);
+                break;
+            case 3:
+                c.mostrarDesfile();
+                break;
+            case 4:
+                c.mostrarAreaDeJuego(j);
+                break;
+            case 5:
+                c.mostrarJugadores();
+                break;
+            default:
+                println("\nPor favor, seleccione una opción correcta\n");
+                break;
+        }
     }
 
     public void agregarNombre (Jugador jugador) {
@@ -821,5 +837,9 @@ public class VistaConsola extends JFrame implements IVista {
 
     public void bienvenidaYEspera (Jugador j) {
         println("Bienvenido " + j.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.");
+    }
+
+    private void limpiarPantalla() {
+        textArea.setText("");
     }
 }

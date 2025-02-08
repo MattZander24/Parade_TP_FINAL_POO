@@ -33,6 +33,14 @@ public class ControladorParade implements IControladorRemoto {
         this.v = v;
     }
 
+    public Jugador getJugadorLocal() {
+        return jugadorLocal;
+    }
+
+    public void setJugadorLocal(Jugador jugadorLocal) {
+        this.jugadorLocal = jugadorLocal;
+    }
+
     private void cambiarEstadoYActualizarVista(EstadoPartida nuevoEstado) throws RemoteException {
         estadoActual = nuevoEstado;
         v.actualizarVistaParaAccion(nuevoEstado);
@@ -309,7 +317,12 @@ public class ControladorParade implements IControladorRemoto {
     public void agregarJugador(String nombre) throws RemoteException {
         jugadorLocal = m.agregarJugador(nombre);
         v.bienvenidaYEspera(jugadorLocal);
+    }
 
+    public void checkInicioPartida() throws RemoteException {
+        if (m.getPartida().getJugadores().size() == m.getPartida().getCantidadJugadores()) {
+            m.iniciarPartida();
+        }
     }
 
     /*public void linkJugadorLocal () throws RemoteException {

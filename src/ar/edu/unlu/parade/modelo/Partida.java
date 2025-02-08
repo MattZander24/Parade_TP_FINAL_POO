@@ -99,11 +99,6 @@ public class Partida implements Serializable {
         if (!Objects.equals(nombre, "")) {
             jugador.setNombre(nombre);
         }
-        System.out.println(jugadoresPartida.size());
-        System.out.println(cantidadJugadores);
-        if (jugadoresPartida.size() == cantidadJugadores) {
-            modelo.iniciarPartida();
-        }
 
         return jugador;
     }
@@ -188,7 +183,9 @@ public class Partida implements Serializable {
     }
 
     public void turno (Jugador j) throws RemoteException {
+        j.setTurnoJugador(true);
         modelo.menuTurno(j);
+        j.setTurnoJugador(false);
     }
 
     public void turnoFinal (Jugador j) throws RemoteException {

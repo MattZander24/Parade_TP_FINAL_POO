@@ -60,6 +60,11 @@ public class menuPrePartida extends JFrame {
                 throw new RuntimeException(ex);
             }
             dispose();
+            try {
+                c.checkInicioPartida();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         /*iniciarPartidaButton.addActionListener(e -> {

@@ -12,6 +12,7 @@ public class Jugador implements Serializable {
     private String nombre;
     private int posicion;
     private boolean esGanador;
+    private boolean turnoJugador;
 
     public Jugador() {
         this.idJugador = idJugadorGen;
@@ -22,6 +23,7 @@ public class Jugador implements Serializable {
         this.nombre = "";
         this.posicion = 0;
         this.esGanador = false;
+        this.turnoJugador = false;
     }
 
     public int getPuntos() {
@@ -66,6 +68,14 @@ public class Jugador implements Serializable {
 
     public AreaDeJuego getAreaJugador() {
         return areaJugador;
+    }
+
+    public boolean isTurnoJugador() {
+        return turnoJugador;
+    }
+
+    public void setTurnoJugador(boolean turnoJugador) {
+        this.turnoJugador = turnoJugador;
     }
 
     //funcion que retorne SI EXISTE el nombre y si no existe el ID

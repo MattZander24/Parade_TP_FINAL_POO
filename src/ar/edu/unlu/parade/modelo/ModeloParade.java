@@ -91,7 +91,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
     }
 
     public void iniciarPartida (/*int cantidadJugadores, boolean agregarNombre*/) throws RemoteException {
-        System.out.println("ARRANCA LA PARTIDA CHEEE");
         partida.inicializar();
         try {
             partida.comenzarJuego(this, false);
