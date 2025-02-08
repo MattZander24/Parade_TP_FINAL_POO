@@ -95,11 +95,10 @@ public class Partida implements Serializable {
 
     public Jugador agregarJugador (String nombre) throws RemoteException {
         Jugador jugador = new Jugador();
-        this.jugadoresPartida.add(jugador);
         if (!Objects.equals(nombre, "")) {
             jugador.setNombre(nombre);
         }
-
+        this.jugadoresPartida.add(jugador);
         return jugador;
     }
 
@@ -118,20 +117,32 @@ public class Partida implements Serializable {
         }
         boolean finturnos = false;
         Jugador jugadorFinal = null;
+
+        for (Jugador j : jugadoresPartida) {
+            System.out.println("Jugador n°" + j.getIdJugador() + ": " + j.definicionJugador("",""));
+        }
+
         do {
             for (int i = 0; i < jugadoresPartida.size(); i++) {
-                turno(jugadoresPartida.get(indiceTurno));
+                Jugador jugadorEnTurno = jugadoresPartida.get(indiceTurno);
+                jugadorEnTurno.setTurnoJugador(true);
+                System.out.println("TURNO de " + jugadorEnTurno.definicionJugador("","") + ", " + jugadorEnTurno.isTurnoJugador());
+                System.out.println(System.identityHashCode(jugadorEnTurno));
+                turno();
+                while (jugadorEnTurno.isTurnoJugador()) {
+                    //Thread.onSpinWait();
+                }
                 if (salirAlMenu) {
                     break;
                 }
-                mazoJuego.transferirCartas(jugadoresPartida.get(indiceTurno).manoJugador, 1);
-                if (jugadoresPartida.get(indiceTurno).areaJugador.tieneSeisColores()) {
-                    jugadorFinal = jugadoresPartida.get(indiceTurno);
+                mazoJuego.transferirCartas(jugadorEnTurno.manoJugador, 1);
+                if (jugadorEnTurno.areaJugador.tieneSeisColores()) {
+                    jugadorFinal = jugadorEnTurno;
                     finturnos = true;
                     break;
                 }
                 if (mazoJuego.estaTerminado()) {
-                    jugadorFinal = jugadoresPartida.get(indiceTurno);
+                    jugadorFinal = jugadorEnTurno;
                     finturnos = true;
                     break;
                 }
@@ -170,6 +181,7 @@ public class Partida implements Serializable {
                 } else {
                     indiceUltimoTurno += 1;
                 }
+                System.out.println("descarte");
                 descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
             }
 
@@ -182,10 +194,9 @@ public class Partida implements Serializable {
         }
     }
 
-    public void turno (Jugador j) throws RemoteException {
-        j.setTurnoJugador(true);
-        modelo.menuTurno(j);
-        j.setTurnoJugador(false);
+    public void turno () throws RemoteException {
+        modelo.menuTurno();
+        //j.setTurnoJugador(false);
     }
 
     public void turnoFinal (Jugador j) throws RemoteException {

@@ -7,15 +7,22 @@ import ar.edu.unlu.parade.modelo.Mano;
 
 public class VistaConsolaMano implements Mostrable {
     @Override
-    public void mostrar (Object o) {
+    public String mostrar(Object o) {
         Jugador j = (Jugador) o;
         Mano m = j.getManoJugador();
-        System.out.print("\n");
-        System.out.println("Mano de" + j.definicionJugador("l ", " ") + ":");
+        StringBuilder resultado = new StringBuilder();
+
+        resultado.append("\n");
+        resultado.append("Mano de").append(j.definicionJugador("l ", " ")).append(":\n");
+
         int i = 1;
         for (Carta c : m.getCartas()) {
-            System.out.println("\t" + i + "- " + c.getValor() + " " + c.getColor());
+            resultado.append("\t").append(i).append("- ")
+                    .append(c.getValor()).append(" ")
+                    .append(c.getColor()).append("\n");
             i++;
         }
+
+        return resultado.toString();
     }
 }

@@ -99,7 +99,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         }
     }
 
-    public void menuTurno (Jugador j) throws RemoteException {
+    public void menuTurno () throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO);
     }
 

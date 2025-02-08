@@ -246,10 +246,11 @@ public class ControladorParade implements IControladorRemoto {
                     v.mensajeGuardarYSalir();
                     break;
                 case MENU_TURNO:
-                    v.menuTurno(jugadorLocal);
+                    System.out.println("HOLA? ? ?");
+                    v.menuTurno(/*jugadorEnTurno()*/);
                     break;
                 case MENU_TURNO_FINAL:
-                    v.menuTurnoFinal(jugadorLocal);
+                    v.menuTurnoFinal(/*jugadorEnTurno()*/);
                     break;
                 case DESCARTE_Y_FINAL:
                     v.mensajeDescarteFinal(jugadorLocal);
@@ -315,7 +316,7 @@ public class ControladorParade implements IControladorRemoto {
 
 
     public void agregarJugador(String nombre) throws RemoteException {
-        jugadorLocal = m.agregarJugador(nombre);
+        setJugadorLocal(m.agregarJugador(nombre));
         v.bienvenidaYEspera(jugadorLocal);
     }
 
@@ -323,6 +324,16 @@ public class ControladorParade implements IControladorRemoto {
         if (m.getPartida().getJugadores().size() == m.getPartida().getCantidadJugadores()) {
             m.iniciarPartida();
         }
+    }
+
+    public Jugador jugadorEnTurno () throws RemoteException {
+        Jugador jug = null;
+        for (Jugador j : m.getPartida().getJugadores()) {
+            if (j.isTurnoJugador()) {
+                jug = j;
+            }
+        }
+        return jug;
     }
 
     /*public void linkJugadorLocal () throws RemoteException {

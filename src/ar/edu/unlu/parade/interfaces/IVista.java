@@ -37,9 +37,9 @@ public interface IVista {
 
     public void cargarPartida (/*, ConjuntoPartidas cp*/) throws IOException;
 
-    public void menuTurno (Jugador j);
+    public void menuTurno ();
 
-    public void menuTurnoFinal (Jugador j);
+    public void menuTurnoFinal ();
 
     public void agregarNombre (Jugador jugador);
 

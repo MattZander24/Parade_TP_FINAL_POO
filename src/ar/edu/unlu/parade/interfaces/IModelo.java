@@ -27,7 +27,7 @@ public interface IModelo extends IObservableRemoto {
 
     public void iniciarPartida (/*int cantidadJugadores, boolean agregarNombre*/) throws RemoteException;
 
-    public void menuTurno (Jugador j) throws RemoteException;
+    public void menuTurno () throws RemoteException;
 
     public void menuTurnoFinal (Jugador j) throws RemoteException;
 
