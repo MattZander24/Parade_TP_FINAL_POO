@@ -21,10 +21,11 @@ public interface IModelo extends IObservableRemoto {
     public void verHistorico () throws IOException, ClassNotFoundException, RemoteException;
 
     public void mensajeCreacionArchivo () throws RemoteException;
+    public void generarPartida () throws RemoteException;
 
     public void terminarPartida () throws RemoteException;
 
-    public void iniciarPartida (int cantidadJugadores, boolean agregarNombre) throws RemoteException;
+    public void iniciarPartida (/*int cantidadJugadores, boolean agregarNombre*/) throws RemoteException;
 
     public void menuTurno (Jugador j) throws RemoteException;
 
@@ -67,4 +68,8 @@ public interface IModelo extends IObservableRemoto {
     public void guardarYSalir () throws IOException, ClassNotFoundException, RemoteException;
 
     public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException, RemoteException;
+
+    public Jugador agregarJugador(String nombre) throws RemoteException;
+
+    public void setJugadoresPartida(int cantidad) throws RemoteException;
 }

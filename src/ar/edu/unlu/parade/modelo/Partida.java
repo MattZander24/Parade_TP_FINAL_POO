@@ -23,21 +23,23 @@ public class Partida implements Serializable {
     private static int iDPartidaGen = 1;
     private int iDPartida;
     private int indiceTurno;
-    boolean salirAlMenu = false;
+    private boolean salirAlMenu = false;
+
+    private int cantidadJugadores;
 
     private LocalDateTime fechaYHoraGuardado;
 
-    public Partida(int cantidadJugadores, boolean agregarNombre, ModeloParade modelo) throws RemoteException {
+    public Partida(/*int cantidadJugadores, boolean agregarNombre, */ModeloParade modelo) throws RemoteException {
         this.jugadoresPartida = new ArrayList<Jugador>();
         this.ganadores = new ArrayList<Jugador>();
         Jugador.resetearIDGen();
         this.modelo = modelo;
 
-        for (int i = 0; i < cantidadJugadores; i++) {
+        /*for (int i = 0; i < cantidadJugadores; i++) {
             Jugador jugador = new Jugador();
             this.jugadoresPartida.add(jugador);
             if (agregarNombre) { modelo.pedirNombre(jugador); }
-        }
+        }*/
 
         this.pilaPartida = new PilaDeDescarte();
         this.mazoJuego = new Mazo();
@@ -63,6 +65,14 @@ public class Partida implements Serializable {
         return jugadoresPartida;
     }
 
+    public int getCantidadJugadores() {
+        return cantidadJugadores;
+    }
+
+    public void setCantidadJugadores(int cantidadJugadores) {
+        this.cantidadJugadores = cantidadJugadores;
+    }
+
     public void setJugadores(ArrayList<Jugador> jugadoresPartida) {
         this.jugadoresPartida = jugadoresPartida;
     }
@@ -81,6 +91,21 @@ public class Partida implements Serializable {
 
     public void setDesfileJuego(Desfile desfileJuego) {
         this.desfileJuego = desfileJuego;
+    }
+
+    public Jugador agregarJugador (String nombre) throws RemoteException {
+        Jugador jugador = new Jugador();
+        this.jugadoresPartida.add(jugador);
+        if (!Objects.equals(nombre, "")) {
+            jugador.setNombre(nombre);
+        }
+        System.out.println(jugadoresPartida.size());
+        System.out.println(cantidadJugadores);
+        if (jugadoresPartida.size() == cantidadJugadores) {
+            modelo.iniciarPartida();
+        }
+
+        return jugador;
     }
 
     public void inicializar () {

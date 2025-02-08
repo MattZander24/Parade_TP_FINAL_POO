@@ -13,11 +13,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class ClienteParade {
+
+
     public ClienteParade() {
         ArrayList<String> opciones = new ArrayList<>();
-        opciones.add("Interfáz gráfica");
         opciones.add("Consola");
         opciones.add("Consola (con UI mejorada)");
+        opciones.add("Interfáz gráfica");
         ArrayList<String> ips = Util.getIpDisponibles();
         String ip = (String) JOptionPane.showInputDialog(
                 null,
@@ -66,8 +68,9 @@ public class ClienteParade {
             //vista = new VistaConsolaParade();
             vista = new VistaConsola();
             vista.setC(controlador);
+            controlador.setV(vista);
 
-            System.out.println("CONSOLA");
+            //System.out.println("CONSOLA");
         } else if (interfaz.equals("Consola (con UI mejorada)")) {
             //vista = new VistaConsolaMejorada(controlador);
             vista = null;

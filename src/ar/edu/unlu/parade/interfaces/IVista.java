@@ -60,4 +60,6 @@ public interface IVista {
     public void mostrarD (Desfile d);
 
     public void mostrarM (Jugador j);
+
+    public void bienvenidaYEspera(Jugador jugadorLocal);
 }

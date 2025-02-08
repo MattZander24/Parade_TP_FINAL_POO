@@ -62,7 +62,8 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
 
     public void iniciarAplicacion() throws RemoteException {
         //notificarObservadores(Opcion.MENU_PRINCIPAL);
-        iniciarJuego();
+        //iniciarJuego();
+        generarPartida();
     }
 
     public void iniciarJuego () throws RemoteException {
@@ -85,8 +86,12 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         System.exit(0);
     }
 
-    public void iniciarPartida (int cantidadJugadores, boolean agregarNombre) throws RemoteException {
-        partida = new Partida(cantidadJugadores, agregarNombre, this);
+    public void generarPartida () throws RemoteException {
+        partida = new Partida(/*cantidadJugadores, agregarNombre, */this);
+    }
+
+    public void iniciarPartida (/*int cantidadJugadores, boolean agregarNombre*/) throws RemoteException {
+        System.out.println("ARRANCA LA PARTIDA CHEEE");
         partida.inicializar();
         try {
             partida.comenzarJuego(this, false);
@@ -241,5 +246,14 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(partidas);
         objectOutputStream.close();
+    }
+
+    public Jugador agregarJugador(String nombre) throws RemoteException {
+        return partida.agregarJugador(nombre);
+
+    }
+
+    public void setJugadoresPartida(int cantidadJugadores) throws RemoteException {
+        partida.setCantidadJugadores(cantidadJugadores);
     }
 }

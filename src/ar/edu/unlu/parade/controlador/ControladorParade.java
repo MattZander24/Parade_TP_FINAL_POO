@@ -11,11 +11,13 @@ import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
 import java.io.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class ControladorParade implements IControladorRemoto {
 
     private IModelo m;
     private IVista v;
+    private int idControlador;
     private Jugador jugadorLocal;
     private EstadoPartida estadoActual;
 
@@ -86,9 +88,9 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void iniciarPartida (int cantidadJugadores, boolean agregarNombre) {
+    public void iniciarPartida (/*int cantidadJugadores, boolean agregarNombre*/) {
         try {
-            m.iniciarPartida(cantidadJugadores, agregarNombre);
+            m.iniciarPartida(/*cantidadJugadores, agregarNombre*/);
         }
         catch (RemoteException e) {
             e.printStackTrace();
@@ -304,4 +306,18 @@ public class ControladorParade implements IControladorRemoto {
     }
 
 
+    public void agregarJugador(String nombre) throws RemoteException {
+        jugadorLocal = m.agregarJugador(nombre);
+        v.bienvenidaYEspera(jugadorLocal);
+
+    }
+
+    /*public void linkJugadorLocal () throws RemoteException {
+        ArrayList <Jugador> jugadores = m.getPartida().getJugadores();
+        for (Jugador j : jugadores) {
+            if (j.getIdJugador() == idControlador) {
+                jugadorLocal = j;
+            }
+        }
+    }*/
 }

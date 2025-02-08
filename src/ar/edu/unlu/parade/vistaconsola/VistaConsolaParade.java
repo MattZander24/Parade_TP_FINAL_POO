@@ -13,7 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class VistaConsolaParade implements IVista /*, Observer*/ {
+//LE COMENTE LA IMPLEMENTACION A IVISTA PARA QUE NO DE ERROR, SI NECESITO DE VUELTA DESCOMENTARLO
+public class VistaConsolaParade /*implements IVista , Observer*/ {
 
     private ControladorParade c;
     private VistaConsolaAreaDeJuego vca;
@@ -34,12 +35,10 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
         this.c = c;
     }
 
-    @Override
     public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException {
         System.out.println("Not Intended");
     }
 
-    @Override
     public void iniciarVista() {
         System.out.println("Not Intended");
     }
@@ -323,7 +322,7 @@ public class VistaConsolaParade implements IVista /*, Observer*/ {
             agregarNombre = false;
         }
 
-        c.iniciarPartida(cantidadJugadores, agregarNombre);
+        //c.iniciarPartida(cantidadJugadores, agregarNombre); ///!
     }
 
     public void cargarPartida (/*, ConjuntoPartidas cp*/) throws IOException {

@@ -11,15 +11,14 @@ import java.rmi.RemoteException;
 
 public class menuPrePartida extends JFrame {
     private JPanel panel;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
     private JTextArea textArea;
+    private JTextField textField1;
+    private JButton bSeleccionar;
     private JButton bSeleccionarJugadorPorPos;
     private JButton iniciarPartidaButton;
     private JButton bCrearNuevoJugador;
     private JButton bSeleccionarExistente;
-    private Jugador jugadorLocal;
+    //private Jugador jugadorLocal;
     private ControladorParade c;
     private Image icono;
 
@@ -53,19 +52,29 @@ public class menuPrePartida extends JFrame {
             }
         });
 
-        iniciarPartidaButton.addActionListener(e -> {/*
+        bSeleccionar.addActionListener(e -> {
+            try {
+                //System.out.println(textField1.getText());
+                c.agregarJugador(textField1.getText());
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+            dispose();
+        });
+
+        /*iniciarPartidaButton.addActionListener(e -> {
             try {
                 c.agregarJugador(jugadorLocal);
             } catch (RemoteException ex) {
                 throw new RuntimeException(ex);
             }
-            dispose();*/
-        });
+            dispose();
+        });*/
 
-        bCrearNuevoJugador.addActionListener(e -> {
+        /*bCrearNuevoJugador.addActionListener(e -> {
             println("");
             println("¡Generando Jugador nuevo!");
-            /*
+
             // Verificamos que ese nombre no exista
             boolean ocupado;
             String nombre = JOptionPane.showInputDialog(null, "Ingrese nombre del nuevo jugador: ");
@@ -88,10 +97,10 @@ public class menuPrePartida extends JFrame {
                 bCrearNuevoJugador.setVisible(false);
                 bSeleccionarJugadorPorPos.setVisible(false);
                 iniciarPartidaButton.setVisible(true);
-            }*/
-        });
+            }
+        });*/
 
-        bSeleccionarJugadorPorPos.addActionListener(e -> {/*
+        /*bSeleccionarJugadorPorPos.addActionListener(e -> {
             try {
                 boolean disponible;
                 int pos;
@@ -112,10 +121,10 @@ public class menuPrePartida extends JFrame {
             println(">>> Se ha seleccionado el jugador " + jugadorLocal.getNombre());
             bCrearNuevoJugador.setVisible(false);
             bSeleccionarJugadorPorPos.setVisible(false);
-            iniciarPartidaButton.setVisible(true);*/
-        });
+            iniciarPartidaButton.setVisible(true);
+        });*/
 
-        bSeleccionarExistente.addActionListener(e -> {/*
+        /*bSeleccionarExistente.addActionListener(e -> {/*
             try {
                 boolean disponible;
                 int pos;
@@ -135,11 +144,10 @@ public class menuPrePartida extends JFrame {
 
             println(">>> Se ha seleccionado el jugador " + jugadorLocal.getNombre());
             bSeleccionarExistente.setVisible(false);
-            iniciarPartidaButton.setVisible(true);*/
-        });
+            iniciarPartidaButton.setVisible(true);
+        });*/
 
-        println("   ¡Bienvenido nuevamente al Juego del Molino!\n");
-        println("Primero que nada vamos a analizar el estado del Juego encontrado en el Servidor seleccionado...\n");
+        println("Elegí tu nombre. Si no queres elegir uno, presioná 'Seleccionar' sin escribir nada.\n");
         /*try {
             if (c.esPartidaNueva()) {
                 println("¡Se va a iniciar una nueva partida dentro de muy poco! Comencemos por conocerte, así te registramos.");

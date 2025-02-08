@@ -555,7 +555,7 @@ public class VistaConsola extends JFrame implements IVista {
             agregarNombre = false;
         }
 
-        c.iniciarPartida(cantidadJugadores, agregarNombre);
+        c.iniciarPartida();
     }
 
     public void cargarPartida (/*, ConjuntoPartidas cp*/) throws IOException {
@@ -817,5 +817,9 @@ public class VistaConsola extends JFrame implements IVista {
 
     private void print(JTextArea textArea, String texto) {
         textArea.append(texto);
+    }
+
+    public void bienvenidaYEspera (Jugador j) {
+        println("Bienvenido " + j.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.");
     }
 }
