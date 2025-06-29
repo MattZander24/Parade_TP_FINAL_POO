@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
+import java.util.Objects;
 
 public class menuPrePartida extends JFrame {
     private JPanel panel;
@@ -27,7 +28,7 @@ public class menuPrePartida extends JFrame {
         initComponents();
         setIconImage(icono);
         setContentPane(panel);
-        setTitle("Juego del Molino - Menú principal");
+        setTitle("MENU PRE PARTIDA");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(800, 500);
         textArea.setSize(10, 50);
@@ -54,8 +55,16 @@ public class menuPrePartida extends JFrame {
 
         bSeleccionar.addActionListener(e -> {
             try {
-                //System.out.println(textField1.getText());
-                c.agregarJugador(textField1.getText());
+                String nombre = textField1.getText();
+                if (!Objects.equals(nombre, "")) {
+                    //jugador.setNombre(nombre);
+                    Jugador jugador = new Jugador(nombre);
+                    c.agregarJugador(jugador);
+                }
+                else {
+
+                }
+                //TODO Que pasa si el nombre es incorrecto? Fran ademas chequea otras cosas en el if
             } catch (RemoteException ex) {
                 throw new RuntimeException(ex);
             }

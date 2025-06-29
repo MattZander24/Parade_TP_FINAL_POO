@@ -175,6 +175,9 @@ public class VistaConsola extends JFrame implements IVista {
             case 3, 4:
                 seleccionCartaOpcion(opcion);
                 break;
+            case 0:
+                println("\nActualmente no es tu turno, espera el tuyo para ingresar opciones.\n");
+                break;
             default:
                 System.out.println("DEFAULT");
                 break;
@@ -645,13 +648,12 @@ public class VistaConsola extends JFrame implements IVista {
 
     public void menuTurno (/*Jugador j*/) {
         limpiarPantalla();
-        System.out.println("LLEGO ACA?");
         //System.out.println("Jugador del parametro: " + j.definicionJugador("",""));
         System.out.println("Jugador local: " + c.getJugadorLocal().definicionJugador("","") + ", " + c.getJugadorLocal().isTurnoJugador());
         System.out.println(System.identityHashCode(c.getJugadorLocal()));
         System.out.println("\n");
         if (c.getJugadorLocal().isTurnoJugador()) {
-            //System.out.println("Es turno de " + j.definicionJugador("", ""));
+            System.out.println("Es turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
             indiceInput = 1;
 
             println("\n");
@@ -666,6 +668,8 @@ public class VistaConsola extends JFrame implements IVista {
         }
         else {
             System.out.println("NO es turno de " + c.getJugadorLocal().definicionJugador("", ""));
+            indiceInput = 0;
+            println("\n");
             println("Actualmente es turno de otro jugador, espera hasta que sea tu turno");
         }
         /*while (indiceInput != 0) {
@@ -719,7 +723,7 @@ public class VistaConsola extends JFrame implements IVista {
                 println("\nPor favor, seleccione una opción correcta\n");
                 break;
         }
-        indiceInput = 0;
+        //indiceInput = 0;  //todo esto debe cambiarse solo cuando cambia el turno
     }
 
     public void menuTurnoFinal () {
@@ -765,7 +769,7 @@ public class VistaConsola extends JFrame implements IVista {
                 println("\nPor favor, seleccione una opción correcta\n");
                 break;
         }
-        indiceInput = 0;
+        //indiceInput = 0;
     }
 
     public void agregarNombre (Jugador jugador) {
@@ -779,11 +783,13 @@ public class VistaConsola extends JFrame implements IVista {
     public void seleccionCarta (Jugador j, DestinoCarta d) {
         if (d == DestinoCarta.EVALUAR) { indiceInput = 3; }
         else { indiceInput = 4; }
-        c.mostrarMano(j);
-        println("Seleccione la carta a jugar: ");
-        while (indiceInput != 0) {
-            Thread.onSpinWait();
+        if (j.isTurnoJugador()) {
+            c.mostrarMano(j);
+            println("Seleccione la carta a jugar: ");
         }
+        /*while (indiceInput != 0) {
+            Thread.onSpinWait();
+        }*/
     }
 
     public void seleccionCartaOpcion (int opcion) {
@@ -791,14 +797,20 @@ public class VistaConsola extends JFrame implements IVista {
         DestinoCarta d = null;
         if (indiceInput == 3) { d = DestinoCarta.EVALUAR; }
         else if (indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
-        while (opcion < 1 || opcion > j.getManoJugador().cantidadMano()) {
-            println("Opcion incorrecta...");
-            println("Seleccione la carta a jugar: ");
-            while (indiceInput != 0) {
+        if (j.isTurnoJugador()) {
+            while (opcion < 1 || opcion > j.getManoJugador().cantidadMano()) {
+                println("Opcion incorrecta...");
+                println("Seleccione la carta a jugar: ");
+            /*while (indiceInput != 0) {
                 Thread.onSpinWait();
+            }*/
             }
+            c.devolverCarta(j, --opcion, d); //todo paso jugador local entonces modifico la instancia cliente y no la servidor
+            //TODO aca cambiar el índice input y el turno
+            System.out.println("Finaliza el turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
+            indiceInput = 0;
+            c.finalizarTurno();
         }
-        c.devolverCarta(j, --opcion, d);
     }
 
     public void ultimoTurno () {
@@ -834,15 +846,21 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     public void mostrarADJ (Jugador j) {
-        println(vca.mostrar(j));
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            println(vca.mostrar(j));
+        }
     }
 
     public void mostrarD (Desfile d) {
-        println(vcd.mostrar(d));
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            println(vcd.mostrar(d));
+        }
     }
 
     public void mostrarM (Jugador j) {
-        println(vcm.mostrar(j));
+        if (j.isTurnoJugador()) {
+            println(vcm.mostrar(j));
+        }
     }
 
     private String numeroFila(int fila) {

@@ -37,6 +37,8 @@ public interface IModelo extends IObservableRemoto {
 
     public void devolverCarta(Jugador j, int opcionCarta, DestinoCarta d) throws RemoteException;
 
+    public void finalizarTurno() throws IOException, ClassNotFoundException;
+
     public void mensajeDescarteFinal (Jugador j) throws RemoteException;
 
     public void mensajeGanador (/*Jugador j*/) throws RemoteException;
@@ -69,7 +71,7 @@ public interface IModelo extends IObservableRemoto {
 
     public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException, RemoteException;
 
-    public Jugador agregarJugador(String nombre) throws RemoteException;
+    public void agregarJugador(Jugador jugador) throws RemoteException;
 
     public void setJugadoresPartida(int cantidad) throws RemoteException;
 }

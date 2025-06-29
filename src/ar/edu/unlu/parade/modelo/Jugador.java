@@ -7,20 +7,20 @@ public class Jugador implements Serializable {
     Mano manoJugador;
     AreaDeJuego areaJugador;
     private int puntos;
-    private static int idJugadorGen = 1;
-    private int idJugador;
+    //private static int idJugadorGen = 1;
+    private final Integer idJugador;
     private String nombre;
     private int posicion;
     private boolean esGanador;
     private boolean turnoJugador;
 
-    public Jugador() {
-        this.idJugador = idJugadorGen;
-        idJugadorGen++;
+    public Jugador(String nombre) {
+        this.idJugador = generarHashID(nombre);
+        //idJugadorGen++;
         this.puntos = 0;
         this.manoJugador = new Mano();
         this.areaJugador = new AreaDeJuego();
-        this.nombre = "";
+        this.nombre = nombre;
         this.posicion = 0;
         this.esGanador = false;
         this.turnoJugador = false;
@@ -88,7 +88,22 @@ public class Jugador implements Serializable {
         }
     }
 
-    public static void resetearIDGen () {
-        idJugadorGen = 1;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Jugador jugador = (Jugador) o;
+        return idJugador.equals(jugador.idJugador) && nombre.equals(jugador.nombre);
     }
+
+    private int generarHashID(String nombre){
+        long timestamp = System.currentTimeMillis();
+        String nombreLimpio = nombre.replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
+        String input = nombreLimpio + "_" + timestamp;
+        return input.hashCode();
+    }
+
+    /*public static void resetearIDGen () {
+        idJugadorGen = 1;
+    }*/
 }

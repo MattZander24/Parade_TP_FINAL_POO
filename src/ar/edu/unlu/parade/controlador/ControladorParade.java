@@ -123,6 +123,17 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
+    public void finalizarTurno () {
+        try {
+            m.finalizarTurno();
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setNombre (Jugador j, String nombre) {
         try {
             m.setNombre(j, nombre);
@@ -246,7 +257,6 @@ public class ControladorParade implements IControladorRemoto {
                     v.mensajeGuardarYSalir();
                     break;
                 case MENU_TURNO:
-                    System.out.println("HOLA? ? ?");
                     v.menuTurno(/*jugadorEnTurno()*/);
                     break;
                 case MENU_TURNO_FINAL:
@@ -257,6 +267,11 @@ public class ControladorParade implements IControladorRemoto {
                     break;
                 case MOSTRAR_AREA:
                     v.mostrarADJ(jugadorLocal);
+                    break;
+                case MOSTRAR_AREA_TODOS:
+                    for (Jugador j : m.getPartida().getJugadores()) { //TODO por ahi esto debería ir fuera del modelo
+                        v.mostrarADJ(j);
+                    }
                     break;
                 case MOSTRAR_MANO:
                     v.mostrarM(jugadorLocal);
@@ -303,6 +318,12 @@ public class ControladorParade implements IControladorRemoto {
                 case SELECICON_DESCARTAR:
                     v.seleccionCarta(jugadorLocal, DestinoCarta.DESCARTAR);
                     break;
+                case ACTUALIZAR_TURNO:
+                    actualizarTurno();
+                    break;
+                case ACTUALIZAR_JUGADOR:
+                    actualizarJugador();
+                    break;
                 default:
                     break;
             }
@@ -315,25 +336,39 @@ public class ControladorParade implements IControladorRemoto {
     }
 
 
-    public void agregarJugador(String nombre) throws RemoteException {
-        setJugadorLocal(m.agregarJugador(nombre));
+    public void agregarJugador(Jugador jugador) throws RemoteException {
+        setJugadorLocal(jugador);
+        m.agregarJugador(jugador);
         v.bienvenidaYEspera(jugadorLocal);
     }
 
     public void checkInicioPartida() throws RemoteException {
-        if (m.getPartida().getJugadores().size() == m.getPartida().getCantidadJugadores()) {
-            m.iniciarPartida();
-        }
+        m.iniciarPartida();
     }
 
-    public Jugador jugadorEnTurno () throws RemoteException {
-        Jugador jug = null;
+    public void actualizarTurno () throws RemoteException {
+        Jugador jugadorEnTurno = null;
         for (Jugador j : m.getPartida().getJugadores()) {
-            if (j.isTurnoJugador()) {
-                jug = j;
+            if (j.isTurnoJugador()){
+                jugadorEnTurno = j;
             }
         }
-        return jug;
+        jugadorLocal.setTurnoJugador(jugadorLocal.equals(jugadorEnTurno));
+    }
+
+    public void actualizarJugador () throws RemoteException {
+        for (Jugador j : m.getPartida().getJugadores()) {
+            if (jugadorLocal.equals(j)){
+                //jugadorLocal = j;
+                jugadorLocal.setPuntos(j.getPuntos());
+                jugadorLocal.setPosicion(j.getPosicion());
+                jugadorLocal.setEsGanador(j.esGanador());
+                jugadorLocal.setTurnoJugador(j.isTurnoJugador());
+
+                jugadorLocal.getManoJugador().actualizarMano(j.getManoJugador());
+                jugadorLocal.getAreaJugador().actualizarArea(j.getAreaJugador());
+            }
+        }
     }
 
     /*public void linkJugadorLocal () throws RemoteException {

@@ -16,6 +16,7 @@ public enum Opcion implements Serializable {
     SELECICON_DESCARTAR,
     RANKING,
     MOSTRAR_AREA,
+    MOSTRAR_AREA_TODOS,
     MOSTRAR_MANO,
     MOSTRAR_DESFILE,
     GANADOR_PARTIDA,
@@ -23,6 +24,8 @@ public enum Opcion implements Serializable {
     DESCARTE_Y_FINAL,
     ULTIMO_TURNO,
     GUARDAR_Y_SALIR,
-    CARGAR_PARTIDA
+    CARGAR_PARTIDA,
+    ACTUALIZAR_TURNO,
+    ACTUALIZAR_JUGADOR
 
 }

@@ -2,6 +2,7 @@ package ar.edu.unlu.parade.modelo;
 
 import ar.edu.unlu.parade.enumerados.Color;
 
+import java.awt.geom.Area;
 import java.io.Serializable;
 import java.util.*;
 
@@ -58,5 +59,10 @@ public class AreaDeJuego extends ListaCartas implements Serializable {
              }
         }
         return puntaje;
+    }
+
+    public void actualizarArea(AreaDeJuego nuevaArea) {
+        this.cartas.clear();
+        this.cartas.addAll(nuevaArea.cartas);
     }
 }

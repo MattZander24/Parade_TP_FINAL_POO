@@ -24,6 +24,9 @@ public class Partida implements Serializable {
     private int iDPartida;
     private int indiceTurno;
     private boolean salirAlMenu = false;
+    private Jugador jugadorEnTurno;
+    private Jugador jugadorFinal;
+    private boolean finturnos = false;
 
     private int cantidadJugadores;
 
@@ -32,7 +35,7 @@ public class Partida implements Serializable {
     public Partida(/*int cantidadJugadores, boolean agregarNombre, */ModeloParade modelo) throws RemoteException {
         this.jugadoresPartida = new ArrayList<Jugador>();
         this.ganadores = new ArrayList<Jugador>();
-        Jugador.resetearIDGen();
+        //Jugador.resetearIDGen();
         this.modelo = modelo;
 
         /*for (int i = 0; i < cantidadJugadores; i++) {
@@ -93,13 +96,13 @@ public class Partida implements Serializable {
         this.desfileJuego = desfileJuego;
     }
 
-    public Jugador agregarJugador (String nombre) throws RemoteException {
-        Jugador jugador = new Jugador();
+    public /*Jugador*/ void agregarJugador (Jugador jugador) throws RemoteException {
+        /*Jugador jugador = new Jugador();
         if (!Objects.equals(nombre, "")) {
             jugador.setNombre(nombre);
-        }
+        }*/
         this.jugadoresPartida.add(jugador);
-        return jugador;
+        //return jugador;
     }
 
     public void inicializar () {
@@ -115,52 +118,93 @@ public class Partida implements Serializable {
         if (reasignar) {
             modelo = m;
         }
-        boolean finturnos = false;
-        Jugador jugadorFinal = null;
 
+        //DEBUG
         for (Jugador j : jugadoresPartida) {
-            System.out.println("Jugador n°" + j.getIdJugador() + ": " + j.definicionJugador("",""));
+            int indice = jugadoresPartida.indexOf(j)+ 1;
+            System.out.println("Jugador n°" + indice + ": " + j.definicionJugador("",""));
         }
 
-        do {
+        modelo.actualizarJugador();
+        iniciarTurno();
+    }
+
+    public void iniciarTurno () throws IOException, ClassNotFoundException {
+
+        /*do {
             for (int i = 0; i < jugadoresPartida.size(); i++) {
                 Jugador jugadorEnTurno = jugadoresPartida.get(indiceTurno);
                 jugadorEnTurno.setTurnoJugador(true);
-                System.out.println("TURNO de " + jugadorEnTurno.definicionJugador("","") + ", " + jugadorEnTurno.isTurnoJugador());
+                modelo.actualizarTurno();
+
+                System.out.println("TURNO de " + jugadorEnTurno.definicionJugador("", "") + ", " + jugadorEnTurno.isTurnoJugador());
                 System.out.println(System.identityHashCode(jugadorEnTurno));
+
                 turno();
                 while (jugadorEnTurno.isTurnoJugador()) {
-                    //Thread.onSpinWait();
-                }
-                if (salirAlMenu) {
-                    break;
-                }
-                mazoJuego.transferirCartas(jugadorEnTurno.manoJugador, 1);
-                if (jugadorEnTurno.areaJugador.tieneSeisColores()) {
-                    jugadorFinal = jugadorEnTurno;
-                    finturnos = true;
-                    break;
-                }
-                if (mazoJuego.estaTerminado()) {
-                    jugadorFinal = jugadorEnTurno;
-                    finturnos = true;
-                    break;
-                }
-                if (indiceTurno == jugadoresPartida.size()-1) {
-                    indiceTurno = 0;
-                }
-                else {
-                    indiceTurno++;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            if (salirAlMenu) {
-                break;
-            }
-        } while (!finturnos);
+        } while (!finturnos);*/
+
+        if (!finturnos) {
+            jugadorEnTurno = jugadoresPartida.get(indiceTurno);
+            jugadorEnTurno.setTurnoJugador(true);
+            //modelo.actualizarTurno();
+            modelo.actualizarJugador(); //TODO DE HECHO ESTE METODO OBSOLECE ACTUALIZAR TURNO
+
+            System.out.println("TURNO de " + jugadorEnTurno.definicionJugador("", "") + ", " + jugadorEnTurno.isTurnoJugador());
+            System.out.println(System.identityHashCode(jugadorEnTurno));
+
+            turno();
+        }
+        else {
+           secuenciaFinal();
+        }
+    }
+
+    //despues de que el jugador mueve invoca esta funcion (vista)
+    public void finalizarTurno () throws IOException, ClassNotFoundException {
+        //jugadorFinal = null;
+
+        /*if (salirAlMenu) {
+            break;
+        }*/
 
         if (!salirAlMenu) {
+            mazoJuego.transferirCartas(jugadorEnTurno.manoJugador, 1);
+            if (jugadorEnTurno.areaJugador.tieneSeisColores()) {
+                jugadorFinal = jugadorEnTurno;
+                finturnos = true;
+                //break;
+            }
+            if (mazoJuego.estaTerminado()) {
+                jugadorFinal = jugadorEnTurno;
+                finturnos = true;
+                //break;
+            }
 
-            modelo.ultimoTurno();
+            if (indiceTurno == jugadoresPartida.size() - 1) {
+                indiceTurno = 0;
+            } else {
+                indiceTurno++;
+            }
+
+            jugadorEnTurno.setTurnoJugador(false);
+            iniciarTurno();
+        }
+    }
+
+    //} while (!finturnos);
+
+    public void secuenciaFinal () throws IOException, ClassNotFoundException {
+        if (!salirAlMenu) {
+
+            modelo.ultimoTurno();  //TODO!
 
             int indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
             int indiceUltimoTurno = indiceFinal;
@@ -171,7 +215,7 @@ public class Partida implements Serializable {
                 } else {
                     indiceUltimoTurno += 1;
                 }
-                turnoFinal(jugadoresPartida.get(indiceUltimoTurno));
+                turnoFinal(jugadoresPartida.get(indiceUltimoTurno)); //TODO!
             }
 
             indiceUltimoTurno = indiceFinal;
@@ -182,17 +226,18 @@ public class Partida implements Serializable {
                     indiceUltimoTurno += 1;
                 }
                 System.out.println("descarte");
-                descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
+                descarteFinal(jugadoresPartida.get(indiceUltimoTurno)); //TODO!
             }
 
             puntuacion();
 
-            m.finalizarPartida(iDPartida);
+            modelo.finalizarPartida(iDPartida);
 
             registrarPartida();
             registrarJugadores();
         }
     }
+
 
     public void turno () throws RemoteException {
         modelo.menuTurno();
@@ -217,7 +262,6 @@ public class Partida implements Serializable {
                 }
             }
         }
-
         j.manoJugador.transferirCartas(desfileJuego, cartaSeleccionada);
     }
 

@@ -11,4 +11,9 @@ public class Mano extends ListaCartas implements Serializable {
     public int cantidadMano () {
         return this.cartas.size();
     }
+
+    public void actualizarMano(Mano nuevaMano) {
+        this.cartas.clear();
+        this.cartas.addAll(nuevaMano.cartas);
+    }
 }
