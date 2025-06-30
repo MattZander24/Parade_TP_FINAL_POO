@@ -55,6 +55,8 @@ public interface IVista {
 
     public void mensajeRanking(ArrayList<Jugador> jugadoresPartida);
 
+    public void habilitarSalir();
+
     public void mostrarADJ (Jugador j);
 
     public void mostrarD (Desfile d);

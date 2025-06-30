@@ -314,6 +314,9 @@ public class ControladorParade implements IControladorRemoto {
                 case RANKING:
                     v.mensajeRanking(m.getPartida().getJugadores());
                     break;
+                case HABILITAR_SALIR:
+                    v.habilitarSalir();
+                    break;
                 case HISTORICO:
                     try {
                         v.verHistorico(/*partidas*/);

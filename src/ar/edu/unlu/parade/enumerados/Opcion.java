@@ -15,6 +15,7 @@ public enum Opcion implements Serializable {
     SELECICON_EVALUAR,
     SELECICON_DESCARTAR,
     RANKING,
+    HABILITAR_SALIR,
     MOSTRAR_AREA,
     MOSTRAR_AREA_TODOS,
     MOSTRAR_MANO,

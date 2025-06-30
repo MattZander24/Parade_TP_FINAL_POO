@@ -304,6 +304,9 @@ public class Partida implements Serializable {
             modelo.finalizarPartida(iDPartida);
             registrarPartida();
             registrarJugadores();
+
+            //TODO ACA TENGO QUE HACER ALGO PARA VOLVER AL MENU PRINCIPAL UNA VEZ SE MUESTRE TODO
+            modelo.habilitarSalir();
         }
     }
 

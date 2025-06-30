@@ -51,6 +51,8 @@ public interface IModelo extends IObservableRemoto {
 
     public void mensajeGanadorYRanking () throws RemoteException;
 
+    public void habilitarSalir () throws RemoteException;
+
     public void pedirNombre (Jugador j) throws RemoteException;
 
     public void setNombre (Jugador j, String nombre) throws RemoteException;

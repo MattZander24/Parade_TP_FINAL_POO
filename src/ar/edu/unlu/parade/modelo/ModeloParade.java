@@ -157,6 +157,10 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.RANKING);
     }
 
+    public void habilitarSalir () throws RemoteException {
+        notificarObservadores(Opcion.HABILITAR_SALIR);
+    }
+
     public void pedirNombre (Jugador j) throws RemoteException {
         notificarObservadores(Opcion.ADD_NOMBRE);
     }

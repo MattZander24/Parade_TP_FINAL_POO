@@ -176,6 +176,9 @@ public class VistaConsola extends JFrame implements IVista {
             case 3, 4:
                 seleccionCartaOpcion(opcion);
                 break;
+            case 5:
+                evaluarSalirAlMenu(opcion);
+                break;
             case 0:
                 println("\nActualmente no es tu turno, espera el tuyo para ingresar opciones.\n");
                 break;
@@ -866,17 +869,24 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     public void mensajeGanador(Jugador j) {
+        limpiarPantalla();
+        println("\n");
         println("\nEl ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...");
+        println("\n");
     }
 
     public void mensajeEmpateEntreJugadores (ArrayList<Jugador> ganadores) {
+        limpiarPantalla();
+        println("\n");
         println("\n¡Se ha producido un empate!\n");
         for (Jugador j : ganadores) {
             println("Uno de los ganadores de la partida es " +  j.definicionJugador("el ", "") + " con " + j.getPuntos() + " PUNTOS...");
         }
+        println("\n");
     }
 
     public void mensajeRanking(ArrayList<Jugador> jugadoresPartida) {
+        println("----------------------------------------------------------------------------------------------------");
         println("\n");
         println("Jugadores ordenados por puesto");
         int i = 1;
@@ -885,7 +895,30 @@ public class VistaConsola extends JFrame implements IVista {
             i++;
         }
         println("\n");
-        FuncionesConsola.PulseEnter();
+        //FuncionesConsola.PulseEnter();
+    }
+
+    public void habilitarSalir() {
+        indiceInput = 5;
+        println("----------------------------------------------------------------------------------------------------");
+        println("\n");
+        println("Para volver al menú principal ingrese '0'");
+        println("Para salir del juego ingrese '1'");
+        println("\n");
+        println("----------------------------------------------------------------------------------------------------");
+    }
+
+    public void evaluarSalirAlMenu(int opcion) {
+        if (opcion == 0) {
+            dispose();
+            new menuParade();
+        }
+        else if (opcion == 1) {
+            System.exit(0);
+        }
+        else {
+            println("\n Ingrese una opción correcta...");
+        }
     }
 
     public void mostrarADJ (Jugador j) {
