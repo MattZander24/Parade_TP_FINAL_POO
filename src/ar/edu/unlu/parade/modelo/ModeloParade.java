@@ -105,7 +105,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.MENU_TURNO);
     }
 
-    public void menuTurnoFinal (Jugador j) throws RemoteException {
+    public void menuTurnoFinal (/*Jugador j*/) throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO_FINAL);
     }
 
@@ -133,7 +133,15 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         partida.finalizarTurno();
     }
 
-    public void mensajeDescarteFinal (Jugador j) throws RemoteException {
+    public void finalizarUltimoTurno() throws IOException, ClassNotFoundException {
+        partida.finalizarSecuenciaUltimoTurno();
+    }
+
+    public void finalizarDescarte() throws IOException, ClassNotFoundException {
+        partida.finalizarSecuenciaDescarte();
+    }
+
+    public void mensajeDescarteFinal (/*Jugador j*/) throws RemoteException {
         notificarObservadores(Opcion.DESCARTE_Y_FINAL);
     }
 
@@ -173,9 +181,9 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.MOSTRAR_MANO);
     }
 
-    public void ultimoTurno() throws RemoteException {
+    /*public void ultimoTurno() throws RemoteException {
         notificarObservadores(Opcion.ULTIMO_TURNO);
-    }
+    }*/
 
     public void cargarPartida () throws IOException, ClassNotFoundException, RemoteException {
         notificarObservadores(Opcion.CARGAR_PARTIDA);

@@ -134,6 +134,28 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
+    public void finalizarUltimoTurno () {
+        try {
+            m.finalizarUltimoTurno();
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void finalizarDescarte () {
+        try {
+            m.finalizarDescarte();
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setNombre (Jugador j, String nombre) {
         try {
             m.setNombre(j, nombre);
@@ -250,9 +272,10 @@ public class ControladorParade implements IControladorRemoto {
                 case SETEO_PARTIDA:
                     v.configuracionPartida();
                     break;
-                case ULTIMO_TURNO:
+                /*case ULTIMO_TURNO:
                     v.ultimoTurno();
                     break;
+                */
                 case GUARDAR_Y_SALIR:
                     v.mensajeGuardarYSalir();
                     break;

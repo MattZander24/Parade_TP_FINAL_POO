@@ -45,7 +45,7 @@ public interface IVista {
 
     public void seleccionCarta (Jugador j, DestinoCarta d);
 
-    public void ultimoTurno ();
+    //public void ultimoTurno ();
 
     public void mensajeDescarteFinal (Jugador j);
 

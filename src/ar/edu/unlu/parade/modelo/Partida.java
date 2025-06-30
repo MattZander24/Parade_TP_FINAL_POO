@@ -23,6 +23,10 @@ public class Partida implements Serializable {
     private static int iDPartidaGen = 1;
     private int iDPartida;
     private int indiceTurno;
+    private int indiceFinal;
+    //private int indiceUltimoTurno;
+    private int contadorUltimoTurno;
+    private int contadorDescartes;
     private boolean salirAlMenu = false;
     private Jugador jugadorEnTurno;
     private Jugador jugadorFinal;
@@ -163,7 +167,7 @@ public class Partida implements Serializable {
             turno();
         }
         else {
-           secuenciaFinal();
+            iniciarSecuenciaFinal();
         }
     }
 
@@ -201,41 +205,125 @@ public class Partida implements Serializable {
 
     //} while (!finturnos);
 
-    public void secuenciaFinal () throws IOException, ClassNotFoundException {
+    public void iniciarSecuenciaFinal () throws IOException, ClassNotFoundException {
         if (!salirAlMenu) {
+            //modelo.ultimoTurno();
+            indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
+            //indiceUltimoTurno = indiceFinal;
+            contadorUltimoTurno = 0;
+            System.out.println("Inicia Secuencia FINAL");
+            secuenciaUltimoTurno();
+        }
+    }
 
-            modelo.ultimoTurno();  //TODO!
 
-            int indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
-            int indiceUltimoTurno = indiceFinal;
+    public void secuenciaUltimoTurno () throws IOException, ClassNotFoundException {
 
-            for (int i = 0; i < jugadoresPartida.size(); i++) {
-                if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
-                    indiceUltimoTurno = 0;
-                } else {
-                    indiceUltimoTurno += 1;
-                }
-                turnoFinal(jugadoresPartida.get(indiceUltimoTurno)); //TODO!
+        /*for (int i = 0; i < jugadoresPartida.size(); i++) { //todo acá el flujo no se para en cada turno final
+            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                indiceUltimoTurno = 0;
+            } else {
+                indiceUltimoTurno += 1;
             }
+            turnoFinal(jugadoresPartida.get(indiceUltimoTurno));
+        }*/
 
-            indiceUltimoTurno = indiceFinal;
-            for (int i = 0; i < jugadoresPartida.size(); i++) {
-                if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
-                    indiceUltimoTurno = 0;
-                } else {
-                    indiceUltimoTurno += 1;
-                }
-                System.out.println("descarte");
-                descarteFinal(jugadoresPartida.get(indiceUltimoTurno)); //TODO!
+        if (contadorUltimoTurno < jugadoresPartida.size()) {
+            //jugadorEnTurno = jugadoresPartida.get(indiceUltimoTurno);
+            jugadorEnTurno = jugadoresPartida.get(indiceFinal);
+            jugadorEnTurno.setTurnoJugador(true);
+            //modelo.actualizarTurno();
+            modelo.actualizarJugador(); //TODO DE HECHO ESTE METODO OBSOLECE ACTUALIZAR TURNO
+
+            System.out.println("ULTIMO TURNO de " + jugadorEnTurno.definicionJugador("", "") + ", " + jugadorEnTurno.isTurnoJugador());
+            System.out.println(System.identityHashCode(jugadorEnTurno));
+
+            turnoFinal(jugadorEnTurno);
+        } else {
+            contadorUltimoTurno = 0;
+            //TODO esto debería no tener que hacerse xq cuando pega la ultima el indice ultimo turno debe ser el mismo
+            //indiceUltimoTurno = indiceFinal;
+            contadorDescartes = 0;
+            secuenciaDescarte();
+        }
+    }
+
+    public void finalizarSecuenciaUltimoTurno () throws IOException, ClassNotFoundException {
+        //if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+        //
+        // mazoJuego.transferirCartas(jugadorEnTurno.manoJugador, 1);
+        if (indiceFinal == jugadoresPartida.size() - 1) {
+            //indiceUltimoTurno = 0;
+            indiceFinal = 0;
+        } else {
+            //indiceUltimoTurno += 1;
+            indiceFinal += 1;
+        }
+        contadorUltimoTurno++;
+        jugadorEnTurno.setTurnoJugador(false);
+        secuenciaUltimoTurno();
+    }
+
+    public void secuenciaDescarte () throws IOException, ClassNotFoundException {
+
+        /*for (int i = 0; i < jugadoresPartida.size(); i++) { //todo acá el flujo no se para en cada descarte final
+            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                indiceUltimoTurno = 0;
+            } else {
+                indiceUltimoTurno += 1;
             }
+            System.out.println("descarte");
+            descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
+        }*/
 
+        /*if (contadorUltimoTurno < jugadoresPartida.size()) {
+            descarteFinal(jugadoresPartida.get(indiceUltimoTurno));
+            if (indiceUltimoTurno == jugadoresPartida.size() - 1) {
+                indiceUltimoTurno = 0;
+            } else {
+                indiceUltimoTurno += 1;
+            }
+            //System.out.println("descarte");
+            contadorUltimoTurno++;
+        }*/
+
+        if (contadorUltimoTurno < jugadoresPartida.size()) {
+            //jugadorEnTurno = jugadoresPartida.get(indiceUltimoTurno);
+            jugadorEnTurno = jugadoresPartida.get(indiceFinal);
+            jugadorEnTurno.setTurnoJugador(true);
+            //modelo.actualizarTurno();
+            modelo.actualizarJugador(); //TODO DE HECHO ESTE METODO OBSOLECE ACTUALIZAR TURNO
+
+            System.out.println("DESCARTE N°" + contadorDescartes + " de " + jugadorEnTurno.definicionJugador("", "") + ", " + jugadorEnTurno.isTurnoJugador());
+            System.out.println(System.identityHashCode(jugadorEnTurno));
+
+            descarteFinal(/*jugadorEnTurno*/);
+        }
+        else{
             puntuacion();
-
             modelo.finalizarPartida(iDPartida);
-
             registrarPartida();
             registrarJugadores();
         }
+    }
+
+    public void finalizarSecuenciaDescarte () throws IOException, ClassNotFoundException {
+        if (contadorDescartes == 1) {
+            if (indiceFinal == jugadoresPartida.size() - 1) {
+                indiceFinal = 0;
+            } else {
+                indiceFinal += 1;
+            }
+            descarteUltimasCartas(jugadorEnTurno);
+            contadorDescartes = 0;
+            contadorUltimoTurno++;
+        }
+        else {
+            contadorDescartes++;
+        }
+        //System.out.println("descarte");
+        jugadorEnTurno.setTurnoJugador(false);
+        secuenciaDescarte();
     }
 
 
@@ -245,7 +333,7 @@ public class Partida implements Serializable {
     }
 
     public void turnoFinal (Jugador j) throws RemoteException {
-        modelo.menuTurnoFinal(j);
+        modelo.menuTurnoFinal(/*j*/);
     }
 
     public void evaluarDesfile (Carta cartaSeleccionada, Jugador j) {
@@ -265,17 +353,17 @@ public class Partida implements Serializable {
         j.manoJugador.transferirCartas(desfileJuego, cartaSeleccionada);
     }
 
-    public void descarteFinal (Jugador j) throws RemoteException {
-        modelo.mensajeDescarteFinal(j);
-
+    public void descarteFinal (/*Jugador j*/) throws RemoteException {
+        modelo.mensajeDescarteFinal(/*j*/);
         modelo.descartarCarta();
-        modelo.descartarCarta();
+        //contadorDescartes++;
+    }
 
+    public void descarteUltimasCartas (Jugador j) throws RemoteException {
         for (Carta c : j.manoJugador.cartas) {
             j.manoJugador.transferirCartas(j.areaJugador, c);
         }
         j.areaJugador.ordenar();
-
     }
 
     public void puntuacion () throws RemoteException {

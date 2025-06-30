@@ -37,6 +37,7 @@ public class VistaConsola extends JFrame implements IVista {
     private VistaConsolaMano vcm;
 
     private volatile int indiceInput = -1;
+    private volatile int indiceRetorno = -1;
 
     public VistaConsola() {
         this.vca = new VistaConsolaAreaDeJuego();
@@ -655,6 +656,7 @@ public class VistaConsola extends JFrame implements IVista {
         if (c.getJugadorLocal().isTurnoJugador()) {
             System.out.println("Es turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
             indiceInput = 1;
+            indiceRetorno = 1;
 
             println("\n");
             println("TURNO DE" + c.getJugadorLocal().definicionJugador("L ", " "));
@@ -729,7 +731,11 @@ public class VistaConsola extends JFrame implements IVista {
     public void menuTurnoFinal () {
         limpiarPantalla();
         if (c.getJugadorLocal().isTurnoJugador()) {
+            println("----------------------------------------------------------------------------------------------------");
+            println("\n \t - ULTIMO TURNO DE " + c.getJugadorLocal().definicionJugador("L ", " ") + " -\n");
+            println("----------------------------------------------------------------------------------------------------");
             indiceInput = 2;
+            indiceRetorno = 2;
             println("\n");
             //println("TURNO DE" + j.definicionJugador("L ", " "));
             println("\t1. Seleccionar carta para jugar");
@@ -740,6 +746,9 @@ public class VistaConsola extends JFrame implements IVista {
             println("Seleccione una opción: ");
         }
         else {
+            //System.out.println("NO es turno de " + c.getJugadorLocal().definicionJugador("", ""));
+            indiceInput = 0;
+            println("\n");
             println("Actualmente es turno de otro jugador, espera hasta que sea tu turno");
         }
         /*while (indiceInput != 0) {
@@ -781,11 +790,19 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     public void seleccionCarta (Jugador j, DestinoCarta d) {
-        if (d == DestinoCarta.EVALUAR) { indiceInput = 3; }
-        else { indiceInput = 4; }
+        String verbo;
+        if (d == DestinoCarta.EVALUAR) {
+            indiceInput = 3;
+            verbo = "jugar";
+        }
+        else {
+            indiceInput = 4;
+            indiceRetorno = 3;
+            verbo = "descartar";
+        }
         if (j.isTurnoJugador()) {
             c.mostrarMano(j);
-            println("Seleccione la carta a jugar: ");
+            println("Seleccione la carta a " + verbo + ": ");
         }
         /*while (indiceInput != 0) {
             Thread.onSpinWait();
@@ -808,18 +825,44 @@ public class VistaConsola extends JFrame implements IVista {
             c.devolverCarta(j, --opcion, d); //todo paso jugador local entonces modifico la instancia cliente y no la servidor
             //TODO aca cambiar el índice input y el turno
             System.out.println("Finaliza el turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
-            indiceInput = 0;
-            c.finalizarTurno();
+
+            switch (indiceRetorno) {
+            // TODO: ACA NO ENTRA NI A CASE 1 NI 2, ENTONCES NO SIGUE EN ULTIMO TURNO.
+                case 1:
+                    indiceInput = 0;
+                    c.finalizarTurno();
+                    break;
+                case 2:
+                    indiceInput = 0;
+                    c.finalizarUltimoTurno();
+                    break;
+                case 3:
+                    indiceInput = 0;
+                    c.finalizarDescarte();
+                    break;
+            }
         }
     }
 
-    public void ultimoTurno () {
+    /*public void ultimoTurno () {
         println("\n  - ULTIMO TURNO -\n");
-    }
+    }*/
 
     public void mensajeDescarteFinal (Jugador j) {
-        println(j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar");
-        println("(las otras dos se añadirán al area de juego para contarse en la puntuación)");
+        limpiarPantalla();
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            println("----------------------------------------------------------------------------------------------------");
+            println("\n \t - DESCARTE DE " + c.getJugadorLocal().definicionJugador("L ", " ") + " -\n");
+            println("----------------------------------------------------------------------------------------------------");
+            println(j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar");
+            println("(las otras dos se añadirán al area de juego para contarse en la puntuación)");
+        }
+        else {
+            //System.out.println("NO es turno de " + c.getJugadorLocal().definicionJugador("", ""));
+            indiceInput = 0;
+            println("\n");
+            println("Actualmente es turno de otro jugador, espera hasta que sea tu turno");
+        }
     }
 
     public void mensajeGanador(Jugador j) {
