@@ -48,6 +48,7 @@ public interface IVista {
     //public void ultimoTurno ();
 
     public void mensajeDescarteFinal (Jugador j);
+    public void mensajeGuardar (boolean msgOpcionIncorrecta);
 
     public void mensajeGanador(Jugador j);
 

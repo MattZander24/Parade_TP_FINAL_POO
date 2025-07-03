@@ -3,6 +3,7 @@ package ar.edu.unlu.parade.online;
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.parade.vistaconsola.VistaConsola;
+import ar.edu.unlu.parade.vistagrafica.VistaGrafica;
 import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
@@ -78,7 +79,9 @@ public class ClienteParade {
             System.out.println("CONSOLA MEJORADA");
         } else {
             //vista = new VistaInterfazGrafica(controlador);
-            vista = null;
+            vista = new VistaGrafica();
+            vista.setC(controlador);
+            controlador.setV(vista);
 
             System.out.println("GRAFICA");
         }

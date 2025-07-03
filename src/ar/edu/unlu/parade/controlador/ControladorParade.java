@@ -174,6 +174,15 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
+    public void mensajeGuardarYSalir () {
+        try {
+            m.mensajeGuardarYSalir();
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void mostrarDesfile () {
         try {
             m.mostrarDesfile();
@@ -255,6 +264,15 @@ public class ControladorParade implements IControladorRemoto {
         }*/
     }
 
+    public void menuTurno () {
+        try {
+            m.menuTurno();
+        }
+        catch (IOException e) {
+            //nada porque ya lo controla la funcion interna
+        }
+    }
+
     @Override
     public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
         if (cambio instanceof Opcion) {
@@ -268,6 +286,9 @@ public class ControladorParade implements IControladorRemoto {
                     break;
                 case CREACION_ARCHIVO:
                     v.mensajeCreacionArchivo();
+                    break;
+                case MENSAJE_GUARDAR_Y_SALIR:
+                    v.mensajeGuardar(false);
                     break;
                 case SETEO_PARTIDA:
                     v.configuracionPartida();

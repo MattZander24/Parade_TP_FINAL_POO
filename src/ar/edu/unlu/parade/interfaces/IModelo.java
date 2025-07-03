@@ -21,6 +21,9 @@ public interface IModelo extends IObservableRemoto {
     public void verHistorico () throws IOException, ClassNotFoundException, RemoteException;
 
     public void mensajeCreacionArchivo () throws RemoteException;
+
+    public void mensajeGuardarYSalir () throws RemoteException;
+
     public void generarPartida () throws RemoteException;
 
     public void terminarPartida () throws RemoteException;

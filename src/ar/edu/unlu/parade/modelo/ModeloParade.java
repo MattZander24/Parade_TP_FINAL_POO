@@ -82,6 +82,11 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.CREACION_ARCHIVO);
     }
 
+    public void mensajeGuardarYSalir () throws RemoteException {
+        notificarObservadores(Opcion.MENSAJE_GUARDAR_Y_SALIR);
+    }
+
+
     public void terminarPartida () throws RemoteException {
         System.exit(0);
     }

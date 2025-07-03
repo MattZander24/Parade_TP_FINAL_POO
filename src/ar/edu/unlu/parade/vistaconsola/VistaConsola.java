@@ -179,6 +179,9 @@ public class VistaConsola extends JFrame implements IVista {
             case 5:
                 evaluarSalirAlMenu(opcion);
                 break;
+            case 6:
+                guardarPartida(opcion);
+                break;
             case 0:
                 println("\nActualmente no es tu turno, espera el tuyo para ingresar opciones.\n");
                 break;
@@ -684,7 +687,6 @@ public class VistaConsola extends JFrame implements IVista {
 
     public void menuTurnoOpcion (int opcion) {
         Jugador j = c.getJugadorLocal();
-        boolean gys = false;
         switch (opcion) {
             case 1:
                 c.seleccionarCarta(j);
@@ -702,30 +704,10 @@ public class VistaConsola extends JFrame implements IVista {
                 c.mostrarJugadores();
                 break;
             case 6:
-                println("Desea Guardar y Salir?");
-                println("1 - SI");
-                println("2 - NO");
-                println("Seleccione una opción: ");
-                //TODO ACA HARDCODEÉ
-                int confirmacion = 2;
-                while (confirmacion < 1 || confirmacion > 2) {
-                    println("\nOpcion incorrecta, la cantidad de opciones debe ir de 1 a 2...");
-                    println("Desea Guardar y Salir?");
-                    println("1 - SI");
-                    println("2 - NO");
-                    println("Seleccione una opción: ");
-                    //confirmacion = scanner.nextInt();
-                }
-                if (confirmacion == 1) {
-                    gys = true;
-                    c.guardarYSalir();
-                    break;
-                } else if (confirmacion == 2) {
-                    println("\nOperación cancelada. Volviendo al menú...\n");
-                    break;
-                }
+                c.mensajeGuardarYSalir();
+                break;
             default:
-                println("\nPor favor, seleccione una opción correcta\n");
+                println("\nPor favor, seleccione una opción correcta. DEFAULT.\n");
                 break;
         }
         //indiceInput = 0;  //todo esto debe cambiarse solo cuando cambia el turno
@@ -865,6 +847,41 @@ public class VistaConsola extends JFrame implements IVista {
             indiceInput = 0;
             println("\n");
             println("Actualmente es turno de otro jugador, espera hasta que sea tu turno");
+        }
+    }
+
+    public void mensajeGuardar (boolean msgOpcionIncorrecta) {
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            limpiarPantalla();
+            indiceInput = 6;
+            if (msgOpcionIncorrecta) {
+                println("\nOpcion incorrecta, la cantidad de opciones debe ir de 1 a 2...\n");
+            }
+            println("Desea Guardar y Salir?");
+            println("1 - SI");
+            println("2 - NO");
+            println("Seleccione una opción: ");
+        }
+        else {
+            //System.out.println("NO es turno de " + c.getJugadorLocal().definicionJugador("", ""));
+            limpiarPantalla();
+            indiceInput = 0;
+            println("\n");
+            println(" !!! Un jugador solicitó guardar la partida y salir");
+        }
+    }
+
+    public void guardarPartida (int opcion) {
+        switch (opcion) {
+            case 1:
+                c.guardarYSalir();
+                break;
+            case 2:
+                c.menuTurno();
+                break;
+            default:
+                mensajeGuardar(true);
+                break;
         }
     }
 
