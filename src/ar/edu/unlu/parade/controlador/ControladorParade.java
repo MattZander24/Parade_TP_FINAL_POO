@@ -41,10 +41,10 @@ public class ControladorParade implements IControladorRemoto {
         this.jugadorLocal = jugadorLocal;
     }
 
-    private void cambiarEstadoYActualizarVista(EstadoPartida nuevoEstado) throws RemoteException {
+    /*private void cambiarEstadoYActualizarVista(EstadoPartida nuevoEstado) throws RemoteException {
         estadoActual = nuevoEstado;
         v.actualizarVistaParaAccion(nuevoEstado);
-    }
+    }*/
 
     public void iniciarJuego () {
         try {

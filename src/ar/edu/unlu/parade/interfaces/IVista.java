@@ -17,7 +17,7 @@ public interface IVista {
 
     public void setC(ControladorParade c);
 
-    public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException;
+    //public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException;
 
     public void iniciarVista();
 

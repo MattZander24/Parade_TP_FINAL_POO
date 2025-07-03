@@ -13,6 +13,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//------------------------------------------------------------------//
+/// VISTA CONSOLA SIN SWING. PREVIA A LA ENTREGA FINAL. OBSOLETA. ///
+//------------------------------------------------------------------//
+
 //LE COMENTE LA IMPLEMENTACION A IVISTA PARA QUE NO DE ERROR, SI NECESITO DE VUELTA DESCOMENTARLO
 public class VistaConsolaParade /*implements IVista , Observer*/ {
 

@@ -45,22 +45,27 @@ public class VistaConsola extends JFrame implements IVista {
         this.vcm = new VistaConsolaMano();
 
         initComponents();
+
         setIconImage(icono);
         setResizable(false);
-        //setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setFont(new java.awt.Font("Monospaced", Font.PLAIN, 15));
+
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
+
         bottomPanel = new JPanel(new BorderLayout());
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+
         JPanel textFieldsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
         /*JLabel filaLabel = new JLabel("Fila:");
         JTextField fila = new JTextField(5);
         fila.setDocument(new PlainDocument() {
@@ -93,6 +98,7 @@ public class VistaConsola extends JFrame implements IVista {
         textFieldsPanel.add(columna);
         textFieldsPanel.add(filaLabel);
         textFieldsPanel.add(fila);*/
+
         JLabel opcionLabel = new JLabel("Opción:");
         JTextField opcion = new JTextField(5);
         opcion.setDocument(new PlainDocument() {
@@ -107,6 +113,7 @@ public class VistaConsola extends JFrame implements IVista {
                 }
             }
         });
+
         textFieldsPanel.add(opcionLabel);
         textFieldsPanel.add(opcion);
 
@@ -115,7 +122,6 @@ public class VistaConsola extends JFrame implements IVista {
             inputOpcion(Integer.parseInt(opcion.getText()));
             // Reiniciamos el contenido.
             opcion.setText("");
-            //columna.setText("");
         });
         optionsPanel.add(textFieldsPanel);
         optionsPanel.add(botonEnviarMovimiento);
@@ -128,6 +134,7 @@ public class VistaConsola extends JFrame implements IVista {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+
                 /*try {
                     if (controlador.partidaHaComenzado()) {
                         if (controlador.partidaSigueActiva()) {
@@ -160,11 +167,13 @@ public class VistaConsola extends JFrame implements IVista {
                     ex.printStackTrace();
                     System.exit(0); // Termina la aplicación
                 }*/
+
             }
         });
         setVisible(true);
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     public void inputOpcion (int opcion) {
         switch (indiceInput) {
             case 1:
@@ -186,14 +195,19 @@ public class VistaConsola extends JFrame implements IVista {
                 println("\nActualmente no es tu turno, espera el tuyo para ingresar opciones.\n");
                 break;
             default:
-                System.out.println("DEFAULT");
+                System.out.println("inputOpcion DEFAULT");
                 break;
         }
     }
 
+    /*
+    @Override
     public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException {
         switch (estadoActual) {
             case ESPERANDO_TURNO -> println("Ahora es el turno de tu oponente.\nEspera hasta que realice su movimiento ;)");
+
+            */
+
             /*case COLOCAR_FICHA, SELECCIONAR_DESTINO_MOVER_SUPER -> {
                 mostrarMensajeEsTuTurno();
                 mensajePedirNuevaCasillaLibre();
@@ -210,6 +224,8 @@ public class VistaConsola extends JFrame implements IVista {
                 mostrarMensajeEsTuTurno();
                 mensajeFichaAEliminar();
             }*/
+
+            /*
             case TURNO -> {
                 println("Turno de este jugador ");
             }
@@ -281,19 +297,24 @@ public class VistaConsola extends JFrame implements IVista {
             }
         }
     }
+    */
 
-    public void iniciarVista() {
-        new menuPrePartida(c);
-    }
-
+    @Override
     public ControladorParade getC() {
         return c;
     }
 
+    @Override
     public void setC(ControladorParade c) {
         this.c = c;
     }
 
+    @Override
+    public void iniciarVista() {
+        new menuPrePartida(c);
+    }
+
+    //TODO Método privado. No se si debe pertenecer a IVista
     private void initComponents() {
         icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/LogoParade.png")).getImage();
         Image originalImage = icono;
@@ -301,6 +322,7 @@ public class VistaConsola extends JFrame implements IVista {
         icono = new ImageIcon(scaledImage).getImage();
     }
 
+    @Override
     public void menuPrincipal () {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -348,6 +370,7 @@ public class VistaConsola extends JFrame implements IVista {
 
     }
 
+    @Override
     public void verReglas () {
         println("\n");
 
@@ -437,16 +460,19 @@ public class VistaConsola extends JFrame implements IVista {
         FuncionesConsola.PulseEnter();
     }
 
+    @Override
     public void mensajeCreacionArchivo () {
         println("\n----------------------------------------------");
         println("NO SE ENCONTRO EL ARCHIVO, SE CREO UNO VACÍO");
         println("----------------------------------------------\n");
     }
 
+    @Override
     public void mensajeGuardarYSalir () {
         println("\nPartida guardada correctamente. Volviendo al Menú Principal...\n");
     }
 
+    @Override
     public void verHistorico (/*RegistroConjuntoPartidas r*/) throws IOException {
 
         FileInputStream fileInputStream;
@@ -497,6 +523,7 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    @Override
     public void verTop5 (/*RegistroConjuntoJugadores j*/) throws IOException {
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
@@ -546,6 +573,7 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    @Override
     public void configuracionPartida () {
         Scanner scanner = new Scanner(System.in);
         int cantidadJugadores;
@@ -583,6 +611,7 @@ public class VistaConsola extends JFrame implements IVista {
         c.iniciarPartida();
     }
 
+    @Override
     public void cargarPartida (/*, ConjuntoPartidas cp*/) throws IOException {
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
@@ -653,6 +682,7 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    @Override
     public void menuTurno (/*Jugador j*/) {
         limpiarPantalla();
         //System.out.println("Jugador del parametro: " + j.definicionJugador("",""));
@@ -685,6 +715,7 @@ public class VistaConsola extends JFrame implements IVista {
         }*/
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     public void menuTurnoOpcion (int opcion) {
         Jugador j = c.getJugadorLocal();
         switch (opcion) {
@@ -713,6 +744,7 @@ public class VistaConsola extends JFrame implements IVista {
         //indiceInput = 0;  //todo esto debe cambiarse solo cuando cambia el turno
     }
 
+    @Override
     public void menuTurnoFinal () {
         limpiarPantalla();
         if (c.getJugadorLocal().isTurnoJugador()) {
@@ -741,6 +773,7 @@ public class VistaConsola extends JFrame implements IVista {
         }*/
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     public void menuTurnoFinalOpcion(int opcion) {
         Jugador j = c.getJugadorLocal();
         switch (opcion) {
@@ -766,6 +799,7 @@ public class VistaConsola extends JFrame implements IVista {
         //indiceInput = 0;
     }
 
+    @Override
     public void agregarNombre (Jugador jugador) {
         Scanner scanner = new Scanner(System.in);
         println("Ingrese el nombre del jugador n°" + jugador.getIdJugador() + ": ");
@@ -774,6 +808,7 @@ public class VistaConsola extends JFrame implements IVista {
         c.setNombre(jugador, nombreJugador);
     }
 
+    @Override
     public void seleccionCarta (Jugador j, DestinoCarta d) {
         String verbo;
         if (d == DestinoCarta.EVALUAR) {
@@ -794,6 +829,7 @@ public class VistaConsola extends JFrame implements IVista {
         }*/
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     public void seleccionCartaOpcion (int opcion) {
         Jugador j = c.getJugadorLocal();
         DestinoCarta d = null;
@@ -803,6 +839,7 @@ public class VistaConsola extends JFrame implements IVista {
             while (opcion < 1 || opcion > j.getManoJugador().cantidadMano()) {
                 println("Opcion incorrecta...");
                 println("Seleccione la carta a jugar: ");
+
             /*while (indiceInput != 0) {
                 Thread.onSpinWait();
             }*/
@@ -833,6 +870,7 @@ public class VistaConsola extends JFrame implements IVista {
         println("\n  - ULTIMO TURNO -\n");
     }*/
 
+    @Override
     public void mensajeDescarteFinal (Jugador j) {
         limpiarPantalla();
         if (c.getJugadorLocal().isTurnoJugador()) {
@@ -850,6 +888,7 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    @Override
     public void mensajeGuardar (boolean msgOpcionIncorrecta) {
         if (c.getJugadorLocal().isTurnoJugador()) {
             limpiarPantalla();
@@ -871,6 +910,7 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     public void guardarPartida (int opcion) {
         switch (opcion) {
             case 1:
@@ -885,6 +925,7 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    @Override
     public void mensajeGanador(Jugador j) {
         limpiarPantalla();
         println("\n");
@@ -892,6 +933,7 @@ public class VistaConsola extends JFrame implements IVista {
         println("\n");
     }
 
+    @Override
     public void mensajeEmpateEntreJugadores (ArrayList<Jugador> ganadores) {
         limpiarPantalla();
         println("\n");
@@ -902,6 +944,7 @@ public class VistaConsola extends JFrame implements IVista {
         println("\n");
     }
 
+    @Override
     public void mensajeRanking(ArrayList<Jugador> jugadoresPartida) {
         println("----------------------------------------------------------------------------------------------------");
         println("\n");
@@ -915,6 +958,7 @@ public class VistaConsola extends JFrame implements IVista {
         //FuncionesConsola.PulseEnter();
     }
 
+    @Override
     public void habilitarSalir() {
         indiceInput = 5;
         println("----------------------------------------------------------------------------------------------------");
@@ -925,6 +969,7 @@ public class VistaConsola extends JFrame implements IVista {
         println("----------------------------------------------------------------------------------------------------");
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     public void evaluarSalirAlMenu(int opcion) {
         if (opcion == 0) {
             dispose();
@@ -938,44 +983,54 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
+    @Override
     public void mostrarADJ (Jugador j) {
         if (c.getJugadorLocal().isTurnoJugador()) {
             println(vca.mostrar(j));
         }
     }
 
+    @Override
     public void mostrarD (Desfile d) {
         if (c.getJugadorLocal().isTurnoJugador()) {
             println(vcd.mostrar(d));
         }
     }
 
+    @Override
     public void mostrarM (Jugador j) {
         if (j.isTurnoJugador()) {
             println(vcm.mostrar(j));
         }
     }
 
+    /*
+    //Método interno del modo consola. No pertenece a IVista
     private String numeroFila(int fila) {
         return String.valueOf(fila + 1);
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     private String formatoCelda(String contenido) {
         return String.format("%1s", contenido);
-    }
+    }*/
 
+    //Método interno del modo consola. No pertenece a IVista
     private void println(String texto) {
         textArea.append("\n" + texto + "\n");
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     private void print(JTextArea textArea, String texto) {
         textArea.append(texto);
     }
 
+    @Override
     public void bienvenidaYEspera (Jugador j) {
         println("Bienvenido " + j.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.");
     }
 
+    //Método interno del modo consola. No pertenece a IVista
     private void limpiarPantalla() {
         textArea.setText("");
     }
