@@ -47,7 +47,7 @@ public class VistaConsola extends JFrame implements IVista {
         initComponents();
 
         setIconImage(icono);
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);

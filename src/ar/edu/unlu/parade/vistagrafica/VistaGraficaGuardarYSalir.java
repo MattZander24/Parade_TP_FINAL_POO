@@ -1,4 +1,4 @@
 package ar.edu.unlu.parade.vistagrafica;
 
-public class VistaGraficaDesfile {
+public class VistaGraficaGuardarYSalir {
 }

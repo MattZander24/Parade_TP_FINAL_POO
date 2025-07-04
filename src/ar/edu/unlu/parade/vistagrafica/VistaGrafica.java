@@ -34,25 +34,23 @@ public class VistaGrafica  extends JFrame implements IVista {
     private JTextArea textArea;
     private JPanel panelBotonesFin;
 
-    private VistaGraficaAreaDeJuego vca;
-    private VistaGraficaDesfile vcd;
-    private VistaGraficaMano vcm;
+    private VistaGraficaAreaDeJuego vga;
+    private VistaGraficaGuardarYSalir vggys;
 
     //private final Map<ButtonCoordinates, JButton> botonesPorCoordenada = new HashMap<>();
 
     public VistaGrafica() {
-        this.vca = new VistaGraficaAreaDeJuego();
-        this.vcd = new VistaGraficaDesfile();
-        this.vcm = new VistaGraficaMano();
+        this.vga = new VistaGraficaAreaDeJuego();
+        this.vggys = new VistaGraficaGuardarYSalir();
 
         initComponents();
         setLocationRelativeTo(null);
-        setSize(900, 540);
+        setSize(1080, 720);
         setLayout(new BorderLayout());
 
         setIconImage(icono);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);
         //Eventos
         addWindowListener(new WindowAdapter() {
             @Override

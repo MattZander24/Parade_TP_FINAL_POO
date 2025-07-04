@@ -38,4 +38,8 @@ public class Carta implements Serializable {
     public boolean isAnulada() {
         return anulada;
     }
+
+    private String nombreImagen () {
+        return String.valueOf(this.valor) + String.valueOf(this.color);
+    }
 }
