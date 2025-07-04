@@ -37,6 +37,14 @@ public class VistaGrafica  extends JFrame implements IVista {
     private VistaGraficaAreaDeJuego vga;
     private VistaGraficaGuardarYSalir vggys;
 
+    private JButton btnAreasJuego, btnJugadores, btnGuardarSalir;
+    private JLabel mazoLabel;
+    private Desfile desfile;
+    /*
+    private AreaDeJuego areaDeJuego;
+    private Mano mano;
+    */
+
     //private final Map<ButtonCoordinates, JButton> botonesPorCoordenada = new HashMap<>();
 
     public VistaGrafica() {
@@ -46,7 +54,7 @@ public class VistaGrafica  extends JFrame implements IVista {
         initComponents();
         setLocationRelativeTo(null);
         setSize(1080, 720);
-        setLayout(new BorderLayout());
+        setLayout(null);
 
         setIconImage(icono);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -91,7 +99,43 @@ public class VistaGrafica  extends JFrame implements IVista {
         });
 
         setLayout(new BorderLayout());
-        setVisible(false);
+
+        // Botones
+        btnAreasJuego = new JButton("1\nVER AREAS DE JUEGO");
+        btnAreasJuego.setBounds(20, 220, 100, 80);
+        add(btnAreasJuego);
+
+        btnJugadores = new JButton("2\nVER JUGADORES");
+        btnJugadores.setBounds(680, 220, 100, 80);
+        add(btnJugadores);
+
+        btnGuardarSalir = new JButton("3\nGUARDAR Y SALIR");
+        btnGuardarSalir.setBounds(680, 20, 100, 80);
+        add(btnGuardarSalir);
+
+        // Mazo
+        mazoLabel = new JLabel(new ImageIcon("carta_reverso.png"));
+        mazoLabel.setBounds(20, 20, 60, 90);
+        add(mazoLabel);
+
+        /*
+        // Desfile
+        desfile = new Desfile();
+        desfile.setBounds(100, 20, 560, 100);
+        add(desfile);
+
+        // Área de juego
+        areaDeJuego = new AreaDeJuego();
+        areaDeJuego.setBounds(140, 200, 500, 100);
+        add(areaDeJuego);
+
+        // Mano
+        mano = new Mano();
+        mano.setBounds(140, 400, 500, 100);
+        add(mano);*/
+
+        setVisible(true);
+        
         // Tablero
         /*BoardPanel boardPanel = new BoardPanel();
         crearBoton(boardPanel, 0, 0, 29, 29);
@@ -120,7 +164,7 @@ public class VistaGrafica  extends JFrame implements IVista {
         crearBoton(boardPanel, 6, 6, 425, 425);
         add(boardPanel, BorderLayout.WEST);*/
 
-        rightPanel = new JPanel(new BorderLayout());
+        /*rightPanel = new JPanel(new BorderLayout());
         // Texto
         textArea = new JTextArea(10, 30); // Ajusta los valores para que se ajuste a tus necesidades
         textArea.setEditable(false);
@@ -144,7 +188,7 @@ public class VistaGrafica  extends JFrame implements IVista {
         panelBotonesFin.add(bVolver, BorderLayout.WEST);
         rightPanel.add(panelBotonesFin, BorderLayout.SOUTH);
         panelBotonesFin.setVisible(false);
-        add(rightPanel, BorderLayout.EAST);
+        add(rightPanel, BorderLayout.EAST);*/
     }
 
     private void initComponents() {
