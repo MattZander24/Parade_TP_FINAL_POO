@@ -6,7 +6,7 @@ import ar.edu.unlu.parade.online.ServidorParade;
 import javax.swing.*;
 import java.awt.*;
 
-public class menuParade extends JFrame{
+public class menuParade extends JFrame {
     private JPanel panel1;
     private JLabel titulo;
     private JButton bReglas;
@@ -42,6 +42,7 @@ public class menuParade extends JFrame{
 
         // Eventos
         bIniciarRed.addActionListener(e -> {
+            dispose();
             new ServidorParade();
         });
         bUnirseRed.addActionListener(e -> {
@@ -55,7 +56,16 @@ public class menuParade extends JFrame{
             } else {
                 dispose();
                 new ListaPartidasGuardadas(partidasGuardadas);
-            }*/
+            }*/ //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
+            dispose();
+            new menuCargarPartida(/*partidasGuardadas*/);
+        });
+        bHistorialPartidas.addActionListener(e -> {
+            /*
+                //TODO ACÁ SE DEBE APLICAR LA MISMA LOGICA QUE LOS OTROS 2 BOTONES
+            */
+            //dispose();
+            new menuHistorialPartidas(/**/);
         });
         bTopJugadores.addActionListener(e -> {/*
             ArrayList<Jugador> mejoresJugadores = Persistencia.cargarJugadoresHistorico();
@@ -63,12 +73,9 @@ public class menuParade extends JFrame{
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado Jugadores en este ordenador.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 new MejoresJugadoresDialog(null, mejoresJugadores);
-            }*/
-        });
-        bHistorialPartidas.addActionListener(e -> {
-            /*
-
-            */
+            }*/ //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
+            //dispose();
+            new menuRankingJugadores(/*null, mejoresJugadores*/);
         });
         bReglas.addActionListener(e -> {
             String[] paginas = {
