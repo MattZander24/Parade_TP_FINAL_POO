@@ -1,82 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ar.edu.unlu.parade.vistagrafica.VistaGrafica">
-  <grid id="27dc6" binding="generalPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <grid id="27dc6" binding="generalPanel" layout-manager="CardLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties/>
-    <border type="empty">
-      <size top="30" left="10" bottom="10" right="10"/>
-    </border>
+    <border type="none"/>
     <children>
-      <grid id="3e37e" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="North"/>
-        <properties/>
+      <grid id="224d1" binding="menuPanel1" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="Card1"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+        </properties>
         <border type="empty">
-          <size top="0" left="20" bottom="0" right="0"/>
+          <size top="30" left="10" bottom="10" right="10"/>
         </border>
         <children>
-          <grid id="d77c7" binding="mazo" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints border-constraint="West"/>
+          <grid id="56263" binding="topPanel1" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="North"/>
             <properties/>
-            <border type="none"/>
-            <children/>
+            <border type="empty">
+              <size top="0" left="20" bottom="0" right="0"/>
+            </border>
+            <children>
+              <grid id="44cc8" binding="mazo1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="West"/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+              <grid id="8b346" binding="desfile1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+              <component id="14266" class="javax.swing.JButton" binding="bGuardarYSalir1">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value="Guardar y Salir"/>
+                </properties>
+              </component>
+            </children>
           </grid>
-          <grid id="39137" binding="desfile" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="dbc61" binding="centerPanel1" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
-            <border type="none"/>
-            <children/>
+            <border type="empty">
+              <size top="20" left="0" bottom="20" right="0"/>
+            </border>
+            <children>
+              <component id="ce799" class="javax.swing.JButton" binding="bVerAreaDeJuego1">
+                <constraints border-constraint="West"/>
+                <properties>
+                  <text value="Ver Area"/>
+                </properties>
+              </component>
+              <grid id="a13f2" binding="areaDeJuego1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+              <component id="ec195" class="javax.swing.JButton" binding="bVerJugadoresYSusAreasDeJuego1">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value="Ver Jugadores y Areas"/>
+                </properties>
+              </component>
+            </children>
           </grid>
-          <component id="901e8" class="javax.swing.JButton" binding="bGuardarYSalir">
-            <constraints border-constraint="East"/>
-            <properties>
-              <text value="Guardar y Salir"/>
-            </properties>
-          </component>
+          <grid id="9ebaf" binding="bottomPanel1" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="South"/>
+            <properties/>
+            <border type="none">
+              <size top="0" left="0" bottom="10" right="0"/>
+            </border>
+            <children>
+              <grid id="79706" binding="mano1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
         </children>
       </grid>
-      <grid id="ac931" binding="mediumPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="Center"/>
+      <grid id="c3619" binding="menuPanel2" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="Card2"/>
+        </constraints>
         <properties/>
         <border type="empty">
-          <size top="0" left="0" bottom="0" right="0"/>
+          <size top="10" left="10" bottom="20" right="10"/>
         </border>
         <children>
-          <component id="59dd4" class="javax.swing.JButton" binding="bVerAreaDeJuego">
-            <constraints border-constraint="West"/>
-            <properties>
-              <text value="Ver Area"/>
-            </properties>
-          </component>
-          <grid id="1e09" binding="areaDeJuego" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="61e8f" binding="topPanel2" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="cef3e" binding="jugador2" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="West"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="40425" binding="iconoJugador2" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints border-constraint="West"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children/>
+                  </grid>
+                  <component id="55b08" class="javax.swing.JLabel" binding="lNombreJugador2">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Jugador N°n"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <component id="db70a" class="javax.swing.JButton" binding="bSalir2">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value="Salir"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="c2504" binding="centerPanel2" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <grid id="76e24" binding="areaDeJuego2" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
           </grid>
-          <component id="e3a27" class="javax.swing.JButton" binding="bVerJugadoresYSusAreasDeJuego">
-            <constraints border-constraint="East"/>
-            <properties>
-              <text value="Ver Jugadores y Areas"/>
-            </properties>
-          </component>
         </children>
       </grid>
-      <grid id="89b82" binding="bottomPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="South"/>
+      <grid id="e0cc7" binding="menuPanel3" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="Card3"/>
+        </constraints>
         <properties/>
-        <border type="none"/>
+        <border type="empty">
+          <size top="10" left="10" bottom="20" right="10"/>
+        </border>
         <children>
-          <grid id="21aaa" binding="mano" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="d0d57" binding="topPanel3" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="80ee1" binding="jugador3" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="West"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="6dc7d" binding="iconoJugador3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints border-constraint="West"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children/>
+                  </grid>
+                  <component id="f17b4" class="javax.swing.JLabel" binding="lNombreJugador3">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Jugador N°n"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <component id="b8c61" class="javax.swing.JButton" binding="bSalir3">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value="Salir"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="32d3e" binding="centerPanel3" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <grid id="cec4f" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="West"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="4ed3b" class="javax.swing.JButton" binding="bAnterior3">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Anterior"/>
+                    </properties>
+                  </component>
+                  <vspacer id="455f8">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                </children>
+              </grid>
+              <grid id="639c9" binding="areaDeJuego3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+              <grid id="25493" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints border-constraint="East"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="5187d" class="javax.swing.JButton" binding="bSiguiente3">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Siguiente"/>
+                    </properties>
+                  </component>
+                  <vspacer id="71a83">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="266cc" binding="menuPanel4" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="Card4"/>
+        </constraints>
+        <properties/>
+        <border type="empty">
+          <size top="30" left="50" bottom="20" right="50"/>
+        </border>
+        <children>
+          <grid id="42c65" binding="centerPanel4" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none">
+              <size top="0" left="0" bottom="0" right="0"/>
+            </border>
+            <children>
+              <component id="af028" class="javax.swing.JLabel" binding="lGuardarYSalir4">
+                <constraints border-constraint="North"/>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="¿Desea guardar la partida y salir al menú principal?"/>
+                </properties>
+              </component>
+              <grid id="a977f" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="empty">
+                  <size top="100" left="125" bottom="150" right="125"/>
+                </border>
+                <children>
+                  <component id="4efeb" class="javax.swing.JButton" binding="bSi4">
+                    <constraints border-constraint="North"/>
+                    <properties>
+                      <text value="SI"/>
+                    </properties>
+                  </component>
+                  <component id="946f2" class="javax.swing.JButton" binding="bNo4">
+                    <constraints border-constraint="South"/>
+                    <properties>
+                      <text value="NO"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
           </grid>
         </children>
       </grid>

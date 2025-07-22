@@ -13,29 +13,58 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class VistaGrafica  extends JFrame implements IVista {
+public class VistaGrafica extends JFrame implements IVista {
 
     private ControladorParade c;
     private Image icono;
-    private Image iconoMazo;
-
-    private VistaGraficaAreaDeJuego vga;
-    private VistaGraficaGuardarYSalir vggys;
-
     private JPanel generalPanel;
 
-    private JPanel topPanel;
-    private JPanel mazo;
-    private JPanel desfile;
-    private JButton bGuardarYSalir;
 
-    private JPanel mediumPanel;
-    private JButton bVerAreaDeJuego;
-    private JPanel areaDeJuego;
-    private JButton bVerJugadoresYSusAreasDeJuego;
+    //MENU PANEL MESA
+    private JPanel menuPanel1;
+    private JPanel topPanel1;
+    private JPanel mazo1;
+    private Image iconoMazo1;
+    private JPanel desfile1;
+    private JButton bGuardarYSalir1;
+    private JPanel centerPanel1;
+    private JButton bVerAreaDeJuego1;
+    private JPanel areaDeJuego1;
+    private JButton bVerJugadoresYSusAreasDeJuego1;
+    private JPanel bottomPanel1;
+    private JPanel mano1;
 
-    private JPanel bottomPanel;
-    private JPanel mano;
+
+    //MENU PANEL AREA DE JUEGO
+    private JPanel menuPanel2;
+    private JPanel topPanel2;
+    private JPanel jugador2;
+    private JPanel iconoJugador2;
+    private JLabel lNombreJugador2;
+    private JButton bSalir2;
+    private JPanel centerPanel2;
+    private JPanel areaDeJuego2;
+
+
+    //MENU PANEL AREAS DE JUEGO
+    private JPanel menuPanel3;
+    private JPanel topPanel3;
+    private JPanel jugador3;
+    private JPanel iconoJugador3;
+    private JLabel lNombreJugador3;
+    private JButton bSalir3;
+    private JPanel centerPanel3;
+    private JPanel areaDeJuego3;
+    private JButton bAnterior3;
+    private JButton bSiguiente3;
+
+
+    //MENU PANEL GUARDAR Y SALIR
+    private JPanel menuPanel4;
+    private JPanel centerPanel4;
+    private JLabel lGuardarYSalir4;
+    private JButton bSi4;
+    private JButton bNo4;
 
     /*
     private AreaDeJuego areaDeJuego;
@@ -43,20 +72,18 @@ public class VistaGrafica  extends JFrame implements IVista {
     */
 
     public VistaGrafica() {
-        this.vga = new VistaGraficaAreaDeJuego();
-        this.vggys = new VistaGraficaGuardarYSalir();
 
         initComponents();
         setLocationRelativeTo(null);
         setSize(1080, 720);
-        setLayout(null);
+        //setLayout(null);
 
         setIconImage(icono);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
         setContentPane(generalPanel);
-        setVisible(true); //TODO Borrar despues
+        setVisible(true); //TODO Esto se activa en otro lado
 
         //Eventos
         addWindowListener(new WindowAdapter() {
@@ -97,7 +124,33 @@ public class VistaGrafica  extends JFrame implements IVista {
             }
         });
 
-        //setLayout(new BorderLayout());
+        bVerAreaDeJuego1.addActionListener(e -> {
+            CardLayout cl = (CardLayout)(generalPanel.getLayout());
+            cl.show(generalPanel, "Card2");
+        });
+        bVerJugadoresYSusAreasDeJuego1.addActionListener(e -> {
+            CardLayout cl = (CardLayout)(generalPanel.getLayout());
+            cl.show(generalPanel, "Card3");
+        });
+        bGuardarYSalir1.addActionListener(e -> {
+            CardLayout cl = (CardLayout)(generalPanel.getLayout());
+            cl.show(generalPanel, "Card4");
+        });
+
+        bSalir2.addActionListener(e -> {
+            CardLayout cl = (CardLayout)(generalPanel.getLayout());
+            cl.show(generalPanel, "Card1");
+        });
+
+        bSalir3.addActionListener(e -> {
+            CardLayout cl = (CardLayout)(generalPanel.getLayout());
+            cl.show(generalPanel, "Card1");
+        });
+
+        bNo4.addActionListener(e -> {
+            CardLayout cl = (CardLayout)(generalPanel.getLayout());
+            cl.show(generalPanel, "Card1");
+        });
 
         setVisible(true);
     }
@@ -108,12 +161,24 @@ public class VistaGrafica  extends JFrame implements IVista {
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
 
-        iconoMazo = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/MAZO.png")).getImage();
-        Image iconoMazoEscalado = iconoMazo.getScaledInstance(103, 160, Image.SCALE_SMOOTH);
+        //MENU PANEL 1
+        iconoMazo1 = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/MAZO.png")).getImage();
+        Image iconoMazoEscalado = iconoMazo1.getScaledInstance(103, 160, Image.SCALE_SMOOTH);
         JLabel mazoLabel = new JLabel(new ImageIcon(iconoMazoEscalado));
 
-        mazo.setLayout(new BorderLayout());
-        mazo.add(mazoLabel, BorderLayout.CENTER);
+        mazo1.setLayout(new BorderLayout());
+        mazo1.add(mazoLabel, BorderLayout.CENTER);
+
+        //MENU PANEL 2
+
+        //MENU PANEL 3
+
+        //MENU PANEL 4
+
+        //GENERAL
+        CardLayout cl = (CardLayout)(generalPanel.getLayout());
+        cl.show(generalPanel, "Card4");
+
     }
 
     @Override
