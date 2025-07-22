@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ar.edu.unlu.parade.vistagrafica.VistaGrafica">
   <grid id="27dc6" binding="generalPanel" layout-manager="CardLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="500" height="405"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -57,7 +57,7 @@
               <component id="ce799" class="javax.swing.JButton" binding="bVerAreaDeJuego1">
                 <constraints border-constraint="West"/>
                 <properties>
-                  <text value="Ver Area"/>
+                  <text value="Ver Area de Juego"/>
                 </properties>
               </component>
               <grid id="a13f2" binding="areaDeJuego1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -70,7 +70,7 @@
               <component id="ec195" class="javax.swing.JButton" binding="bVerJugadoresYSusAreasDeJuego1">
                 <constraints border-constraint="East"/>
                 <properties>
-                  <text value="Ver Jugadores y Areas"/>
+                  <text value="Ver Jugadores y sus Areas de Juego"/>
                 </properties>
               </component>
             </children>
@@ -116,7 +116,9 @@
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints border-constraint="West"/>
                     <properties/>
-                    <border type="none"/>
+                    <border type="empty">
+                      <size top="0" left="0" bottom="0" right="20"/>
+                    </border>
                     <children/>
                   </grid>
                   <component id="55b08" class="javax.swing.JLabel" binding="lNombreJugador2">
@@ -174,7 +176,9 @@
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints border-constraint="West"/>
                     <properties/>
-                    <border type="none"/>
+                    <border type="empty">
+                      <size top="0" left="0" bottom="0" right="20"/>
+                    </border>
                     <children/>
                   </grid>
                   <component id="f17b4" class="javax.swing.JLabel" binding="lNombreJugador3">
@@ -289,13 +293,19 @@
                     </properties>
                   </component>
                   <component id="946f2" class="javax.swing.JButton" binding="bNo4">
-                    <constraints border-constraint="South"/>
+                    <constraints border-constraint="Center"/>
                     <properties>
                       <text value="NO"/>
                     </properties>
                   </component>
+                  <vspacer id="61d66">
+                    <constraints border-constraint="South"/>
+                  </vspacer>
                 </children>
               </grid>
+              <vspacer id="4664b">
+                <constraints border-constraint="South"/>
+              </vspacer>
             </children>
           </grid>
         </children>

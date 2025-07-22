@@ -169,15 +169,128 @@ public class VistaGrafica extends JFrame implements IVista {
         mazo1.setLayout(new BorderLayout());
         mazo1.add(mazoLabel, BorderLayout.CENTER);
 
+        ImageIcon iconoAreaDeJuego = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonVerAreaDeJuego.png"));
+        Image imagenEscaladaAreaDeJuego = iconoAreaDeJuego.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoAreaDeJuego = new ImageIcon(imagenEscaladaAreaDeJuego);
+        bVerAreaDeJuego1.setIcon(iconoEscaladoAreaDeJuego);
+        bVerAreaDeJuego1.setHorizontalTextPosition(SwingConstants.CENTER);
+        bVerAreaDeJuego1.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bVerAreaDeJuego1.setBorderPainted(false);
+        bVerAreaDeJuego1.setContentAreaFilled(false);
+        bVerAreaDeJuego1.setFocusPainted(false);
+        bVerAreaDeJuego1.setOpaque(false);
+        //bVerAreaDeJuego1.setText("");
+
+        ImageIcon iconoAreasDeJuego = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonVerAreasDeJuego.png"));
+        Image imagenEscaladaAreasDeJuego = iconoAreasDeJuego.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoAreasDeJuego = new ImageIcon(imagenEscaladaAreasDeJuego);
+        bVerJugadoresYSusAreasDeJuego1.setIcon(iconoEscaladoAreasDeJuego);
+        bVerJugadoresYSusAreasDeJuego1.setHorizontalTextPosition(SwingConstants.CENTER);
+        bVerJugadoresYSusAreasDeJuego1.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bVerJugadoresYSusAreasDeJuego1.setBorderPainted(false);
+        bVerJugadoresYSusAreasDeJuego1.setContentAreaFilled(false);
+        bVerJugadoresYSusAreasDeJuego1.setFocusPainted(false);
+        bVerJugadoresYSusAreasDeJuego1.setOpaque(false);
+        //bVerJugadoresYSusAreasDeJuego1.setText("");
+
+        ImageIcon iconoGuardarYSalir = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonGuardarYSalir.png"));
+        Image imagenEscaladaGuardarYSalir = iconoGuardarYSalir.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoGuardarYSalir = new ImageIcon(imagenEscaladaGuardarYSalir);
+        bGuardarYSalir1.setIcon(iconoEscaladoGuardarYSalir);
+        bGuardarYSalir1.setHorizontalTextPosition(SwingConstants.CENTER);
+        bGuardarYSalir1.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bGuardarYSalir1.setBorderPainted(false);
+        bGuardarYSalir1.setContentAreaFilled(false);
+        bGuardarYSalir1.setFocusPainted(false);
+        bGuardarYSalir1.setOpaque(false);
+        bGuardarYSalir1.setText("");
+
         //MENU PANEL 2
+        ImageIcon iconoJugador = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/ImagenJugador.png"));
+        Image iconoJugadorEscalado = iconoJugador.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        JLabel jugadorLabel2 = new JLabel(new ImageIcon(iconoJugadorEscalado));
+
+        iconoJugador2.setLayout(new BorderLayout());
+        iconoJugador2.add(jugadorLabel2, BorderLayout.CENTER);
+
+        ImageIcon iconoVolver = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonVolver.png"));
+        Image imagenEscaladaVolver = iconoVolver.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoVolver = new ImageIcon(imagenEscaladaVolver);
+        bSalir2.setIcon(iconoEscaladoVolver);
+        bSalir2.setHorizontalTextPosition(SwingConstants.CENTER);
+        bSalir2.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bSalir2.setBorderPainted(false);
+        bSalir2.setContentAreaFilled(false);
+        bSalir2.setFocusPainted(false);
+        bSalir2.setOpaque(false);
+        bSalir2.setText("");
 
         //MENU PANEL 3
+        JLabel jugadorLabel3 = new JLabel(new ImageIcon(iconoJugadorEscalado));
+        iconoJugador3.setLayout(new BorderLayout());
+        iconoJugador3.add(jugadorLabel3, BorderLayout.CENTER);
+
+        bSalir3.setIcon(iconoEscaladoVolver);
+        bSalir3.setHorizontalTextPosition(SwingConstants.CENTER);
+        bSalir3.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bSalir3.setBorderPainted(false);
+        bSalir3.setContentAreaFilled(false);
+        bSalir3.setFocusPainted(false);
+        bSalir3.setOpaque(false);
+        bSalir3.setText("");
+
+        ImageIcon iconoAnterior = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonAnterior.png"));
+        Image imagenEscaladaAnterior = iconoAnterior.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoAnterior = new ImageIcon(imagenEscaladaAnterior);
+        bAnterior3.setIcon(iconoEscaladoAnterior);
+        bAnterior3.setHorizontalTextPosition(SwingConstants.CENTER);
+        bAnterior3.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bAnterior3.setBorderPainted(false);
+        bAnterior3.setContentAreaFilled(false);
+        bAnterior3.setFocusPainted(false);
+        bAnterior3.setOpaque(false);
+        bAnterior3.setText("");
+
+        ImageIcon iconoSiguiente = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonSiguiente.png"));
+        Image imagenEscaladaSiguiente = iconoSiguiente.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoSiguiente = new ImageIcon(imagenEscaladaSiguiente);
+        bSiguiente3.setIcon(iconoEscaladoSiguiente);
+        bSiguiente3.setHorizontalTextPosition(SwingConstants.CENTER);
+        bSiguiente3.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bSiguiente3.setBorderPainted(false);
+        bSiguiente3.setContentAreaFilled(false);
+        bSiguiente3.setFocusPainted(false);
+        bSiguiente3.setOpaque(false);
+        bSiguiente3.setText("");
 
         //MENU PANEL 4
+        ImageIcon iconoSi = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonSi.png"));
+        Image imagenEscaladaSi = iconoSi.getImage().getScaledInstance(125, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoSi = new ImageIcon(imagenEscaladaSi);
+        bSi4.setIcon(iconoEscaladoSi);
+        bSi4.setHorizontalTextPosition(SwingConstants.CENTER);
+        bSi4.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bSi4.setBorderPainted(false);
+        bSi4.setContentAreaFilled(false);
+        bSi4.setFocusPainted(false);
+        bSi4.setOpaque(false);
+        bSi4.setText("");
+
+        ImageIcon iconoNo = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonNo.png"));
+        Image imagenEscaladaNo = iconoNo.getImage().getScaledInstance(125, 75, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscaladoNo = new ImageIcon(imagenEscaladaNo);
+        bNo4.setIcon(iconoEscaladoNo);
+        bNo4.setHorizontalTextPosition(SwingConstants.CENTER);
+        bNo4.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bNo4.setBorderPainted(false);
+        bNo4.setContentAreaFilled(false);
+        bNo4.setFocusPainted(false);
+        bNo4.setOpaque(false);
+        bNo4.setText("");
 
         //GENERAL
         CardLayout cl = (CardLayout)(generalPanel.getLayout());
-        cl.show(generalPanel, "Card4");
+        cl.show(generalPanel, "Card1");
 
     }
 
