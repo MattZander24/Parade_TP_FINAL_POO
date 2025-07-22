@@ -23,7 +23,7 @@ public class menuParade extends JFrame {
     public menuParade() {
         // Iniciar y configurar Frame
         initElements();
-        setSize(350, 300);
+        setSize(360, 400);
         setContentPane(panel1);
         setIconImage(icono);
         setVisible(true);
@@ -31,14 +31,6 @@ public class menuParade extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Menú principal - Parade");
-
-        titulo.setText("¡Bienvenido al juego Parade!");
-        bIniciarRed.setText("Crear un servidor");
-        bUnirseRed.setText("Unirse a un servidor");
-        bReanudar.setText("Cargar una partida");
-        bHistorialPartidas.setText("Ver el Historial de partidas");
-        bTopJugadores.setText("Ver Ranking de jugadores");
-        bReglas.setText("¿Cómo jugar? | Reglas");
 
         // Eventos
         bIniciarRed.addActionListener(e -> {

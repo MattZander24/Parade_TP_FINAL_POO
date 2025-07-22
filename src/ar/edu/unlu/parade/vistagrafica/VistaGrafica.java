@@ -17,6 +17,7 @@ public class VistaGrafica  extends JFrame implements IVista {
 
     private ControladorParade c;
     private Image icono;
+    private Image iconoMazo;
 
     private VistaGraficaAreaDeJuego vga;
     private VistaGraficaGuardarYSalir vggys;
@@ -52,7 +53,10 @@ public class VistaGrafica  extends JFrame implements IVista {
 
         setIconImage(icono);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setResizable(true);
+        setResizable(false);
+
+        setContentPane(generalPanel);
+        setVisible(true); //TODO Borrar despues
 
         //Eventos
         addWindowListener(new WindowAdapter() {
@@ -103,6 +107,13 @@ public class VistaGrafica  extends JFrame implements IVista {
         Image originalImage = icono;
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
+
+        iconoMazo = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/MAZO.png")).getImage();
+        Image iconoMazoEscalado = iconoMazo.getScaledInstance(103, 160, Image.SCALE_SMOOTH);
+        JLabel mazoLabel = new JLabel(new ImageIcon(iconoMazoEscalado));
+
+        mazo.setLayout(new BorderLayout());
+        mazo.add(mazoLabel, BorderLayout.CENTER);
     }
 
     @Override

@@ -37,7 +37,5 @@ public class menuHistorialPartidas extends JFrame {
         Image originalImage = icono;
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
-
-
     }
 }

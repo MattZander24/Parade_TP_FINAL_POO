@@ -1,7 +1,5 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
-import ar.edu.unlu.parade.online.ServidorParade;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,6 +13,7 @@ public class menuRankingJugadores extends JFrame {
     private JLabel lTop5;
     private JButton bSalir;
     private JPanel topPanel;
+    private JPanel centerPanel;
 
     private Image icono;
 
@@ -41,7 +40,5 @@ public class menuRankingJugadores extends JFrame {
         Image originalImage = icono;
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
-
-
     }
 }
