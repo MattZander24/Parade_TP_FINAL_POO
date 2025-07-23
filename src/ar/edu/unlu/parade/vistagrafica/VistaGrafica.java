@@ -24,6 +24,9 @@ public class VistaGrafica extends JFrame implements IVista {
     private Image icono;
     private JPanel generalPanel;
 
+    int indiceInput; //3 = Evaluar carta, 4 = Descartar carta
+    int indiceCarta = 0;
+
 
     //MENU PANEL MESA
     private JPanel menuPanel1;
@@ -193,6 +196,8 @@ public class VistaGrafica extends JFrame implements IVista {
 
         //TEST MODO TURNO
         setModoTurno(false);
+        indiceInput = 3;
+
     }
 
     private void initComponents() {
@@ -381,7 +386,12 @@ public class VistaGrafica extends JFrame implements IVista {
         panelCartas.removeAll();
         panelCartas.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        for (Carta carta : listaCartas.getCartas()) {
+        List<Carta> cartas = listaCartas.getCartas();
+
+        for (int i = 0; i < cartas.size(); i++) {
+            Carta carta = cartas.get(i);
+            final int indiceCarta = i;
+
             String nombreImagen = carta.nombreImagen();
             ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
             Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
@@ -389,10 +399,8 @@ public class VistaGrafica extends JFrame implements IVista {
 
             bCarta.addActionListener(e -> {
                 if (c.getJugadorLocal().isTurnoJugador()) {
-                    // TODO ACÁ VA EL CODIGO DE JUGAR CARTA
-                    System.out.println("Carta jugada !");
-                }
-                else {
+                    seleccionCartaOpcion(indiceCarta);
+                } else {
                     JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
                 }
             });
@@ -550,9 +558,21 @@ public class VistaGrafica extends JFrame implements IVista {
 
     }
 
+    public void seleccionCartaOpcion (int indiceCartaJugada) {
+        Jugador j = c.getJugadorLocal();
+        DestinoCarta d = null;
+        if (indiceInput == 3) { d = DestinoCarta.EVALUAR; }
+        else if (indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
+        c.devolverCarta(j, indiceCartaJugada, d);
+
+        //todo CAMBIAR TURNO? O SE HACE EN OTRO LUGAR
+        //setModoTurno(false);
+    }
+
     @Override
     public void mensajeDescarteFinal(Jugador j) {
         if (c.getJugadorLocal().isTurnoJugador()) {
+            indiceInput = 4;
             JOptionPane.showMessageDialog(this,
                     j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar\n" +
                     "(las otras dos se añadirán al area de juego para contarse en la puntuación)",
