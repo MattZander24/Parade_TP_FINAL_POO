@@ -19,7 +19,7 @@ public class ClienteParade {
     public ClienteParade() {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("Consola");
-        opciones.add("Consola (con UI mejorada)");
+        //opciones.add("Consola (con UI mejorada)");
         opciones.add("Interfáz gráfica");
         ArrayList<String> ips = Util.getIpDisponibles();
         String ip = (String) JOptionPane.showInputDialog(
@@ -72,12 +72,12 @@ public class ClienteParade {
             controlador.setV(vista);
 
             //System.out.println("CONSOLA");
-        } else if (interfaz.equals("Consola (con UI mejorada)")) {
+        } /*else if (interfaz.equals("Consola (con UI mejorada)")) {
             //vista = new VistaConsolaMejorada(controlador);
             vista = null;
 
             System.out.println("CONSOLA MEJORADA");
-        } else {
+        }*/ else {
             //vista = new VistaInterfazGrafica(controlador);
             vista = new VistaGrafica();
             vista.setC(controlador);

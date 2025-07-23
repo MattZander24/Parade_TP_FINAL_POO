@@ -3,8 +3,9 @@ package ar.edu.unlu.parade.vistagrafica;
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.enumerados.DestinoCarta;
 import ar.edu.unlu.parade.interfaces.IVista;
-import ar.edu.unlu.parade.modelo.Desfile;
-import ar.edu.unlu.parade.modelo.Jugador;
+import ar.edu.unlu.parade.modelo.*;
+import ar.edu.unlu.parade.vistamenuprepartida.menuPrePartida;
+import ar.edu.unlu.parade.enumerados.Color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class VistaGrafica extends JFrame implements IVista {
 
@@ -24,6 +28,7 @@ public class VistaGrafica extends JFrame implements IVista {
     private JPanel menuPanel1;
     private JPanel topPanel1;
     private JPanel mazo1;
+    private JLabel mazoLabel;
     private Image iconoMazo1;
     private JPanel desfile1;
     private JButton bGuardarYSalir1;
@@ -125,16 +130,31 @@ public class VistaGrafica extends JFrame implements IVista {
         });
 
         bVerAreaDeJuego1.addActionListener(e -> {
-            CardLayout cl = (CardLayout)(generalPanel.getLayout());
-            cl.show(generalPanel, "Card2");
+            if (c.getJugadorLocal().isTurnoJugador()) {
+                CardLayout cl = (CardLayout) (generalPanel.getLayout());
+                cl.show(generalPanel, "Card2");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
+            }
         });
         bVerJugadoresYSusAreasDeJuego1.addActionListener(e -> {
-            CardLayout cl = (CardLayout)(generalPanel.getLayout());
-            cl.show(generalPanel, "Card3");
+            if (c.getJugadorLocal().isTurnoJugador()) {
+                CardLayout cl = (CardLayout)(generalPanel.getLayout());
+                cl.show(generalPanel, "Card3");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
+            }
         });
         bGuardarYSalir1.addActionListener(e -> {
-            CardLayout cl = (CardLayout)(generalPanel.getLayout());
-            cl.show(generalPanel, "Card4");
+            if (c.getJugadorLocal().isTurnoJugador()) {
+                CardLayout cl = (CardLayout)(generalPanel.getLayout());
+                cl.show(generalPanel, "Card4");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
+            }
         });
 
         bSalir2.addActionListener(e -> {
@@ -152,6 +172,24 @@ public class VistaGrafica extends JFrame implements IVista {
             cl.show(generalPanel, "Card1");
         });
 
+        //TEST DISPLAY
+        Mazo mazoJuego = new Mazo();
+        Desfile desfileJuego = new Desfile();
+        Mano manoJuego = new Mano();
+        AreaDeJuego aJuego = new AreaDeJuego();
+
+        mazoJuego.generarMazo();
+        mazoJuego.mezclarMazo();
+        mazoJuego.transferirCartas(desfileJuego, 6);
+        displayCartasDesfile(desfile1, desfileJuego);
+
+        mazoJuego.transferirCartas(manoJuego, 4);
+        displayCartasMano(mano1, manoJuego);
+
+        mazoJuego.transferirCartas(aJuego, 10);
+        aJuego.ordenar();
+        displayCartasAreaDeJuego(areaDeJuego1, aJuego);
+
         setVisible(true);
     }
 
@@ -164,7 +202,7 @@ public class VistaGrafica extends JFrame implements IVista {
         //MENU PANEL 1
         iconoMazo1 = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/MAZO.png")).getImage();
         Image iconoMazoEscalado = iconoMazo1.getScaledInstance(103, 160, Image.SCALE_SMOOTH);
-        JLabel mazoLabel = new JLabel(new ImageIcon(iconoMazoEscalado));
+        mazoLabel = new JLabel(new ImageIcon(iconoMazoEscalado));
 
         mazo1.setLayout(new BorderLayout());
         mazo1.add(mazoLabel, BorderLayout.CENTER);
@@ -291,8 +329,112 @@ public class VistaGrafica extends JFrame implements IVista {
         //GENERAL
         CardLayout cl = (CardLayout)(generalPanel.getLayout());
         cl.show(generalPanel, "Card1");
+        setModoTurno(true);
 
     }
+
+    public void setModoTurno(boolean turno) {
+
+        // Ponemos un fondo grisáceo si no es el turno
+        float gris = turno ? 1f : 0.6f;
+        java.awt.Color filtro = new java.awt.Color(gris, gris, gris);
+
+        generalPanel.setBackground(filtro);
+
+        /*mazoLabel.setOpaque(true);
+        mazoLabel.setBackground(filtro);
+        bGuardarYSalir1.setContentAreaFilled(false);
+        bGuardarYSalir1.setOpaque(true);
+        bGuardarYSalir1.setBackground(filtro);
+        bVerAreaDeJuego1.setContentAreaFilled(false);
+        bVerAreaDeJuego1.setOpaque(true);
+        bVerAreaDeJuego1.setBackground(filtro);
+        bVerJugadoresYSusAreasDeJuego1.setContentAreaFilled(false);
+        bVerJugadoresYSusAreasDeJuego1.setOpaque(true);
+        bVerJugadoresYSusAreasDeJuego1.setBackground(filtro);*/
+    }
+
+    public void displayCartasDesfile(JPanel panelCartas, ListaCartas listaCartas) {
+        panelCartas.removeAll();
+        panelCartas.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+
+        for (Carta carta : listaCartas.getCartas()) {
+            String nombreImagen = carta.nombreImagen();
+            ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
+
+            Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
+            JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
+            panelCartas.add(cartaLabel);
+        }
+
+        panelCartas.revalidate();
+        panelCartas.repaint();
+    }
+
+    public void displayCartasMano(JPanel panelCartas, ListaCartas listaCartas) {
+        panelCartas.removeAll();
+        panelCartas.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
+        for (Carta carta : listaCartas.getCartas()) {
+            String nombreImagen = carta.nombreImagen();
+            ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
+            Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
+            JButton bCarta = new JButton(new ImageIcon(imagenEscalada));
+
+            bCarta.addActionListener(e -> {
+                if (c.getJugadorLocal().isTurnoJugador()) {
+                    System.out.println("Carta jugada !");
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
+                }
+            });
+
+            panelCartas.add(bCarta);
+        }
+
+        panelCartas.revalidate();
+        panelCartas.repaint();
+    }
+
+    public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas) {
+        panelArea.removeAll();
+        panelArea.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10)); // separacion entre columnas
+
+        // Crear un panel por color (una columna por color)
+        for (Color color : Color.values()) {
+            JPanel columna = new JPanel(null); // layout absoluto para superponer
+            columna.setPreferredSize(new Dimension(110, 600)); // altura grande suficiente
+            columna.setOpaque(false); // sin fondo visible
+
+            // Filtrar cartas del color correspondiente
+            List<Carta> cartasDelColor = (List<Carta>) listaCartas.getCartas().stream()
+                    .filter(c -> c.getColor() == color)/*
+                    .sorted(Comparator.comparingInt(Carta::getValor)) // orden de abajo hacia arriba*/
+                    .toList();
+
+            // Superponer de abajo hacia arriba
+            int offset = 0;
+            for (int i = cartasDelColor.size() - 1; i >= 0; i--) {
+                Carta carta = cartasDelColor.get(i);
+                String nombreImagen = carta.nombreImagen();
+                ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
+                Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
+                JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
+                cartaLabel.setBounds(0, offset, 103, 160); // posición absoluta
+                columna.add(cartaLabel);
+                offset += 30; // superposición: se muestra solo parte de la carta anterior
+            }
+
+            panelArea.add(columna);
+        }
+
+        panelArea.revalidate();
+        panelArea.repaint();
+    }
+
+
+
 
     @Override
     public ControladorParade getC() {
@@ -312,7 +454,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void iniciarVista() {
-
+        new menuPrePartida(c);
     }
 
     @Override

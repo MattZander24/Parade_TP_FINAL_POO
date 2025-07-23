@@ -5,7 +5,7 @@ import ar.edu.unlu.parade.enumerados.Color;
 import java.io.Serializable;
 
 public class Carta implements Serializable {
-    private int valor; //VALORES POSIBLES SOLO DE 0 a 10
+    private int valor; //VALORES POSIBLES SOLO DE 1 a 10
     private Color color;
     private boolean anulada;
 
@@ -39,7 +39,7 @@ public class Carta implements Serializable {
         return anulada;
     }
 
-    private String nombreImagen () {
+    public String nombreImagen () {
         return String.valueOf(this.valor) + String.valueOf(this.color);
     }
 }
