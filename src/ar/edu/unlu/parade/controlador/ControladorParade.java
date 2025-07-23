@@ -105,7 +105,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void seleccionarCarta(Jugador j) {
+    public void seleccionarCarta() {
         try {
             m.evaluarCarta();
         }
@@ -192,9 +192,9 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void mostrarAreaDeJuego (Jugador j) {
+    public void mostrarAreaDeJuego () {
         try {
-            m.mostrarAreaDeJuego(j);
+            m.mostrarAreaDeJuego();
         }
         catch (RemoteException e) {
             e.printStackTrace();
@@ -210,9 +210,9 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void mostrarMano (Jugador j) {
+    public void mostrarMano () {
         try {
-            m.mostrarMano(j);
+            m.mostrarMano();
         }
         catch (RemoteException e) {
             e.printStackTrace();
@@ -312,7 +312,7 @@ public class ControladorParade implements IControladorRemoto {
                 case MOSTRAR_AREA:
                     v.mostrarADJ(jugadorLocal);
                     break;
-                case MOSTRAR_AREA_TODOS:
+                case MOSTRAR_AREA_TODOS: //ESTO ESTA MAL, EN VISTA GRAFICA NO ANDA
                     for (Jugador j : m.getPartida().getJugadores()) { //TODO por ahi esto debería ir fuera del modelo
                         v.mostrarADJ(j);
                     }

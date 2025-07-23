@@ -6,6 +6,7 @@ import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.parade.modelo.*;
 import ar.edu.unlu.parade.vistamenuprepartida.menuPrePartida;
 import ar.edu.unlu.parade.enumerados.Color;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -173,7 +174,7 @@ public class VistaGrafica extends JFrame implements IVista {
         });
 
         //TEST DISPLAY
-        Mazo mazoJuego = new Mazo();
+        /*Mazo mazoJuego = new Mazo();
         Desfile desfileJuego = new Desfile();
         Mano manoJuego = new Mano();
         AreaDeJuego aJuego = new AreaDeJuego();
@@ -188,9 +189,10 @@ public class VistaGrafica extends JFrame implements IVista {
 
         mazoJuego.transferirCartas(aJuego, 10);
         aJuego.ordenar();
-        displayCartasAreaDeJuego(areaDeJuego1, aJuego);
+        displayCartasAreaDeJuego(areaDeJuego1, aJuego, 1);*/
 
-        setVisible(true);
+        //TEST MODO TURNO
+        setModoTurno(false);
     }
 
     private void initComponents() {
@@ -329,17 +331,21 @@ public class VistaGrafica extends JFrame implements IVista {
         //GENERAL
         CardLayout cl = (CardLayout)(generalPanel.getLayout());
         cl.show(generalPanel, "Card1");
-        setModoTurno(true);
 
     }
 
     public void setModoTurno(boolean turno) {
 
         // Ponemos un fondo grisáceo si no es el turno
-        float gris = turno ? 1f : 0.6f;
-        java.awt.Color filtro = new java.awt.Color(gris, gris, gris);
+        float r = turno ? 1f : 0.6f;  // rojo un poco más alto
+        float g = turno ? 1f : 0.5f;  // verde más bajo
+        float b = turno ? 1f : 0.5f;  // azul más bajo
+        java.awt.Color filtro = new java.awt.Color(r, g, b);
 
         generalPanel.setBackground(filtro);
+
+        String debugColor = turno ? "COLOR TRUE" : "COLOR FALSE";
+        System.out.println(debugColor);
 
         /*mazoLabel.setOpaque(true);
         mazoLabel.setBackground(filtro);
@@ -383,6 +389,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
             bCarta.addActionListener(e -> {
                 if (c.getJugadorLocal().isTurnoJugador()) {
+                    // TODO ACÁ VA EL CODIGO DE JUGAR CARTA
                     System.out.println("Carta jugada !");
                 }
                 else {
@@ -397,33 +404,44 @@ public class VistaGrafica extends JFrame implements IVista {
         panelCartas.repaint();
     }
 
-    public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas) {
+    public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
+        int anchoCarta = 0;
+        int altoCarta = 0;
+        if (modo == 1) {
+            anchoCarta = 70;
+            altoCarta = 110;
+        }
+        else if (modo == 2) {
+            anchoCarta = 103;
+            altoCarta = 160;
+        }
+
         panelArea.removeAll();
-        panelArea.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10)); // separacion entre columnas
+        panelArea.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 10));
 
-        // Crear un panel por color (una columna por color)
         for (Color color : Color.values()) {
-            JPanel columna = new JPanel(null); // layout absoluto para superponer
-            columna.setPreferredSize(new Dimension(110, 600)); // altura grande suficiente
-            columna.setOpaque(false); // sin fondo visible
+            JPanel columna = new JPanel(null);
+            columna.setPreferredSize(new Dimension(100, 600));
+            columna.setOpaque(false);
 
-            // Filtrar cartas del color correspondiente
             List<Carta> cartasDelColor = (List<Carta>) listaCartas.getCartas().stream()
-                    .filter(c -> c.getColor() == color)/*
-                    .sorted(Comparator.comparingInt(Carta::getValor)) // orden de abajo hacia arriba*/
+                    .filter(c -> c.getColor() == color)
+                    /*.sorted(Comparator.comparingInt(Carta::getValor)) // orden de abajo hacia arriba*/
                     .toList();
 
             // Superponer de abajo hacia arriba
-            int offset = 0;
+            int offsetX = 0;
+            int offsetY = 0;
             for (int i = cartasDelColor.size() - 1; i >= 0; i--) {
                 Carta carta = cartasDelColor.get(i);
                 String nombreImagen = carta.nombreImagen();
                 ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
-                Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
+                Image imagenEscalada = icono.getImage().getScaledInstance(anchoCarta, altoCarta, Image.SCALE_SMOOTH);
                 JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
-                cartaLabel.setBounds(0, offset, 103, 160); // posición absoluta
+                cartaLabel.setBounds(offsetY, offsetX, anchoCarta, altoCarta); // posición absoluta
                 columna.add(cartaLabel);
-                offset += 30; // superposición: se muestra solo parte de la carta anterior
+                offsetX += 30; // superposición: se muestra solo parte de la carta anterior
+                offsetY += 5;
             }
 
             panelArea.add(columna);
@@ -432,9 +450,6 @@ public class VistaGrafica extends JFrame implements IVista {
         panelArea.revalidate();
         panelArea.repaint();
     }
-
-
-
 
     @Override
     public ControladorParade getC() {
@@ -459,57 +474,75 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void menuPrincipal() {
-
+        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
     }
 
     @Override
     public void verReglas() {
-
+        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
     }
 
     @Override
     public void mensajeCreacionArchivo() {
-
+        JOptionPane.showMessageDialog(this, "No se encontró el archivo, se creó uno vacío.", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void mensajeGuardarYSalir() {
-
+        JOptionPane.showMessageDialog(this, "Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void verHistorico() throws IOException {
-
+        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
     }
 
     @Override
     public void verTop5() throws IOException {
-
+        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
     }
 
     @Override
     public void configuracionPartida() {
+        //todo no pertenece a ivista! ahora se hace en el menuPrePartida. BORRAR
 
     }
 
     @Override
     public void cargarPartida() throws IOException {
-
+        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
     }
 
     @Override
     public void menuTurno() {
-
+        //Actualizar el display del desfile, el area de juego del jugador local y la mano del jugador local
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            setModoTurno(true);
+            c.mostrarMano();
+            c.mostrarDesfile();
+            c.mostrarAreaDeJuego();
+        }
+        else {
+            setModoTurno(false);
+        }
     }
 
     @Override
     public void menuTurnoFinal() {
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            JOptionPane.showMessageDialog(this,
+                    "Es tu ÚLTIMO turno!\n" +
+                    "Luego deberás descartar 2 de las 4 cartas que te no jugaste.\n" +
+                    "Las 2 cartas que no hayas descartado se agregarán a tu área de juego para la puntuación final.",
+                    "Atención!", JOptionPane.INFORMATION_MESSAGE);
 
+        }
+        menuTurno();
     }
 
     @Override
     public void agregarNombre(Jugador jugador) {
-
+        //todo no pertenece a ivista! ahora se hace en el menuPrePartida. BORRAR
     }
 
     @Override
@@ -519,51 +552,77 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mensajeDescarteFinal(Jugador j) {
-
+        if (c.getJugadorLocal().isTurnoJugador()) {
+            JOptionPane.showMessageDialog(this,
+                    j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar\n" +
+                    "(las otras dos se añadirán al area de juego para contarse en la puntuación)",
+                    "Atención!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @Override
     public void mensajeGuardar(boolean msgOpcionIncorrecta) {
-
+        //TODO esto lo hace un menú aparte. quizas no deba ser interfaz.
     }
 
     @Override
     public void mensajeGanador(Jugador j) {
-
+        JOptionPane.showMessageDialog(this, "El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void mensajeEmpateEntreJugadores(ArrayList<Jugador> ganadores) {
-
+        StringBuilder mensaje = new StringBuilder("¡Se ha producido un empate!\n\n");
+        for (Jugador j : ganadores) {
+            mensaje.append("Uno de los ganadores de la partida es ")
+                    .append(j.definicionJugador("el ", ""))
+                    .append(" con ")
+                    .append(j.getPuntos())
+                    .append(" PUNTOS...\n");
+        }
+        JOptionPane.showMessageDialog(this, mensaje.toString(), "Empate", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void mensajeRanking(ArrayList<Jugador> jugadoresPartida) {
-
+        StringBuilder mensaje = new StringBuilder("Jugadores ordenados por puesto:\n\n");
+        int i = 1;
+        for (Jugador j : jugadoresPartida) {
+            mensaje.append("\t")
+                    .append(i)
+                    .append(" -> ")
+                    .append(j.definicionJugador("", ""))
+                    .append(": ")
+                    .append(j.getPuntos())
+                    .append(" pts.\n");
+            i++;
+        }
+        JOptionPane.showMessageDialog(this, mensaje.toString(), "Ranking de Jugadores", JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     @Override
     public void habilitarSalir() {
-
+        JOptionPane.showMessageDialog(this, "Volviendo al Menú Principal...", "", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void mostrarADJ(Jugador j) {
-
+        displayCartasAreaDeJuego(areaDeJuego1, j.getAreaJugador(), 1);
     }
 
     @Override
     public void mostrarD(Desfile d) {
-
+        displayCartasDesfile(desfile1, d);
     }
 
     @Override
     public void mostrarM(Jugador j) {
-
+        displayCartasMano(mano1, j.getManoJugador());
     }
 
     @Override
     public void bienvenidaYEspera(Jugador jugadorLocal) {
-
+        JOptionPane.showMessageDialog(this, "Bienvenido " + jugadorLocal.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.", "Bienvenida", JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -1,7 +1,6 @@
 package ar.edu.unlu.parade.vistaconsola;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
-import ar.edu.unlu.parade.enumerados.EstadoPartida;
 import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.parade.modelo.Desfile;
 import ar.edu.unlu.parade.enumerados.DestinoCarta;
@@ -18,9 +17,7 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.*;
-import java.rmi.RemoteException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -314,7 +311,7 @@ public class VistaConsola extends JFrame implements IVista {
         new menuPrePartida(c);
     }
 
-    //TODO Método privado. No se si debe pertenecer a IVista
+    //Método privado. No debe pertenecer a IVista
     private void initComponents() {
         icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/LogoParade.png")).getImage();
         Image originalImage = icono;
@@ -720,16 +717,16 @@ public class VistaConsola extends JFrame implements IVista {
         Jugador j = c.getJugadorLocal();
         switch (opcion) {
             case 1:
-                c.seleccionarCarta(j);
+                c.seleccionarCarta();
                 break;
             case 2:
-                c.mostrarMano(j);
+                c.mostrarMano();
                 break;
             case 3:
                 c.mostrarDesfile();
                 break;
             case 4:
-                c.mostrarAreaDeJuego(j);
+                c.mostrarAreaDeJuego();
                 break;
             case 5:
                 c.mostrarJugadores();
@@ -778,16 +775,16 @@ public class VistaConsola extends JFrame implements IVista {
         Jugador j = c.getJugadorLocal();
         switch (opcion) {
             case 1:
-                c.seleccionarCarta(j);
+                c.seleccionarCarta();
                 break;
             case 2:
-                c.mostrarMano(j);
+                c.mostrarMano();
                 break;
             case 3:
                 c.mostrarDesfile();
                 break;
             case 4:
-                c.mostrarAreaDeJuego(j);
+                c.mostrarAreaDeJuego();
                 break;
             case 5:
                 c.mostrarJugadores();
@@ -821,7 +818,7 @@ public class VistaConsola extends JFrame implements IVista {
             verbo = "descartar";
         }
         if (j.isTurnoJugador()) {
-            c.mostrarMano(j);
+            c.mostrarMano();
             println("Seleccione la carta a " + verbo + ": ");
         }
         /*while (indiceInput != 0) {
@@ -1026,8 +1023,8 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     @Override
-    public void bienvenidaYEspera (Jugador j) {
-        println("Bienvenido " + j.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.");
+    public void bienvenidaYEspera (Jugador jugadorLocal) {
+        println("Bienvenido " + jugadorLocal.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.");
     }
 
     //Método interno del modo consola. No pertenece a IVista

@@ -3,7 +3,6 @@ package ar.edu.unlu.parade.vistaconsola;
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.enumerados.DestinoCarta;
 import ar.edu.unlu.parade.enumerados.EstadoPartida;
-import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.parade.modelo.*;
 import ar.edu.unlu.parade.modelo.persistencia.*;
 
@@ -419,16 +418,16 @@ public class VistaConsolaParade /*implements IVista , Observer*/ {
 
             switch (opcion) {
                 case 1:
-                    c.seleccionarCarta(j);
+                    c.seleccionarCarta();
                     break;
                 case 2:
-                    c.mostrarMano(j);
+                    c.mostrarMano();
                     break;
                 case 3:
                     c.mostrarDesfile();
                     break;
                 case 4:
-                    c.mostrarAreaDeJuego(j);
+                    c.mostrarAreaDeJuego();
                     break;
                 case 5:
                     c.mostrarJugadores();
@@ -481,16 +480,16 @@ public class VistaConsolaParade /*implements IVista , Observer*/ {
 
             switch (opcion) {
                 case 1:
-                    c.seleccionarCarta(j);
+                    c.seleccionarCarta();
                     break;
                 case 2:
-                    c.mostrarMano(j);
+                    c.mostrarMano();
                     break;
                 case 3:
                     c.mostrarDesfile();
                     break;
                 case 4:
-                    c.mostrarAreaDeJuego(j);
+                    c.mostrarAreaDeJuego();
                     break;
                 case 5:
                     c.mostrarJugadores();
@@ -511,7 +510,7 @@ public class VistaConsolaParade /*implements IVista , Observer*/ {
     }
 
     public void seleccionCarta (Jugador j, DestinoCarta d) {
-        c.mostrarMano(j);
+        c.mostrarMano();
 
         Scanner scanner = new Scanner(System.in);
         int opcion;

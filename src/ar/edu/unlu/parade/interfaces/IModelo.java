@@ -62,11 +62,11 @@ public interface IModelo extends IObservableRemoto {
 
     public void mostrarDesfile () throws RemoteException;
 
-    public void mostrarAreaDeJuego (Jugador j) throws RemoteException;
+    public void mostrarAreaDeJuego () throws RemoteException;
 
     public void mostrarJugadores () throws RemoteException;
 
-    public void mostrarMano (Jugador j) throws RemoteException;
+    public void mostrarMano () throws RemoteException;
 
     //public void ultimoTurno() throws RemoteException;
 

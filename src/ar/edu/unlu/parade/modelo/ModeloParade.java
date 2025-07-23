@@ -178,7 +178,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.MOSTRAR_DESFILE);
     }
 
-    public void mostrarAreaDeJuego (Jugador j) throws RemoteException {
+    public void mostrarAreaDeJuego () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_AREA);
     }
 
@@ -186,7 +186,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.MOSTRAR_AREA_TODOS);
     }
 
-    public void mostrarMano (Jugador j) throws RemoteException {
+    public void mostrarMano () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_MANO);
     }
 
