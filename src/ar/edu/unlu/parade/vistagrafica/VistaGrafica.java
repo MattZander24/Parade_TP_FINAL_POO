@@ -24,8 +24,7 @@ public class VistaGrafica extends JFrame implements IVista {
     private ControladorParade c;
     private Image icono;
     private JPanel generalPanel;
-
-    int indiceInput; //3 = Evaluar carta, 4 = Descartar carta
+    int indiceInput; //1 = Turno [EVALUAR], 2 = Ultimo Turno [EVALUAR], 3 = Primer Descarte [DESCARTAR], 4 = Segundo Descarte
     int indiceCarta = 0;
     int indiceArea = 0;
 
@@ -243,7 +242,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
         //TEST MODO TURNO
         setModoTurno(false);
-        indiceInput = 3;
+        indiceInput = 1;
 
     }
 
@@ -451,10 +450,14 @@ public class VistaGrafica extends JFrame implements IVista {
                     JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
                 }
             });
-
             panelCartas.add(bCarta);
         }
+        panelCartas.revalidate();
+        panelCartas.repaint();
+    }
 
+    public void ocultarUltimaCarta(JPanel panelCartas) {
+        panelCartas.removeAll();
         panelCartas.revalidate();
         panelCartas.repaint();
     }
@@ -554,12 +557,14 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mensajeCreacionArchivo() {
-        JOptionPane.showMessageDialog(this, "No se encontró el archivo, se creó uno vacío.", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "No se encontró el archivo, se creó uno vacío.", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+        mostrarDialogo("No se encontró el archivo, se creó uno vacío.", "Partida Guardada");
     }
 
     @Override
     public void mensajeGuardarYSalir() {
-        JOptionPane.showMessageDialog(this, "Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+        mostrarDialogo("Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada");
     }
 
     @Override
@@ -595,11 +600,17 @@ public class VistaGrafica extends JFrame implements IVista {
     @Override
     public void menuTurnoFinal() {
         if (c.getJugadorLocal().isTurnoJugador()) {
+            indiceInput = 2;
+            mostrarDialogo("Es tu ÚLTIMO turno!\n" +
+                            "Luego deberás descartar 2 de las 4 cartas que te no jugaste.\n" +
+                            "Las 2 cartas que no hayas descartado se agregarán a tu área de juego para la puntuación final.",
+                    "Atención!");
+            /*
             JOptionPane.showMessageDialog(this,
                     "Es tu ÚLTIMO turno!\n" +
                     "Luego deberás descartar 2 de las 4 cartas que te no jugaste.\n" +
                     "Las 2 cartas que no hayas descartado se agregarán a tu área de juego para la puntuación final.",
-                    "Atención!", JOptionPane.INFORMATION_MESSAGE);
+                    "Atención!", JOptionPane.INFORMATION_MESSAGE);*/
 
         }
         menuTurno();
@@ -618,38 +629,47 @@ public class VistaGrafica extends JFrame implements IVista {
     public void seleccionCartaOpcion (int indiceCartaJugada) {
         Jugador j = c.getJugadorLocal();
         DestinoCarta d = null;
-        if (indiceInput == 3) { d = DestinoCarta.EVALUAR; }
-        else if (indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
+        if (indiceInput == 1 || indiceInput == 2) { d = DestinoCarta.EVALUAR; }
+        else if (indiceInput == 3 || indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
         c.devolverCarta(j, indiceCartaJugada, d);
 
         System.out.println("Finaliza el turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
-        c.finalizarTurno();
-
-        /*switch (indiceRetorno) {
-            case 1:
-                indiceInput = 0;
+        switch (indiceInput) {
+            case 1 -> {
                 c.finalizarTurno();
-                break;
-            case 2:
-                indiceInput = 0;
+            }
+            case 2 -> {
                 c.finalizarUltimoTurno();
-                break;
-            case 3:
-                indiceInput = 0;
+            }
+            case 3 -> {
                 c.finalizarDescarte();
-                break;
-        }*/
+            }
+            case 4 -> {
+                c.finalizarDescarte();
+                ocultarUltimaCarta(mano1);
+            }
+        }
     }
 
     @Override
     public void mensajeDescarteFinal(Jugador j) {
         if (c.getJugadorLocal().isTurnoJugador()) {
-            indiceInput = 4;
+            if (indiceInput == 2) {
+                indiceInput = 3;
+            }
+            else if (indiceInput == 3) {
+                indiceInput = 4;
+            }
+            mostrarDialogo(j.definicionJugador("", "") + ", debés seleccionar 2 cartas para descartar.\n" +
+                            "(Las otras dos se añadirán al area de juego para contarse en la puntuación)",
+                    "Atención!");
+            /*
             JOptionPane.showMessageDialog(this,
                     j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar\n" +
                     "(las otras dos se añadirán al area de juego para contarse en la puntuación)",
-                    "Atención!", JOptionPane.INFORMATION_MESSAGE);
+                    "Atención!", JOptionPane.INFORMATION_MESSAGE);*/
         }
+        menuTurno();
     }
 
     @Override
@@ -659,7 +679,8 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mensajeGanador(Jugador j) {
-        JOptionPane.showMessageDialog(this, "El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada", JOptionPane.INFORMATION_MESSAGE);
+        mostrarDialogo("El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada");
     }
 
     @Override
@@ -672,7 +693,8 @@ public class VistaGrafica extends JFrame implements IVista {
                     .append(j.getPuntos())
                     .append(" PUNTOS...\n");
         }
-        JOptionPane.showMessageDialog(this, mensaje.toString(), "Empate", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, mensaje.toString(), "Empate", JOptionPane.INFORMATION_MESSAGE);
+        mostrarDialogo(mensaje.toString(), "Empate");
     }
 
     @Override
@@ -689,13 +711,14 @@ public class VistaGrafica extends JFrame implements IVista {
                     .append(" pts.\n");
             i++;
         }
-        JOptionPane.showMessageDialog(this, mensaje.toString(), "Ranking de Jugadores", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, mensaje.toString(), "Ranking de Jugadores", JOptionPane.INFORMATION_MESSAGE);
+        mostrarDialogo(mensaje.toString(), "Ranking de Jugadores");
     }
-
 
     @Override
     public void habilitarSalir() {
-        JOptionPane.showMessageDialog(this, "Volviendo al Menú Principal...", "", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "Volviendo al Menú Principal...", "", JOptionPane.INFORMATION_MESSAGE);
+        mostrarDialogo("Volviendo al Menú Principal...", "");
     }
 
     @Override
@@ -722,4 +745,11 @@ public class VistaGrafica extends JFrame implements IVista {
     public void bienvenidaYEspera(Jugador jugadorLocal) {
         JOptionPane.showMessageDialog(this, "Bienvenido " + jugadorLocal.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.", "Bienvenida", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public void mostrarDialogo(String mensaje, String titulo) {
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
+
 }
