@@ -59,6 +59,7 @@ public interface IVista {
     public void habilitarSalir();
 
     public void mostrarADJ (Jugador j);
+    public void mostrarADJTodos () throws RemoteException;
 
     public void mostrarD (Desfile d);
 

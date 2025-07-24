@@ -37,6 +37,10 @@ public class ControladorParade implements IControladorRemoto {
         return jugadorLocal;
     }
 
+    public ArrayList<Jugador> getJugadores() throws RemoteException {
+        return m.getPartida().getJugadores();
+    }
+
     public void setJugadorLocal(Jugador jugadorLocal) {
         this.jugadorLocal = jugadorLocal;
     }
@@ -312,10 +316,8 @@ public class ControladorParade implements IControladorRemoto {
                 case MOSTRAR_AREA:
                     v.mostrarADJ(jugadorLocal);
                     break;
-                case MOSTRAR_AREA_TODOS: //ESTO ESTA MAL, EN VISTA GRAFICA NO ANDA
-                    for (Jugador j : m.getPartida().getJugadores()) { //TODO por ahi esto debería ir fuera del modelo
-                        v.mostrarADJ(j);
-                    }
+                case MOSTRAR_AREA_TODOS:
+                    v.mostrarADJTodos();
                     break;
                 case MOSTRAR_MANO:
                     v.mostrarM(jugadorLocal);

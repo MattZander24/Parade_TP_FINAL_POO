@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -26,6 +27,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     int indiceInput; //3 = Evaluar carta, 4 = Descartar carta
     int indiceCarta = 0;
+    int indiceArea = 0;
 
 
     //MENU PANEL MESA
@@ -135,6 +137,8 @@ public class VistaGrafica extends JFrame implements IVista {
 
         bVerAreaDeJuego1.addActionListener(e -> {
             if (c.getJugadorLocal().isTurnoJugador()) {
+                displayCartasAreaDeJuego(areaDeJuego2, c.getJugadorLocal().getAreaJugador(), 2);
+                lNombreJugador2.setText(c.getJugadorLocal().getNombre());
                 CardLayout cl = (CardLayout) (generalPanel.getLayout());
                 cl.show(generalPanel, "Card2");
             }
@@ -144,6 +148,13 @@ public class VistaGrafica extends JFrame implements IVista {
         });
         bVerJugadoresYSusAreasDeJuego1.addActionListener(e -> {
             if (c.getJugadorLocal().isTurnoJugador()) {
+                try {
+                    displayCartasAreaDeJuego(areaDeJuego3, c.getJugadores().get(0).getAreaJugador(), 2);
+                    lNombreJugador3.setText(c.getJugadores().get(0).getNombre());
+                    indiceArea = 0;
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
                 CardLayout cl = (CardLayout)(generalPanel.getLayout());
                 cl.show(generalPanel, "Card3");
             }
@@ -166,9 +177,45 @@ public class VistaGrafica extends JFrame implements IVista {
             cl.show(generalPanel, "Card1");
         });
 
+        bAnterior3.addActionListener(e -> {
+            ArrayList<Jugador> jugadores = null;
+            try {
+                jugadores = c.getJugadores();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (indiceArea == 0) {
+                indiceArea = jugadores.size()-1;
+            } else {
+                indiceArea--;
+            }
+            displayCartasAreaDeJuego(areaDeJuego3, jugadores.get(indiceArea).getAreaJugador(), 2);
+            lNombreJugador3.setText(jugadores.get(indiceArea).getNombre());
+        });
+
+        bSiguiente3.addActionListener(e -> {
+            ArrayList<Jugador> jugadores = null;
+            try {
+                jugadores = c.getJugadores();
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (indiceArea == jugadores.size()-1) {
+                indiceArea = 0;
+            } else {
+                indiceArea++;
+            }
+            displayCartasAreaDeJuego(areaDeJuego3, jugadores.get(indiceArea).getAreaJugador(), 2);
+            lNombreJugador3.setText(jugadores.get(indiceArea).getNombre());
+        });
+
         bSalir3.addActionListener(e -> {
             CardLayout cl = (CardLayout)(generalPanel.getLayout());
             cl.show(generalPanel, "Card1");
+        });
+
+        bSi4.addActionListener(e -> {
+            System.out.println("GUARDAR PARTIDA");
         });
 
         bNo4.addActionListener(e -> {
@@ -629,6 +676,11 @@ public class VistaGrafica extends JFrame implements IVista {
     @Override
     public void mostrarADJ(Jugador j) {
         displayCartasAreaDeJuego(areaDeJuego1, j.getAreaJugador(), 1);
+    }
+
+    @Override
+    public void mostrarADJTodos () {
+
     }
 
     @Override

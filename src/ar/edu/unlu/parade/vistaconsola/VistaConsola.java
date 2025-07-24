@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.rmi.RemoteException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -984,6 +985,13 @@ public class VistaConsola extends JFrame implements IVista {
     public void mostrarADJ (Jugador j) {
         if (c.getJugadorLocal().isTurnoJugador()) {
             println(vca.mostrar(j));
+        }
+    }
+
+    @Override
+    public void mostrarADJTodos () throws RemoteException {
+        for (Jugador j : c.getJugadores()) {
+            mostrarADJ(j);
         }
     }
 
