@@ -462,13 +462,28 @@ public class VistaGrafica extends JFrame implements IVista {
     public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
         int anchoCarta = 0;
         int altoCarta = 0;
+        int offX = 0;
+        int offY = 0;
+        int wColumna = 0;
+        int hColumna = 0;
+        int offsetInicialY = 0;
+
         if (modo == 1) {
             anchoCarta = 70;
             altoCarta = 110;
+            offX = 30;
+            offY = 5;
+            wColumna = 100;
+            hColumna = 600;
         }
         else if (modo == 2) {
-            anchoCarta = 103;
-            altoCarta = 160;
+            anchoCarta = 85;
+            altoCarta = 130;
+            offX = 25;
+            offY = 8;
+            wColumna = 135;
+            hColumna = 800;
+            offsetInicialY = 50;
         }
 
         panelArea.removeAll();
@@ -476,7 +491,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
         for (Color color : Color.values()) {
             JPanel columna = new JPanel(null);
-            columna.setPreferredSize(new Dimension(100, 600));
+            columna.setPreferredSize(new Dimension(wColumna, hColumna));
             columna.setOpaque(false);
 
             List<Carta> cartasDelColor = (List<Carta>) listaCartas.getCartas().stream()
@@ -486,7 +501,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
             // Superponer de abajo hacia arriba
             int offsetX = 0;
-            int offsetY = 0;
+            int offsetY = offsetInicialY;
             for (int i = cartasDelColor.size() - 1; i >= 0; i--) {
                 Carta carta = cartasDelColor.get(i);
                 String nombreImagen = carta.nombreImagen();
@@ -495,8 +510,8 @@ public class VistaGrafica extends JFrame implements IVista {
                 JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
                 cartaLabel.setBounds(offsetY, offsetX, anchoCarta, altoCarta); // posición absoluta
                 columna.add(cartaLabel);
-                offsetX += 30; // superposición: se muestra solo parte de la carta anterior
-                offsetY += 5;
+                offsetX += offX; // superposición: se muestra solo parte de la carta anterior
+                offsetY += offY;
             }
 
             panelArea.add(columna);
@@ -571,15 +586,10 @@ public class VistaGrafica extends JFrame implements IVista {
     @Override
     public void menuTurno() {
         //Actualizar el display del desfile, el area de juego del jugador local y la mano del jugador local
-        if (c.getJugadorLocal().isTurnoJugador()) {
-            setModoTurno(true);
-            c.mostrarMano();
-            c.mostrarDesfile();
-            c.mostrarAreaDeJuego();
-        }
-        else {
-            setModoTurno(false);
-        }
+        c.mostrarMano();
+        c.mostrarDesfile();
+        c.mostrarAreaDeJuego();
+        setModoTurno(c.getJugadorLocal().isTurnoJugador());
     }
 
     @Override
@@ -612,8 +622,23 @@ public class VistaGrafica extends JFrame implements IVista {
         else if (indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
         c.devolverCarta(j, indiceCartaJugada, d);
 
-        //todo CAMBIAR TURNO? O SE HACE EN OTRO LUGAR
-        //setModoTurno(false);
+        System.out.println("Finaliza el turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
+        c.finalizarTurno();
+
+        /*switch (indiceRetorno) {
+            case 1:
+                indiceInput = 0;
+                c.finalizarTurno();
+                break;
+            case 2:
+                indiceInput = 0;
+                c.finalizarUltimoTurno();
+                break;
+            case 3:
+                indiceInput = 0;
+                c.finalizarDescarte();
+                break;
+        }*/
     }
 
     @Override
