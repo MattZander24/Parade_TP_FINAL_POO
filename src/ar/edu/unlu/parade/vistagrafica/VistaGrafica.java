@@ -480,7 +480,7 @@ public class VistaGrafica extends JFrame implements IVista {
             anchoCarta = 85;
             altoCarta = 130;
             offX = 25;
-            offY = 8;
+            offY = 5;
             wColumna = 135;
             hColumna = 800;
             offsetInicialY = 50;
