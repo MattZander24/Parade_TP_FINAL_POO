@@ -306,6 +306,7 @@ public class Partida implements Serializable {
             registrarJugadores();
 
             //TODO ACA TENGO QUE HACER ALGO PARA VOLVER AL MENU PRINCIPAL UNA VEZ SE MUESTRE TODO
+            System.out.println("HABILITAR SALIR");
             modelo.habilitarSalir();
         }
     }

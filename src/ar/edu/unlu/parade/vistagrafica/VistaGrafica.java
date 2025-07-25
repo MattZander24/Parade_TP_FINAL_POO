@@ -6,6 +6,7 @@ import ar.edu.unlu.parade.interfaces.IVista;
 import ar.edu.unlu.parade.modelo.*;
 import ar.edu.unlu.parade.vistamenuprepartida.menuPrePartida;
 import ar.edu.unlu.parade.enumerados.Color;
+import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -645,8 +646,8 @@ public class VistaGrafica extends JFrame implements IVista {
                 c.finalizarDescarte();
             }
             case 4 -> {
-                c.finalizarDescarte();
                 ocultarUltimaCarta(mano1);
+                c.finalizarDescarte();
             }
         }
     }
@@ -656,18 +657,18 @@ public class VistaGrafica extends JFrame implements IVista {
         if (c.getJugadorLocal().isTurnoJugador()) {
             if (indiceInput == 2) {
                 indiceInput = 3;
+                mostrarDialogo(j.definicionJugador("", "") + ", debés seleccionar 2 cartas para descartar.\n" +
+                                "(Las otras dos se añadirán al area de juego para contarse en la puntuación)",
+                        "Atención!");
+                /*
+                JOptionPane.showMessageDialog(this,
+                    j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar\n" +
+                    "(las otras dos se añadirán al area de juego para contarse en la puntuación)",
+                    "Atención!", JOptionPane.INFORMATION_MESSAGE);*/
             }
             else if (indiceInput == 3) {
                 indiceInput = 4;
             }
-            mostrarDialogo(j.definicionJugador("", "") + ", debés seleccionar 2 cartas para descartar.\n" +
-                            "(Las otras dos se añadirán al area de juego para contarse en la puntuación)",
-                    "Atención!");
-            /*
-            JOptionPane.showMessageDialog(this,
-                    j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar\n" +
-                    "(las otras dos se añadirán al area de juego para contarse en la puntuación)",
-                    "Atención!", JOptionPane.INFORMATION_MESSAGE);*/
         }
         menuTurno();
     }
@@ -717,8 +718,29 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void habilitarSalir() {
-        //JOptionPane.showMessageDialog(this, "Volviendo al Menú Principal...", "", JOptionPane.INFORMATION_MESSAGE);
-        mostrarDialogo("Volviendo al Menú Principal...", "");
+        SwingUtilities.invokeLater(() -> {
+            System.out.println("LLegué a habilitarSalir()");
+            String[] opciones = {"Volver al Menú Principal", "Salir del Juego"};
+
+            int eleccion = JOptionPane.showOptionDialog(
+                    this,
+                    "¿Desea volver al Menú Principal o salir del juego?",
+                    "Confirmar salida",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0] // opción por defecto
+            );
+
+            dispose(); // cerrar la ventana actual
+
+            if (eleccion == 0) {
+                new menuParade(); // vuelve al menú principal
+            } else if (eleccion == 1) {
+                System.exit(0); // cierra toda la aplicación
+            }
+        });
     }
 
     @Override
