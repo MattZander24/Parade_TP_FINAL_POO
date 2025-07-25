@@ -23,7 +23,6 @@ public enum Opcion implements Serializable {
     GANADOR_PARTIDA,
     EMPATE_JUGADORES,
     DESCARTE_Y_FINAL,
-    ULTIMO_TURNO,
     MENSAJE_GUARDAR_Y_SALIR,
     GUARDAR_Y_SALIR,
     CARGAR_PARTIDA,

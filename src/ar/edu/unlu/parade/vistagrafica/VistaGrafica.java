@@ -719,7 +719,6 @@ public class VistaGrafica extends JFrame implements IVista {
     @Override
     public void habilitarSalir() {
         SwingUtilities.invokeLater(() -> {
-            System.out.println("LLegué a habilitarSalir()");
             String[] opciones = {"Volver al Menú Principal", "Salir del Juego"};
 
             int eleccion = JOptionPane.showOptionDialog(

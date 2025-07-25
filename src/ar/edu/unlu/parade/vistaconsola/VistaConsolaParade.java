@@ -2,7 +2,6 @@ package ar.edu.unlu.parade.vistaconsola;
 
 import ar.edu.unlu.parade.controlador.ControladorParade;
 import ar.edu.unlu.parade.enumerados.DestinoCarta;
-import ar.edu.unlu.parade.enumerados.EstadoPartida;
 import ar.edu.unlu.parade.modelo.*;
 import ar.edu.unlu.parade.modelo.persistencia.*;
 
@@ -36,10 +35,6 @@ public class VistaConsolaParade /*implements IVista , Observer*/ {
 
     public void setC(ControladorParade c) {
         this.c = c;
-    }
-
-    public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException {
-        System.out.println("Not Intended");
     }
 
     public void iniciarVista() {

@@ -26,14 +26,13 @@ public class RegistroConjuntoJugadores implements Serializable {
         Collections.sort(jugadores, new Comparator<RegistroJugadores>() {
             @Override
             public int compare(RegistroJugadores j1, RegistroJugadores j2) {
-                // Primero comparamos los puntos (puntos más bajos primero)
+                // Comparamos los puntos (puntos más bajos primero)
                 int puntosComparison = Integer.compare(j1.getPuntosJugador(), j2.getPuntosJugador());
 
                 // Si los puntos son iguales, comparamos por la fecha (fecha más antigua primero)
                 if (puntosComparison == 0) {
                     return j1.getFechaYHoraPartida().compareTo(j2.getFechaYHoraPartida());
                 }
-
                 return puntosComparison;
             }
         });

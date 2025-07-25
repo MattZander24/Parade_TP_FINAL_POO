@@ -5,14 +5,14 @@ import ar.edu.unlu.parade.enumerados.Color;
 import java.io.Serializable;
 
 public class Carta implements Serializable {
-    private int valor; //VALORES POSIBLES SOLO DE 1 a 10
-    private Color color;
+    private int valor; //VALORES: 0 a 10
+    private Color color; //VALORES: VERDE, AMARILLO, ROJO, VIOLETA, AZUL, NEGRO
     private boolean anulada;
 
     public Carta(int valor, Color color) {
         this.valor = valor;
         this.color = color;
-        this.anulada = false; //para la puntuacion al final del juego. una carta anulada vale 1 punto
+        this.anulada = false; //Para la puntuación al final del juego. Una carta anulada vale 1 punto.
     }
 
     public int getValor() {

@@ -7,7 +7,6 @@ public class Jugador implements Serializable {
     Mano manoJugador;
     AreaDeJuego areaJugador;
     private int puntos;
-    //private static int idJugadorGen = 1;
     private final Integer idJugador;
     private String nombre;
     private int posicion;
@@ -16,7 +15,6 @@ public class Jugador implements Serializable {
 
     public Jugador(String nombre) {
         this.idJugador = generarHashID(nombre);
-        //idJugadorGen++;
         this.puntos = 0;
         this.manoJugador = new Mano();
         this.areaJugador = new AreaDeJuego();
@@ -78,7 +76,7 @@ public class Jugador implements Serializable {
         this.turnoJugador = turnoJugador;
     }
 
-    //funcion que retorne SI EXISTE el nombre y si no existe el ID
+    //Funcion que retorna el nombre SI EXISTE y sino entonces el ID
     public String definicionJugador(String articuloID, String articuloNombre) {
         if (Objects.equals(this.nombre, "")) {
             return articuloID + "jugador n°" + idJugador;
@@ -102,8 +100,4 @@ public class Jugador implements Serializable {
         String input = nombreLimpio + "_" + timestamp;
         return input.hashCode();
     }
-
-    /*public static void resetearIDGen () {
-        idJugadorGen = 1;
-    }*/
 }

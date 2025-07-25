@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.EnumSet;
 
 public class Mazo extends PilaCartas implements Serializable {
-
     private boolean generado;
 
     public Mazo() {

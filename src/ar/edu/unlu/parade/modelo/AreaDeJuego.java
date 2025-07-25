@@ -2,7 +2,6 @@ package ar.edu.unlu.parade.modelo;
 
 import ar.edu.unlu.parade.enumerados.Color;
 
-import java.awt.geom.Area;
 import java.io.Serializable;
 import java.util.*;
 
@@ -29,7 +28,6 @@ public class AreaDeJuego extends ListaCartas implements Serializable {
         List<Color> ordenColores = List.of(
                 Color.VERDE, Color.AMARILLO, Color.ROJO, Color.VIOLETA, Color.AZUL, Color.NEGRO
         );
-
         EnumMap<Color, Integer> colorOrdenMap = new EnumMap<>(Color.class);
         for (int i = 0; i < ordenColores.size(); i++) {
             colorOrdenMap.put(ordenColores.get(i), i);

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ListaCartas implements ConjuntoCartas, Serializable {
     ArrayList<Carta> cartas;
+
     public ListaCartas() {
         this.cartas = new ArrayList<Carta>();
     }
@@ -30,5 +31,4 @@ public class ListaCartas implements ConjuntoCartas, Serializable {
     public void enviarCarta(Carta carta) {
         cartas.add(carta);
     }
-
 }

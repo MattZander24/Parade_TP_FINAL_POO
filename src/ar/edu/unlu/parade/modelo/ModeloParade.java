@@ -166,10 +166,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.HABILITAR_SALIR);
     }
 
-    public void pedirNombre (Jugador j) throws RemoteException {
-        notificarObservadores(Opcion.ADD_NOMBRE);
-    }
-
     public void setNombre (Jugador j, String nombre) throws RemoteException {
         j.setNombre(nombre);
     }

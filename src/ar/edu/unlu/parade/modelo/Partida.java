@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Partida implements Serializable {
-
     transient ModeloParade modelo;
     ArrayList<Jugador> jugadoresPartida;
     ArrayList<Jugador> ganadores;
