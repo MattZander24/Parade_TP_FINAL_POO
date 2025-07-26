@@ -77,6 +77,12 @@ public class VistaGrafica extends JFrame implements IVista {
     private JButton bSi4;
     private JButton bNo4;
 
+    private String msgCreacionArchivo = "";
+    private String msgGuardarYSalir = "";
+    private String msgGanador = "";
+    private String msgEmpate = "";
+    private String msgRanking = "";
+
     public VistaGrafica() {
 
         initComponents();
@@ -237,6 +243,11 @@ public class VistaGrafica extends JFrame implements IVista {
         mazo1.setLayout(new BorderLayout());
         mazo1.add(mazoLabel, BorderLayout.CENTER);
 
+        JScrollPane scrollPanelCartas = new JScrollPane(desfile1);
+        scrollPanelCartas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPanelCartas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        topPanel1.add(scrollPanelCartas, BorderLayout.CENTER);
+
         ImageIcon iconoAreaDeJuego = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonVerAreaDeJuego.png"));
         Image imagenEscaladaAreaDeJuego = iconoAreaDeJuego.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         ImageIcon iconoEscaladoAreaDeJuego = new ImageIcon(imagenEscaladaAreaDeJuego);
@@ -372,7 +383,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     public void displayCartasDesfile(JPanel panelCartas, ListaCartas listaCartas) {
         panelCartas.removeAll();
-        panelCartas.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        panelCartas.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
 
         for (Carta carta : listaCartas.getCartas()) {
             String nombreImagen = carta.nombreImagen();
@@ -423,8 +434,8 @@ public class VistaGrafica extends JFrame implements IVista {
     public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
         int anchoCarta = 0;
         int altoCarta = 0;
-        int offX = 0;
         int offY = 0;
+        int offX = 0;
         int wColumna = 0;
         int hColumna = 0;
         int offsetInicialY = 0;
@@ -432,19 +443,19 @@ public class VistaGrafica extends JFrame implements IVista {
         if (modo == 1) {
             anchoCarta = 70;
             altoCarta = 110;
-            offX = 30;
-            offY = 5;
+            offY = 25;
+            offX = 5;
             wColumna = 100;
             hColumna = 600;
         }
         else if (modo == 2) {
-            anchoCarta = 85;
-            altoCarta = 130;
-            offX = 25;
-            offY = 5;
+            anchoCarta = 75;
+            altoCarta = 120;
+            offY = 25;
+            offX = 5;
             wColumna = 135;
             hColumna = 800;
-            offsetInicialY = 50;
+            offsetInicialY = 60;
         }
 
         panelArea.removeAll();
@@ -459,18 +470,18 @@ public class VistaGrafica extends JFrame implements IVista {
                     .filter(c -> c.getColor() == color)
                     .toList();
 
-            int offsetX = 0;
             int offsetY = offsetInicialY;
+            int offsetX = 10;
             for (int i = cartasDelColor.size() - 1; i >= 0; i--) {
                 Carta carta = cartasDelColor.get(i);
                 String nombreImagen = carta.nombreImagen();
                 ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
                 Image imagenEscalada = icono.getImage().getScaledInstance(anchoCarta, altoCarta, Image.SCALE_SMOOTH);
                 JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
-                cartaLabel.setBounds(offsetY, offsetX, anchoCarta, altoCarta);
+                cartaLabel.setBounds(offsetX, offsetY, anchoCarta, altoCarta);
                 columna.add(cartaLabel);
-                offsetX += offX;
                 offsetY += offY;
+                offsetX += offX;
             }
             panelArea.add(columna);
         }
@@ -495,7 +506,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mensajeCreacionArchivo() {
-        mostrarDialogo("No se encontró el archivo, se creó uno vacío.", "Partida Guardada");
+        msgCreacionArchivo = "No se encontró el archivo, se creó uno vacío.";
     }
 
     @Override
@@ -571,7 +582,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mensajeGanador(Jugador j) {
-        mostrarDialogo("El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada");
+        msgGanador = "El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...";
     }
 
     @Override
@@ -584,7 +595,7 @@ public class VistaGrafica extends JFrame implements IVista {
                     .append(j.getPuntos())
                     .append(" PUNTOS...\n");
         }
-        mostrarDialogo(mensaje.toString(), "Empate");
+        msgEmpate = mensaje.toString();
     }
 
     @Override
@@ -601,17 +612,23 @@ public class VistaGrafica extends JFrame implements IVista {
                     .append(" pts.\n");
             i++;
         }
-        mostrarDialogo(mensaje.toString(), "Ranking de Jugadores");
+        msgRanking = mensaje.toString();
     }
 
     @Override
     public void habilitarSalir() {
+        String msgHabilitarSalir = "¿Desea volver al Menú Principal o salir del juego?";
         SwingUtilities.invokeLater(() -> {
             String[] opciones = {"Volver al Menú Principal", "Salir del Juego"};
 
             int eleccion = JOptionPane.showOptionDialog(
                     this,
-                    "¿Desea volver al Menú Principal o salir del juego?",
+                    msgCreacionArchivo + "\n" +
+                    msgGuardarYSalir + "\n" +
+                    msgGanador + "\n" +
+                    msgEmpate + "\n" +
+                    msgRanking + "\n\n\n" +
+                    msgHabilitarSalir + "\n",
                     "Confirmar salida",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,

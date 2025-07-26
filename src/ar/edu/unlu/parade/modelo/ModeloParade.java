@@ -33,29 +33,12 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         generarPartida();
     }
 
-    public void iniciarJuego () throws RemoteException {
-        notificarObservadores(Opcion.SETEO_PARTIDA);
-    }
-
-    public void verReglas() throws RemoteException {
-        notificarObservadores(Opcion.REGLAS);
-    }
-
-    public void verHistorico () throws IOException, ClassNotFoundException, RemoteException {
-        notificarObservadores(Opcion.HISTORICO);
-    }
-
     public void mensajeCreacionArchivo () throws RemoteException {
         notificarObservadores(Opcion.CREACION_ARCHIVO);
     }
 
     public void mensajeGuardarYSalir () throws RemoteException {
         notificarObservadores(Opcion.MENSAJE_GUARDAR_Y_SALIR);
-    }
-
-
-    public void terminarPartida () throws RemoteException {
-        System.exit(0);
     }
 
     public void generarPartida () throws RemoteException {
@@ -133,10 +116,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         notificarObservadores(Opcion.HABILITAR_SALIR);
     }
 
-    public void setNombre (Jugador j, String nombre) throws RemoteException {
-        j.setNombre(nombre);
-    }
-
     public void mostrarDesfile () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_DESFILE);
     }
@@ -151,23 +130,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
 
     public void mostrarMano () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_MANO);
-    }
-
-    public void cargarPartida () throws IOException, ClassNotFoundException, RemoteException {
-        notificarObservadores(Opcion.CARGAR_PARTIDA);
-    }
-
-    public void reiniciarPartida (Partida p) throws RemoteException {
-        partida = p;
-        try {
-            partida.comenzarJuego(this, true);
-        } catch (IOException | ClassNotFoundException e) {
-            //Nada porque ya lo controla la funcion interna
-        }
-    }
-
-    public void top5Historico () throws IOException, ClassNotFoundException, RemoteException {
-        notificarObservadores(Opcion.TOP5);
     }
 
     public void guardarYSalir () throws IOException, ClassNotFoundException, RemoteException {
@@ -236,10 +198,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
 
     public void setJugadoresPartida(int cantidadJugadores) throws RemoteException {
         partida.setCantidadJugadores(cantidadJugadores);
-    }
-
-    public void actualizarTurno() throws RemoteException {
-        notificarObservadores(Opcion.ACTUALIZAR_TURNO);
     }
 
     public void actualizarJugador() throws RemoteException {

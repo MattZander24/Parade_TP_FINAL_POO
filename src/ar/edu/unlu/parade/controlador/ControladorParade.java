@@ -33,57 +33,12 @@ public class ControladorParade implements IControladorRemoto {
         this.jugadorLocal = jugadorLocal;
     }
 
-    public void iniciarJuego () {
-        try {
-            m.iniciarJuego();
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void aplicacionCerrada() throws RemoteException {
         try {
             if (m != null) {
                 m.removerObservador(this);
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void verReglas () {
-        try {
-            m.verReglas();
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void verHistorico () {
-        try {
-            m.verHistorico();
-        }
-        catch (IOException | ClassNotFoundException e) {
-            //Nada porque ya lo controla la funcion interna
-        }
-    }
-
-    public void terminarPartida () {
-        try {
-            m.terminarPartida();
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void iniciarPartida () {
-        try {
-            m.iniciarPartida();
-        }
-        catch (RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -139,24 +94,6 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void setNombre (Jugador j, String nombre) {
-        try {
-            m.setNombre(j, nombre);
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void mensajeCreacionArchivo () {
-        try {
-            m.mensajeCreacionArchivo();
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void mensajeGuardarYSalir () {
         try {
             m.mensajeGuardarYSalir();
@@ -202,33 +139,6 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void cargarPartida () {
-        try {
-            m.cargarPartida();
-        }
-        catch (IOException | ClassNotFoundException e) {
-            //Nada porque ya lo controla la funcion interna
-        }
-    }
-
-    public void reiniciarPartida (Partida p) {
-        try {
-            m.reiniciarPartida(p);
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void top5Historico () {
-        try {
-            m.top5Historico();
-        }
-        catch (IOException | ClassNotFoundException e) {
-            //Nada porque ya lo controla la funcion interna
-        }
-    }
-
     public void guardarYSalir () {
         try {
             m.guardarYSalir();
@@ -252,20 +162,8 @@ public class ControladorParade implements IControladorRemoto {
         if (cambio instanceof Opcion) {
             Opcion opcion = (Opcion) cambio;
             switch (opcion) {
-                case MENU_PRINCIPAL:
-                    v.menuPrincipal();
-                    break;
-                case REGLAS:
-                    v.verReglas();
-                    break;
                 case CREACION_ARCHIVO:
                     v.mensajeCreacionArchivo();
-                    break;
-                case MENSAJE_GUARDAR_Y_SALIR:
-                    v.mensajeGuardar(false);
-                    break;
-                case SETEO_PARTIDA:
-                    v.configuracionPartida();
                     break;
                 case GUARDAR_Y_SALIR:
                     v.mensajeGuardarYSalir();
@@ -291,9 +189,6 @@ public class ControladorParade implements IControladorRemoto {
                 case MOSTRAR_DESFILE:
                     v.mostrarD(m.getPartida().getDesfileJuego());
                     break;
-                case ADD_NOMBRE:
-                    v.agregarNombre(jugadorLocal);
-                    break;
                 case GANADOR_PARTIDA:
                     v.mensajeGanador(m.getPartida().getGanadores().get(0));
                     break;
@@ -306,35 +201,11 @@ public class ControladorParade implements IControladorRemoto {
                 case HABILITAR_SALIR:
                     v.habilitarSalir();
                     break;
-                case HISTORICO:
-                    try {
-                        v.verHistorico();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                case TOP5:
-                    try {
-                        v.verTop5();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                case CARGAR_PARTIDA:
-                    try {
-                        v.cargarPartida();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
                 case SELECICON_EVALUAR:
                     v.seleccionCarta(jugadorLocal, DestinoCarta.EVALUAR);
                     break;
                 case SELECICON_DESCARTAR:
                     v.seleccionCarta(jugadorLocal, DestinoCarta.DESCARTAR);
-                    break;
-                case ACTUALIZAR_TURNO:
-                    actualizarTurno();
                     break;
                 case ACTUALIZAR_JUGADOR:
                     actualizarJugador();
@@ -350,7 +221,6 @@ public class ControladorParade implements IControladorRemoto {
         this.m = (IModelo) modeloRemoto;
     }
 
-
     public void agregarJugador(Jugador jugador) throws RemoteException {
         setJugadorLocal(jugador);
         m.agregarJugador(jugador);
@@ -359,16 +229,6 @@ public class ControladorParade implements IControladorRemoto {
 
     public void checkInicioPartida() throws RemoteException {
         m.iniciarPartida();
-    }
-
-    public void actualizarTurno () throws RemoteException {
-        Jugador jugadorEnTurno = null;
-        for (Jugador j : m.getPartida().getJugadores()) {
-            if (j.isTurnoJugador()){
-                jugadorEnTurno = j;
-            }
-        }
-        jugadorLocal.setTurnoJugador(jugadorLocal.equals(jugadorEnTurno));
     }
 
     public void actualizarJugador () throws RemoteException {

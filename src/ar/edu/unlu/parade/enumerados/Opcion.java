@@ -3,15 +3,9 @@ package ar.edu.unlu.parade.enumerados;
 import java.io.Serializable;
 
 public enum Opcion implements Serializable {
-    MENU_PRINCIPAL,
-    REGLAS,
-    HISTORICO,
-    TOP5,
     CREACION_ARCHIVO,
-    SETEO_PARTIDA,
     MENU_TURNO,
     MENU_TURNO_FINAL,
-    ADD_NOMBRE,
     SELECICON_EVALUAR,
     SELECICON_DESCARTAR,
     RANKING,
@@ -25,8 +19,6 @@ public enum Opcion implements Serializable {
     DESCARTE_Y_FINAL,
     MENSAJE_GUARDAR_Y_SALIR,
     GUARDAR_Y_SALIR,
-    CARGAR_PARTIDA,
-    ACTUALIZAR_TURNO,
     ACTUALIZAR_JUGADOR
 
 }
