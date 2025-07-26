@@ -21,30 +21,37 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         }
     }
 
+    @Override
     public Partida getPartida() {
         return partida;
     }
 
+    @Override
     public void setPartida(Partida partida) {
         this.partida = partida;
     }
 
+    @Override
     public void iniciarAplicacion() throws RemoteException {
         generarPartida();
     }
 
+    @Override
     public void mensajeCreacionArchivo () throws RemoteException {
         notificarObservadores(Opcion.CREACION_ARCHIVO);
     }
 
+    @Override
     public void mensajeGuardarYSalir () throws RemoteException {
         notificarObservadores(Opcion.MENSAJE_GUARDAR_Y_SALIR);
     }
 
+    @Override
     public void generarPartida () throws RemoteException {
         partida = new Partida(this);
     }
 
+    @Override
     public void iniciarPartida () throws RemoteException {
         if (partida.getJugadores().size() == partida.getCantidadJugadores()) {
             partida.inicializar();
@@ -56,22 +63,27 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         }
     }
 
+    @Override
     public void menuTurno () throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO);
     }
 
+    @Override
     public void menuTurnoFinal () throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO_FINAL);
     }
 
+    @Override
     public void evaluarCarta() throws RemoteException {
         notificarObservadores(Opcion.SELECICON_EVALUAR);
     }
 
+    @Override
     public void descartarCarta() throws RemoteException {
         notificarObservadores(Opcion.SELECICON_DESCARTAR);
     }
 
+    @Override
     public void devolverCarta(Jugador jugador, int opcionCarta, DestinoCarta d) throws RemoteException {
         for (Jugador j : partida.getJugadores()) {
             if (j.equals(jugador)) {
@@ -84,54 +96,67 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         }
     }
 
+    @Override
     public void finalizarTurno() throws IOException, ClassNotFoundException {
         partida.finalizarTurno();
     }
 
+    @Override
     public void finalizarUltimoTurno() throws IOException, ClassNotFoundException {
         partida.finalizarSecuenciaUltimoTurno();
     }
 
+    @Override
     public void finalizarDescarte() throws IOException, ClassNotFoundException {
         partida.finalizarSecuenciaDescarte();
     }
 
+    @Override
     public void mensajeDescarteFinal () throws RemoteException {
         notificarObservadores(Opcion.DESCARTE_Y_FINAL);
     }
 
+    @Override
     public void mensajeGanador () throws RemoteException {
         notificarObservadores(Opcion.GANADOR_PARTIDA);
     }
 
+    @Override
     public void mensajeEmpate () throws RemoteException {
         notificarObservadores(Opcion.EMPATE_JUGADORES);
     }
 
+    @Override
     public void mensajeGanadorYRanking () throws RemoteException {
         notificarObservadores(Opcion.RANKING);
     }
 
+    @Override
     public void habilitarSalir () throws RemoteException {
         notificarObservadores(Opcion.HABILITAR_SALIR);
     }
 
+    @Override
     public void mostrarDesfile () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_DESFILE);
     }
 
+    @Override
     public void mostrarAreaDeJuego () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_AREA);
     }
 
+    @Override
     public void mostrarJugadores () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_AREA_TODOS);
     }
 
+    @Override
     public void mostrarMano () throws RemoteException {
         notificarObservadores(Opcion.MOSTRAR_MANO);
     }
 
+    @Override
     public void guardarYSalir () throws IOException, ClassNotFoundException, RemoteException {
         partida.guardarFechaYHora();
 
@@ -165,6 +190,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         }
     }
 
+    @Override
     public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException, RemoteException {
 
         FileInputStream fileInputStream;
@@ -192,14 +218,17 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
         objectOutputStream.close();
     }
 
+    @Override
     public void agregarJugador(Jugador jugador) throws RemoteException {
         partida.agregarJugador(jugador);
     }
 
+    @Override
     public void setJugadoresPartida(int cantidadJugadores) throws RemoteException {
         partida.setCantidadJugadores(cantidadJugadores);
     }
 
+    @Override
     public void actualizarJugador() throws RemoteException {
         notificarObservadores(Opcion.ACTUALIZAR_JUGADOR);
     }

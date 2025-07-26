@@ -38,4 +38,5 @@ public interface IModelo extends IObservableRemoto {
     void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException, RemoteException;
     void agregarJugador(Jugador jugador) throws RemoteException;
     void setJugadoresPartida(int cantidad) throws RemoteException;
+    void actualizarJugador() throws RemoteException;
 }
