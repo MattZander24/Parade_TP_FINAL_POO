@@ -83,6 +83,8 @@ public class VistaGrafica extends JFrame implements IVista {
     private String msgEmpate = "";
     private String msgRanking = "";
 
+    boolean manoTerminada;
+
     public VistaGrafica() {
 
         initComponents();
@@ -225,7 +227,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
         setModoTurno(false);
         indiceInput = 1;
-
+        manoTerminada = false;
         setVisible(true);
     }
 
@@ -426,9 +428,11 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     public void ocultarUltimaCarta(JPanel panelCartas) {
-        panelCartas.removeAll();
-        panelCartas.revalidate();
-        panelCartas.repaint();
+        panelCartas.setVisible(false);
+        panelCartas.setEnabled(false);
+        /*panelCartas.revalidate();
+        panelCartas.repaint();*/
+        manoTerminada = true;
     }
 
     public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
@@ -517,9 +521,15 @@ public class VistaGrafica extends JFrame implements IVista {
     @Override
     public void menuTurno() {
         //Actualizar el display del desfile, el area de juego del jugador local y la mano del jugador local
-        c.mostrarMano();
-        c.mostrarDesfile();
-        c.mostrarAreaDeJuego();
+        if (!manoTerminada) {
+            mostrarM(c.getJugadorLocal());
+        }
+        try {
+            mostrarD(c.getDesfile());
+        } catch (RemoteException ex) {
+            throw new RuntimeException(ex);
+        }
+        mostrarADJ(c.getJugadorLocal());
         setModoTurno(c.getJugadorLocal().isTurnoJugador());
     }
 
@@ -558,8 +568,8 @@ public class VistaGrafica extends JFrame implements IVista {
                 c.finalizarDescarte();
             }
             case 4 -> {
-                ocultarUltimaCarta(mano1);
                 c.finalizarDescarte();
+                ocultarUltimaCarta(mano1);
             }
         }
     }

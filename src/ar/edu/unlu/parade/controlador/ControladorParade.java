@@ -33,6 +33,10 @@ public class ControladorParade implements IControladorRemoto {
         this.jugadorLocal = jugadorLocal;
     }
 
+    public Desfile getDesfile () throws RemoteException {
+        return m.getPartida().getDesfileJuego();
+    }
+
     public void aplicacionCerrada() throws RemoteException {
         try {
             if (m != null) {
