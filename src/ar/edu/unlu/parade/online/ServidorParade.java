@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class ServidorParade {
+
     /**
      * Se inicia un servidor limpio. Es decir, es una partida en 0, sin nada cargado. Un modelo limpio.
      */
@@ -41,7 +42,6 @@ public class ServidorParade {
                 null
         );
         ModeloParade modelo = new ModeloParade();
-        //ar.edu.unlu.rmimvc.servidor.Servidor servidor = new ar.edu.unlu.rmimvc.servidor.Servidor(ip, Integer.parseInt(port));
         ar.edu.unlu.rmimvc.servidor.Servidor servidor = new ar.edu.unlu.rmimvc.servidor.Servidor(ip, Integer.parseInt(port));
         try {
             servidor.iniciar(modelo);

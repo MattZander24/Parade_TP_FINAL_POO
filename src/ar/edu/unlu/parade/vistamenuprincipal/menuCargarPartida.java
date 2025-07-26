@@ -1,7 +1,5 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
-import ar.edu.unlu.parade.online.ServidorParade;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,7 +13,6 @@ public class menuCargarPartida extends JFrame {
     private Image icono;
 
     public menuCargarPartida() {
-        // Iniciar y configurar Frame
         initElements();
         setSize(720, 480);
         setContentPane(generalPanel);
@@ -26,7 +23,7 @@ public class menuCargarPartida extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Cargar Partida - Parade");
 
-        // Eventos
+        //Eventos
         bSalir.addActionListener(e -> {
             dispose();
             new menuParade();

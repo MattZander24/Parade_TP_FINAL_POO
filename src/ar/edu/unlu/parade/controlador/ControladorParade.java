@@ -66,7 +66,7 @@ public class ControladorParade implements IControladorRemoto {
             m.verHistorico();
         }
         catch (IOException | ClassNotFoundException e) {
-            //nada porque ya lo controla la funcion interna
+            //Nada porque ya lo controla la funcion interna
         }
     }
 
@@ -207,7 +207,7 @@ public class ControladorParade implements IControladorRemoto {
             m.cargarPartida();
         }
         catch (IOException | ClassNotFoundException e) {
-            //nada porque ya lo controla la funcion interna
+            //Nada porque ya lo controla la funcion interna
         }
     }
 
@@ -225,7 +225,7 @@ public class ControladorParade implements IControladorRemoto {
             m.top5Historico();
         }
         catch (IOException | ClassNotFoundException e) {
-            //nada porque ya lo controla la funcion interna
+            //Nada porque ya lo controla la funcion interna
         }
     }
 
@@ -234,7 +234,7 @@ public class ControladorParade implements IControladorRemoto {
             m.guardarYSalir();
         }
         catch (IOException | ClassNotFoundException e) {
-            //nada porque ya lo controla la funcion interna
+            //Nada porque ya lo controla la funcion interna
         }
     }
 
@@ -243,7 +243,7 @@ public class ControladorParade implements IControladorRemoto {
             m.menuTurno();
         }
         catch (IOException e) {
-            //nada porque ya lo controla la funcion interna
+            //Nada porque ya lo controla la funcion interna
         }
     }
 

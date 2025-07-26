@@ -21,7 +21,6 @@ public class menuParade extends JFrame {
     private Image icono;
 
     public menuParade() {
-        // Iniciar y configurar Frame
         initElements();
         setSize(360, 400);
         setContentPane(panel1);
@@ -32,7 +31,7 @@ public class menuParade extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Menú principal - Parade");
 
-        // Eventos
+        //Eventos
         bIniciarRed.addActionListener(e -> {
             dispose();
             new ServidorParade();
@@ -48,7 +47,8 @@ public class menuParade extends JFrame {
             } else {
                 dispose();
                 new ListaPartidasGuardadas(partidasGuardadas);
-            }*/ //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
+            }*/
+            //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
             dispose();
             new menuCargarPartida(/*partidasGuardadas*/);
         });
@@ -65,7 +65,8 @@ public class menuParade extends JFrame {
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado Jugadores en este ordenador.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 new MejoresJugadoresDialog(null, mejoresJugadores);
-            }*/ //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
+            }*/
+            //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
             //dispose();
             new menuRankingJugadores(/*null, mejoresJugadores*/);
         });
@@ -143,19 +144,15 @@ public class menuParade extends JFrame {
 
             int indice = 0;
             while (indice < paginas.length) {
-                String botonTexto = (indice == paginas.length - 1) ? "Fin" : "Siguiente"; // Cambia el texto en la última página
-
+                String botonTexto = (indice == paginas.length - 1) ? "Fin" : "Siguiente"; //Cambia el texto en la última página
                 int opcion = JOptionPane.showOptionDialog(
                         null, paginas[indice], "Reglas del juego",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                         null, new String[]{botonTexto}, botonTexto
                 );
-
-                if (opcion == -1) break; // Cerrar si el usuario presiona "X"
-
+                if (opcion == -1) break;
                 indice++;
             }
-            //JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "a");
         });
 
         sobreIniciarRed.addActionListener(e -> {
@@ -175,49 +172,4 @@ public class menuParade extends JFrame {
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
     }
-
-    /*private static class MejoresJugadoresDialog extends JDialog {
-        public MejoresJugadoresDialog(Frame parent, ArrayList<Jugador> mejoresJugadores) {
-            super(parent, "Ranking mejores Jugadores", true);
-            ordenarListaDeJugadores(mejoresJugadores);
-            setSize(800, 300);
-            setLocationRelativeTo(parent);
-            JTextArea textArea = new JTextArea(10, 50);
-            textArea.setEditable(false);
-            StringBuilder sb = new StringBuilder();
-            sb.append("Lista de mejores jugadores registrados a la fecha  >>> (").append(formatearFecha()).append(")\n");
-            int posicion = 1;
-            for (Jugador jugador : mejoresJugadores) {
-                sb.append("\nPOSICIÓN N°").append(posicion++).append("  >>>  ").append(jugador.getNombre()).append("\n");
-                sb.append("     ").append("--- PUNTAJE  >>>  * ").append(jugador.getPuntaje()).append(" *\n");
-                sb.append("     ").append("--- VICTORIAS: ").append(jugador.getVictorias());
-                sb.append("     ").append("--- EMPATES: ").append(jugador.getEmpates());
-                sb.append("     ").append("--- DERROTAS: ").append(jugador.getDerrotas());
-                sb.append("\n");
-            }
-            textArea.setText(sb.toString());
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            getContentPane().add(scrollPane, BorderLayout.CENTER);
-            // Hacer visible el diálogo
-            setVisible(true);
-        }
-    }
-
-    private static void ordenarListaDeJugadores(List<Jugador> jugadores) {
-        int n = jugadores.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (jugadores.get(j).getPuntaje() < jugadores.get(j + 1).getPuntaje()) {
-                    Jugador temp = jugadores.get(j);
-                    jugadores.set(j, jugadores.get(j + 1));
-                    jugadores.set(j + 1, temp);
-                }
-            }
-        }
-    }
-
-    private static String formatearFecha() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        return LocalDateTime.now().format(formatter);
-    }*/
 }

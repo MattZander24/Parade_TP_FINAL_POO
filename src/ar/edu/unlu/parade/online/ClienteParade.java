@@ -15,11 +15,9 @@ import java.util.ArrayList;
 
 public class ClienteParade {
 
-
     public ClienteParade() {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("Consola");
-        //opciones.add("Consola (con UI mejorada)");
         opciones.add("Interfáz gráfica");
         ArrayList<String> ips = Util.getIpDisponibles();
         String ip = (String) JOptionPane.showInputDialog(
@@ -66,30 +64,17 @@ public class ClienteParade {
         IVista vista;
 
         if (interfaz.equals("Consola")) {
-            //vista = new VistaConsolaParade();
             vista = new VistaConsola();
             vista.setC(controlador);
             controlador.setV(vista);
-
-            //System.out.println("CONSOLA");
-        } /*else if (interfaz.equals("Consola (con UI mejorada)")) {
-            //vista = new VistaConsolaMejorada(controlador);
-            vista = null;
-
-            System.out.println("CONSOLA MEJORADA");
-        }*/ else {
-            //vista = new VistaInterfazGrafica(controlador);
+        } else {
             vista = new VistaGrafica();
             vista.setC(controlador);
             controlador.setV(vista);
-
-            System.out.println("GRAFICA");
         }
         Cliente cliente = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
         try {
             cliente.iniciar(controlador);
-            //vista.iniciarVista();
-            //vista.actualizar(Opcion.MENU_PRINCIPAL);
             vista.iniciarVista();
         } catch (RemoteException | RMIMVCException e) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Uno de los puertos seleccionados ya se encuentra en uso. Vuelva a intentar unirse con otro.", "Error al unirse el servidor", JOptionPane.ERROR_MESSAGE);

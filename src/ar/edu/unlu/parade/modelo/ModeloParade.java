@@ -10,14 +10,10 @@ import java.io.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class ModeloParade extends ObservableRemoto implements IModelo/*, Observable*/ {
-
+public class ModeloParade extends ObservableRemoto implements IModelo {
     private Partida partida;
 
-    //private ArrayList<Observer> observadores;
-
     public ModeloParade() {
-        //observadores = new ArrayList<Observer>();
         try {
             iniciarAplicacion();
         } catch (RemoteException e) {
@@ -33,36 +29,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         this.partida = partida;
     }
 
-    /*
-    @Override
-    public void agregarObserver(Observer o) {
-        observadores.add(o);
-    }
-    */
-
-    /*
-    private void notificarObservadores(Opcion opcion) {
-        for(Observer o : observadores){
-            o.notificar(opcion);
-        }
-    }
-
-    private void notificarObservadores(Opcion opcion, Object object) {
-        for(Observer o : observadores){
-            o.notificar(opcion, object);
-        }
-    }
-
-    private void notificarObservadores(Opcion opcion, Object object, Object object2) {
-        for(Observer o : observadores){
-            o.notificar(opcion, object, object2);
-        }
-    }
-    */
-
     public void iniciarAplicacion() throws RemoteException {
-        //notificarObservadores(Opcion.MENU_PRINCIPAL);
-        //iniciarJuego();
         generarPartida();
     }
 
@@ -92,16 +59,16 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
     }
 
     public void generarPartida () throws RemoteException {
-        partida = new Partida(/*cantidadJugadores, agregarNombre, */this);
+        partida = new Partida(this);
     }
 
-    public void iniciarPartida (/*int cantidadJugadores, boolean agregarNombre*/) throws RemoteException {
+    public void iniciarPartida () throws RemoteException {
         if (partida.getJugadores().size() == partida.getCantidadJugadores()) {
             partida.inicializar();
             try {
                 partida.comenzarJuego(this, false);
             } catch (IOException | ClassNotFoundException e) {
-                //nada porque ya lo controla la funcion interna
+                //Nada porque ya lo controla la funcion interna
             }
         }
     }
@@ -110,15 +77,15 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.MENU_TURNO);
     }
 
-    public void menuTurnoFinal (/*Jugador j*/) throws RemoteException {
+    public void menuTurnoFinal () throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO_FINAL);
     }
 
-    public void evaluarCarta(/*Jugador j, DestinoCarta d*/) throws RemoteException {
+    public void evaluarCarta() throws RemoteException {
         notificarObservadores(Opcion.SELECICON_EVALUAR);
     }
 
-    public void descartarCarta(/*Jugador j, DestinoCarta d*/) throws RemoteException {
+    public void descartarCarta() throws RemoteException {
         notificarObservadores(Opcion.SELECICON_DESCARTAR);
     }
 
@@ -146,16 +113,16 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         partida.finalizarSecuenciaDescarte();
     }
 
-    public void mensajeDescarteFinal (/*Jugador j*/) throws RemoteException {
+    public void mensajeDescarteFinal () throws RemoteException {
         notificarObservadores(Opcion.DESCARTE_Y_FINAL);
     }
 
-    public void mensajeGanador (/*Jugador j*/) throws RemoteException {
-        notificarObservadores(Opcion.GANADOR_PARTIDA/*, j*/);
+    public void mensajeGanador () throws RemoteException {
+        notificarObservadores(Opcion.GANADOR_PARTIDA);
     }
 
-    public void mensajeEmpate (/*ArrayList<Jugador> ganadores*/) throws RemoteException {
-        notificarObservadores(Opcion.EMPATE_JUGADORES/*, ganadores*/);
+    public void mensajeEmpate () throws RemoteException {
+        notificarObservadores(Opcion.EMPATE_JUGADORES);
     }
 
     public void mensajeGanadorYRanking () throws RemoteException {
@@ -186,10 +153,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         notificarObservadores(Opcion.MOSTRAR_MANO);
     }
 
-    /*public void ultimoTurno() throws RemoteException {
-        notificarObservadores(Opcion.ULTIMO_TURNO);
-    }*/
-
     public void cargarPartida () throws IOException, ClassNotFoundException, RemoteException {
         notificarObservadores(Opcion.CARGAR_PARTIDA);
     }
@@ -199,7 +162,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         try {
             partida.comenzarJuego(this, true);
         } catch (IOException | ClassNotFoundException e) {
-            //nada porque ya lo controla la funcion interna
+            //Nada porque ya lo controla la funcion interna
         }
     }
 
@@ -267,7 +230,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo/*, Observa
         objectOutputStream.close();
     }
 
-    public /*Jugador*/ void agregarJugador(Jugador jugador) throws RemoteException {
+    public void agregarJugador(Jugador jugador) throws RemoteException {
         partida.agregarJugador(jugador);
     }
 

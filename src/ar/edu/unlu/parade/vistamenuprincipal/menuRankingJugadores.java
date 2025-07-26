@@ -18,7 +18,6 @@ public class menuRankingJugadores extends JFrame {
     private Image icono;
 
     public menuRankingJugadores() {
-        // Iniciar y configurar Frame
         initElements();
         setSize(720, 480);
         setContentPane(generalPanel);
@@ -29,7 +28,7 @@ public class menuRankingJugadores extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Top 5 Jugadores - Parade");
 
-        // Eventos
+        //Eventos
         bSalir.addActionListener(e -> {
             dispose();
         });

@@ -1,7 +1,5 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
-import ar.edu.unlu.parade.online.ServidorParade;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,7 +13,6 @@ public class menuHistorialPartidas extends JFrame {
     private Image icono;
 
     public menuHistorialPartidas() {
-        // Iniciar y configurar Frame
         initElements();
         setSize(720, 480);
         setContentPane(generalPanel);
@@ -26,7 +23,7 @@ public class menuHistorialPartidas extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Historial de Partidas - Parade");
 
-        // Eventos
+        //Eventos
         bSalir.addActionListener(e -> {
             dispose();
         });

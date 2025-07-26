@@ -7,26 +7,26 @@ import ar.edu.unlu.parade.modelo.*;
 import ar.edu.unlu.parade.vistamenuprepartida.menuPrePartida;
 import ar.edu.unlu.parade.enumerados.Color;
 import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
-import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VistaGrafica extends JFrame implements IVista {
-
     private ControladorParade c;
     private Image icono;
     private JPanel generalPanel;
-    int indiceInput; //1 = Turno [EVALUAR], 2 = Ultimo Turno [EVALUAR], 3 = Primer Descarte [DESCARTAR], 4 = Segundo Descarte
-    int indiceCarta = 0;
+    int indiceInput;
+    /*
+        1 = Turno [EVALUAR],
+        2 = Ultimo Turno [EVALUAR],
+        3 = Primer Descarte [DESCARTAR],
+        4 = Segundo Descarte
+    */
     int indiceArea = 0;
 
 
@@ -77,29 +77,23 @@ public class VistaGrafica extends JFrame implements IVista {
     private JButton bSi4;
     private JButton bNo4;
 
-    /*
-    private AreaDeJuego areaDeJuego;
-    private Mano mano;
-    */
-
     public VistaGrafica() {
 
         initComponents();
         setLocationRelativeTo(null);
         setSize(1080, 720);
-        //setLayout(null);
 
         setIconImage(icono);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
         setContentPane(generalPanel);
-        setVisible(true); //TODO Esto se activa en otro lado
 
         //Eventos
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                // TODO QUE PASA CON ESTO?
                 /*try {
                     if (controlador.partidaHaComenzado()) {
                         if (controlador.partidaSigueActiva()) {
@@ -223,28 +217,10 @@ public class VistaGrafica extends JFrame implements IVista {
             cl.show(generalPanel, "Card1");
         });
 
-        //TEST DISPLAY
-        /*Mazo mazoJuego = new Mazo();
-        Desfile desfileJuego = new Desfile();
-        Mano manoJuego = new Mano();
-        AreaDeJuego aJuego = new AreaDeJuego();
-
-        mazoJuego.generarMazo();
-        mazoJuego.mezclarMazo();
-        mazoJuego.transferirCartas(desfileJuego, 6);
-        displayCartasDesfile(desfile1, desfileJuego);
-
-        mazoJuego.transferirCartas(manoJuego, 4);
-        displayCartasMano(mano1, manoJuego);
-
-        mazoJuego.transferirCartas(aJuego, 10);
-        aJuego.ordenar();
-        displayCartasAreaDeJuego(areaDeJuego1, aJuego, 1);*/
-
-        //TEST MODO TURNO
         setModoTurno(false);
         indiceInput = 1;
 
+        setVisible(true);
     }
 
     private void initComponents() {
@@ -271,7 +247,6 @@ public class VistaGrafica extends JFrame implements IVista {
         bVerAreaDeJuego1.setContentAreaFilled(false);
         bVerAreaDeJuego1.setFocusPainted(false);
         bVerAreaDeJuego1.setOpaque(false);
-        //bVerAreaDeJuego1.setText("");
 
         ImageIcon iconoAreasDeJuego = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonVerAreasDeJuego.png"));
         Image imagenEscaladaAreasDeJuego = iconoAreasDeJuego.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
@@ -283,7 +258,6 @@ public class VistaGrafica extends JFrame implements IVista {
         bVerJugadoresYSusAreasDeJuego1.setContentAreaFilled(false);
         bVerJugadoresYSusAreasDeJuego1.setFocusPainted(false);
         bVerJugadoresYSusAreasDeJuego1.setOpaque(false);
-        //bVerJugadoresYSusAreasDeJuego1.setText("");
 
         ImageIcon iconoGuardarYSalir = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonGuardarYSalir.png"));
         Image imagenEscaladaGuardarYSalir = iconoGuardarYSalir.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
@@ -387,29 +361,13 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     public void setModoTurno(boolean turno) {
-
-        // Ponemos un fondo grisáceo si no es el turno
-        float r = turno ? 1f : 0.6f;  // rojo un poco más alto
-        float g = turno ? 1f : 0.5f;  // verde más bajo
-        float b = turno ? 1f : 0.5f;  // azul más bajo
+        //Ponemos un fondo gris si no es el turno
+        float r = turno ? 1f : 0.6f;
+        float g = turno ? 1f : 0.5f;
+        float b = turno ? 1f : 0.5f;
         java.awt.Color filtro = new java.awt.Color(r, g, b);
-
         generalPanel.setBackground(filtro);
-
         String debugColor = turno ? "COLOR TRUE" : "COLOR FALSE";
-        System.out.println(debugColor);
-
-        /*mazoLabel.setOpaque(true);
-        mazoLabel.setBackground(filtro);
-        bGuardarYSalir1.setContentAreaFilled(false);
-        bGuardarYSalir1.setOpaque(true);
-        bGuardarYSalir1.setBackground(filtro);
-        bVerAreaDeJuego1.setContentAreaFilled(false);
-        bVerAreaDeJuego1.setOpaque(true);
-        bVerAreaDeJuego1.setBackground(filtro);
-        bVerJugadoresYSusAreasDeJuego1.setContentAreaFilled(false);
-        bVerJugadoresYSusAreasDeJuego1.setOpaque(true);
-        bVerJugadoresYSusAreasDeJuego1.setBackground(filtro);*/
     }
 
     public void displayCartasDesfile(JPanel panelCartas, ListaCartas listaCartas) {
@@ -424,7 +382,6 @@ public class VistaGrafica extends JFrame implements IVista {
             JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
             panelCartas.add(cartaLabel);
         }
-
         panelCartas.revalidate();
         panelCartas.repaint();
     }
@@ -498,12 +455,10 @@ public class VistaGrafica extends JFrame implements IVista {
             columna.setPreferredSize(new Dimension(wColumna, hColumna));
             columna.setOpaque(false);
 
-            List<Carta> cartasDelColor = (List<Carta>) listaCartas.getCartas().stream()
+            List<Carta> cartasDelColor = listaCartas.getCartas().stream()
                     .filter(c -> c.getColor() == color)
-                    /*.sorted(Comparator.comparingInt(Carta::getValor)) // orden de abajo hacia arriba*/
                     .toList();
 
-            // Superponer de abajo hacia arriba
             int offsetX = 0;
             int offsetY = offsetInicialY;
             for (int i = cartasDelColor.size() - 1; i >= 0; i--) {
@@ -512,15 +467,13 @@ public class VistaGrafica extends JFrame implements IVista {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
                 Image imagenEscalada = icono.getImage().getScaledInstance(anchoCarta, altoCarta, Image.SCALE_SMOOTH);
                 JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
-                cartaLabel.setBounds(offsetY, offsetX, anchoCarta, altoCarta); // posición absoluta
+                cartaLabel.setBounds(offsetY, offsetX, anchoCarta, altoCarta);
                 columna.add(cartaLabel);
-                offsetX += offX; // superposición: se muestra solo parte de la carta anterior
+                offsetX += offX;
                 offsetY += offY;
             }
-
             panelArea.add(columna);
         }
-
         panelArea.revalidate();
         panelArea.repaint();
     }
@@ -535,58 +488,19 @@ public class VistaGrafica extends JFrame implements IVista {
         this.c = c;
     }
 
-    /*
-    @Override
-    public void actualizarVistaParaAccion(EstadoPartida estadoActual) throws RemoteException {
-
-    }*/
-
     @Override
     public void iniciarVista() {
         new menuPrePartida(c);
     }
 
     @Override
-    public void menuPrincipal() {
-        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
-    }
-
-    @Override
-    public void verReglas() {
-        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
-    }
-
-    @Override
     public void mensajeCreacionArchivo() {
-        //JOptionPane.showMessageDialog(this, "No se encontró el archivo, se creó uno vacío.", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
         mostrarDialogo("No se encontró el archivo, se creó uno vacío.", "Partida Guardada");
     }
 
     @Override
     public void mensajeGuardarYSalir() {
-        //JOptionPane.showMessageDialog(this, "Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
         mostrarDialogo("Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada");
-    }
-
-    @Override
-    public void verHistorico() throws IOException {
-        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
-    }
-
-    @Override
-    public void verTop5() throws IOException {
-        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
-    }
-
-    @Override
-    public void configuracionPartida() {
-        //todo no pertenece a ivista! ahora se hace en el menuPrePartida. BORRAR
-
-    }
-
-    @Override
-    public void cargarPartida() throws IOException {
-        //todo no pertenece a ivista! ahora se hace en el menu. BORRAR
     }
 
     @Override
@@ -606,25 +520,13 @@ public class VistaGrafica extends JFrame implements IVista {
                             "Luego deberás descartar 2 de las 4 cartas que te no jugaste.\n" +
                             "Las 2 cartas que no hayas descartado se agregarán a tu área de juego para la puntuación final.",
                     "Atención!");
-            /*
-            JOptionPane.showMessageDialog(this,
-                    "Es tu ÚLTIMO turno!\n" +
-                    "Luego deberás descartar 2 de las 4 cartas que te no jugaste.\n" +
-                    "Las 2 cartas que no hayas descartado se agregarán a tu área de juego para la puntuación final.",
-                    "Atención!", JOptionPane.INFORMATION_MESSAGE);*/
-
         }
         menuTurno();
     }
 
     @Override
-    public void agregarNombre(Jugador jugador) {
-        //todo no pertenece a ivista! ahora se hace en el menuPrePartida. BORRAR
-    }
-
-    @Override
     public void seleccionCarta(Jugador j, DestinoCarta d) {
-
+        //TODO Y ESTO?
     }
 
     public void seleccionCartaOpcion (int indiceCartaJugada) {
@@ -634,7 +536,6 @@ public class VistaGrafica extends JFrame implements IVista {
         else if (indiceInput == 3 || indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
         c.devolverCarta(j, indiceCartaJugada, d);
 
-        System.out.println("Finaliza el turno de " + c.getJugadorLocal().definicionJugador("", "")); //TODO sacar despues
         switch (indiceInput) {
             case 1 -> {
                 c.finalizarTurno();
@@ -660,11 +561,6 @@ public class VistaGrafica extends JFrame implements IVista {
                 mostrarDialogo(j.definicionJugador("", "") + ", debés seleccionar 2 cartas para descartar.\n" +
                                 "(Las otras dos se añadirán al area de juego para contarse en la puntuación)",
                         "Atención!");
-                /*
-                JOptionPane.showMessageDialog(this,
-                    j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar\n" +
-                    "(las otras dos se añadirán al area de juego para contarse en la puntuación)",
-                    "Atención!", JOptionPane.INFORMATION_MESSAGE);*/
             }
             else if (indiceInput == 3) {
                 indiceInput = 4;
@@ -674,13 +570,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     @Override
-    public void mensajeGuardar(boolean msgOpcionIncorrecta) {
-        //TODO esto lo hace un menú aparte. quizas no deba ser interfaz.
-    }
-
-    @Override
     public void mensajeGanador(Jugador j) {
-        //JOptionPane.showMessageDialog(this, "El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada", JOptionPane.INFORMATION_MESSAGE);
         mostrarDialogo("El ganador de la partida es " + j.definicionJugador("el ", "") + " con " + j.getPuntos() + " puntos...", "Partida terminada");
     }
 
@@ -694,7 +584,6 @@ public class VistaGrafica extends JFrame implements IVista {
                     .append(j.getPuntos())
                     .append(" PUNTOS...\n");
         }
-        //JOptionPane.showMessageDialog(this, mensaje.toString(), "Empate", JOptionPane.INFORMATION_MESSAGE);
         mostrarDialogo(mensaje.toString(), "Empate");
     }
 
@@ -712,7 +601,6 @@ public class VistaGrafica extends JFrame implements IVista {
                     .append(" pts.\n");
             i++;
         }
-        //JOptionPane.showMessageDialog(this, mensaje.toString(), "Ranking de Jugadores", JOptionPane.INFORMATION_MESSAGE);
         mostrarDialogo(mensaje.toString(), "Ranking de Jugadores");
     }
 
@@ -729,15 +617,14 @@ public class VistaGrafica extends JFrame implements IVista {
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     opciones,
-                    opciones[0] // opción por defecto
+                    opciones[0]
             );
-
-            dispose(); // cerrar la ventana actual
+            dispose();
 
             if (eleccion == 0) {
-                new menuParade(); // vuelve al menú principal
+                new menuParade();
             } else if (eleccion == 1) {
-                System.exit(0); // cierra toda la aplicación
+                System.exit(0);
             }
         });
     }
@@ -749,7 +636,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mostrarADJTodos () {
-
+        //TODO Y ESTO?
     }
 
     @Override
