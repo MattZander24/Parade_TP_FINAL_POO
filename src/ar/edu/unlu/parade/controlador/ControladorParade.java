@@ -169,8 +169,11 @@ public class ControladorParade implements IControladorRemoto {
                 case CREACION_ARCHIVO:
                     v.mensajeCreacionArchivo();
                     break;
-                case GUARDAR_Y_SALIR:
+                case MENSAJE_GUARDAR_Y_SALIR:
                     v.mensajeGuardarYSalir();
+                    break;
+                case GUARDAR_Y_SALIR:
+                    //v.mensajeGuardarYSalir();
                     break;
                 case MENU_TURNO:
                     v.menuTurno();

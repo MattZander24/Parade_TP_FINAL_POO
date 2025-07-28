@@ -233,7 +233,8 @@ public class VistaConsola extends JFrame implements IVista {
                 c.mostrarJugadores();
                 break;
             case 6:
-                c.mensajeGuardarYSalir();
+                //c.mensajeGuardarYSalir();
+                mensajeGuardar(false);
                 break;
             default:
                 println("\nPor favor, seleccione una opción correcta. DEFAULT.\n");
@@ -354,7 +355,6 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
-    //TODO ESTE METODO QUE ONDA SE USA POSTA?
     public void mensajeGuardar (boolean msgOpcionIncorrecta) {
         if (c.getJugadorLocal().isTurnoJugador()) {
             limpiarPantalla();

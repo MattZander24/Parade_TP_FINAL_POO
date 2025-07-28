@@ -186,7 +186,8 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
             objectOutputStream.close();
 
             partida.volverAlMenu();
-            notificarObservadores(Opcion.GUARDAR_Y_SALIR);
+            notificarObservadores(Opcion.MENSAJE_GUARDAR_Y_SALIR);
+            notificarObservadores(Opcion.HABILITAR_SALIR);
         }
     }
 

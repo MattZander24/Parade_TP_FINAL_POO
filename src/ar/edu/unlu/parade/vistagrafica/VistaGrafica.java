@@ -217,7 +217,7 @@ public class VistaGrafica extends JFrame implements IVista {
         });
 
         bSi4.addActionListener(e -> {
-            System.out.println("GUARDAR PARTIDA");
+            c.guardarYSalir();
         });
 
         bNo4.addActionListener(e -> {
@@ -515,7 +515,7 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mensajeGuardarYSalir() {
-        mostrarDialogo("Partida guardada correctamente. Volviendo al Menú Principal...", "Partida Guardada");
+        msgGuardarYSalir = "Partida guardada correctamente. Volviendo al Menú Principal...";
     }
 
     @Override
