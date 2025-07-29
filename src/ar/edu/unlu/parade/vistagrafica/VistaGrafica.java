@@ -504,7 +504,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     @Override
-    public void iniciarVista() {
+    public void iniciarVista() throws RemoteException {
         new menuPrePartida(c);
     }
 

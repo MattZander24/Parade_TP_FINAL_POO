@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class menuPrePartida extends JFrame {
@@ -21,7 +22,7 @@ public class menuPrePartida extends JFrame {
     private JButton bSeleccionarExistente;
     private Image icono;
 
-    public menuPrePartida(ControladorParade c) {
+    public menuPrePartida(ControladorParade c) throws RemoteException {
         initComponents();
         setIconImage(icono);
         setContentPane(panel);
@@ -31,7 +32,72 @@ public class menuPrePartida extends JFrame {
         textArea.setSize(10, 50);
         setVisible(true);
 
-        //Eventos
+        if (c.esNuevaPartida()) {
+            println("Elegí tu nombre. Si no queres elegir uno, presioná 'Seleccionar' sin escribir nada.\n");
+
+            bSeleccionar.addActionListener(e -> {
+                try {
+                    String nombre = textField1.getText();
+                    if (!Objects.equals(nombre, "")) {
+                        Jugador jugador = new Jugador(nombre);
+                        c.agregarJugador(jugador);
+                    }
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+                dispose();
+                try {
+                    c.checkInicioPartida();
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
+        } else {
+            // Ocultar elementos
+            textField1.setVisible(false);
+            bSeleccionar.setVisible(false);
+            textArea.setVisible(false);
+
+            ArrayList<Jugador> jugadores = c.getJugadores();
+            int indice = 1;
+
+            for (Jugador jugador : jugadores) {
+                if (!jugador.isElegido()) {
+                    StringBuilder texto = new StringBuilder();
+                    texto.append("<html>");
+                    texto.append(indice).append(". ").append(jugador.definicionJugador("", ""));
+                    texto.append("</html>");
+
+                    JButton botonJugador = new JButton(texto.toString());
+                    botonJugador.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    botonJugador.setBackground(Color.WHITE);
+                    botonJugador.setHorizontalAlignment(SwingConstants.LEFT);
+
+                    botonJugador.addActionListener(e -> {
+                        try {
+                            jugador.setElegido(true); //TODO esto no funciona
+                            c.reanudarJugador(jugador);
+                        } catch (RemoteException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        dispose();
+                        try {
+                            c.checkInicioPartida();
+                        } catch (RemoteException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    panel.add(Box.createVerticalStrut(20));
+                    panel.add(botonJugador);
+                    indice++;
+                }
+            }
+        }
+
+        // Confirmar salida
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -50,28 +116,6 @@ public class menuPrePartida extends JFrame {
                 }
             }
         });
-
-        bSeleccionar.addActionListener(e -> {
-            try {
-                String nombre = textField1.getText();
-                if (!Objects.equals(nombre, "")) {
-                    Jugador jugador = new Jugador(nombre);
-                    c.agregarJugador(jugador);
-                }
-                else {
-                    //TODO Y ESTO?
-                }
-            } catch (RemoteException ex) {
-                throw new RuntimeException(ex);
-            }
-            dispose();
-            try {
-                c.checkInicioPartida();
-            } catch (RemoteException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        println("Elegí tu nombre. Si no queres elegir uno, presioná 'Seleccionar' sin escribir nada.\n");
     }
 
     private void initComponents() {
@@ -84,5 +128,4 @@ public class menuPrePartida extends JFrame {
     private void println(String texto) {
         textArea.append(texto + "\n");
     }
-
 }

@@ -64,6 +64,22 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     }
 
     @Override
+    public void reiniciarPartida () throws RemoteException {
+        if (partida.getJugadores().size() == partida.getCantidadJugadores()) {
+            try {
+                partida.comenzarJuego(this, true);
+            } catch (IOException | ClassNotFoundException e) {
+                //Nada porque ya lo controla la funcion interna
+            }
+        }
+    }
+
+    @Override
+    public boolean esNuevaPartida() throws RemoteException {
+        return partida.esNueva();
+    }
+
+    @Override
     public void menuTurno () throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO);
     }
@@ -158,6 +174,9 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
 
     @Override
     public void guardarYSalir () throws IOException, ClassNotFoundException, RemoteException {
+        for (Jugador j : partida.getJugadores()) {
+            j.setElegido(false);
+        }
         partida.guardarFechaYHora();
 
         FileInputStream fileInputStream;

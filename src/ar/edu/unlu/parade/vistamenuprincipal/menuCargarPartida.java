@@ -1,23 +1,29 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
+import ar.edu.unlu.parade.modelo.Jugador;
+import ar.edu.unlu.parade.modelo.ModeloParade;
+import ar.edu.unlu.parade.modelo.Partida;
 import ar.edu.unlu.parade.modelo.persistencia.ConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
+import ar.edu.unlu.parade.online.ServidorParade;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 
 public class menuCargarPartida extends JFrame {
     private JPanel generalPanel;
-    private JPanel listaPartidas;
     private JPanel topPanel;
     private JButton bSalir;
     private JLabel lTitulo;
+    private JScrollPane listaPartidasScroll;
+    private JPanel listaPartidas;
 
     private Image icono;
 
-    private RegistroConjuntoPartidas partidas;
+    private ConjuntoPartidas partidas;
 
-    public menuCargarPartida(RegistroConjuntoPartidas partidas) {
+    public menuCargarPartida(ConjuntoPartidas partidas) {
         this.partidas = partidas;
 
         initElements();
@@ -43,74 +49,56 @@ public class menuCargarPartida extends JFrame {
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
 
+        listaPartidas = new JPanel();
+        listaPartidas.setLayout(new BoxLayout(listaPartidas, BoxLayout.Y_AXIS));
+
+        listaPartidasScroll.setViewportView(listaPartidas);
+        listaPartidasScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        listaPartidasScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
         //Cargar Partida
-        //TODO: EMPEZAR UNA VEZ TERMINADO LOS OTROS 2. PARECE MAS COMPLEJO.
-        /*FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-        ConjuntoPartidas partidas = null;
-        try {
-            fileInputStream = new FileInputStream("partidas_guardadas.txt");
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            partidas = (ConjuntoPartidas) objectInputStream.readObject();
-            objectInputStream.close();
-        }
-        catch (FileNotFoundException e) {
-            ArrayList<Partida> cPartidas = new ArrayList<Partida>();
-            partidas = new ConjuntoPartidas(cPartidas);
-            c.mensajeCreacionArchivo();
-            fileOutputStream = new FileOutputStream("partidas_guardadas.txt");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(partidas);
-            objectOutputStream.close();
-        }
-        catch (IOException e) {
-            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException");
-            throw new RuntimeException(e);
-        } finally {
-            Scanner scanner = new Scanner(System.in);
-            int opcion;
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
+        String fechaHoraFormateada;
+        int indice = 1;
 
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
-            String fechaHoraFormateada;
-            int indice = 1;
-            int indice2;
-            if (!(partidas.getPartidas().isEmpty())) {
-                for (Partida partida : partidas.getPartidas()) {
-                    fechaHoraFormateada = partida.getFechaYHoraPartida().format(formato);
-                    System.out.print("\n");
-                    System.out.println(indice + "- Partida guardada el " + fechaHoraFormateada + "...");
-                    System.out.println("\tJugadores:");
-                    indice2 = 1;
-                    for (Jugador j : partida.getJugadores()) {
-                        System.out.println("\t" + indice2 + ". " + j.definicionJugador("", ""));
-                        indice2++;
-                    }
-                    indice++;
-                }
-                System.out.print("\n");
-                System.out.println(indice + "- Salir");
-                System.out.print("\n");
+        if (!(partidas.getPartidas().isEmpty())) {
+            for (Partida partida : partidas.getPartidas()) {
+                fechaHoraFormateada = partida.getFechaYHoraPartida().format(formato);
 
-                System.out.print("Seleccione una opción: ");
-                opcion = scanner.nextInt();
+                // Construir texto descriptivo
+                StringBuilder texto = new StringBuilder();
+                texto.append("<html>");
+                texto.append(indice).append("- Partida guardada el ").append(fechaHoraFormateada).append("<br>");
+                texto.append("&nbsp;&nbsp;&nbsp;Jugadores:<br>");
+                int indice2 = 1;
+                for (Jugador j : partida.getJugadores()) {
+                    texto.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(indice2).append(". ")
+                            .append(j.definicionJugador("", "")).append("<br>");
+                    indice2++;
+                }
+                texto.append("</html>");
 
-                while (opcion < 1 || opcion > indice) {
-                    System.out.print("\nOpción incorrecta, por favor ingrese una opción valida...");
-                    System.out.print("Seleccione una opción: ");
-                    opcion = scanner.nextInt();
-                }
-                if (opcion != indice) {
-                    Partida p = partidas.getPartidas().get(opcion-1);
-                    c.reiniciarPartida (p);
-                }
+                JButton botonPartida = new JButton(texto.toString());
+                botonPartida.setAlignmentX(Component.LEFT_ALIGNMENT);
+                botonPartida.setBackground(Color.WHITE);
+                botonPartida.setHorizontalAlignment(SwingConstants.LEFT);
+
+                Partida partidaSeleccionada = partida; //Esta es la partida que se va a cargar
+                botonPartida.addActionListener(e -> {
+                    ModeloParade modelo = new ModeloParade();
+                    modelo.setPartida(partidaSeleccionada);
+
+                    dispose();
+                    new ServidorParade(modelo);
+                });
+                listaPartidas.add(Box.createVerticalStrut(20));
+                listaPartidas.add(botonPartida);
+                indice++;
             }
-            else {
-                System.out.println("\nNo hay ninguna partida guardada para cargar...\n");
-            }
-        }*/
+        } else {
+            JLabel vacioLabel = new JLabel("No hay ninguna partida guardada para cargar...");
+            vacioLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            listaPartidas.add(vacioLabel);
+        }
     }
 }

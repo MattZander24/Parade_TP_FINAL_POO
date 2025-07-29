@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface IVista {
     ControladorParade getC();
     void setC(ControladorParade c);
-    void iniciarVista();
+    void iniciarVista() throws RemoteException;
     void mensajeCreacionArchivo ();
     void mensajeGuardarYSalir ();
     void menuTurno ();

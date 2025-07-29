@@ -19,6 +19,7 @@ public class Partida implements Serializable {
     Mazo mazoJuego;
     Desfile desfileJuego;
 
+    private boolean esNueva;
     private static int iDPartidaGen = 1;
     private int iDPartida;
     private int indiceTurno;
@@ -33,6 +34,7 @@ public class Partida implements Serializable {
     private LocalDateTime fechaYHoraGuardado;
 
     public Partida(ModeloParade modelo) throws RemoteException {
+        this.esNueva = true;
         this.jugadoresPartida = new ArrayList<Jugador>();
         this.ganadores = new ArrayList<Jugador>();
         this.modelo = modelo;
@@ -107,6 +109,7 @@ public class Partida implements Serializable {
             modelo = m;
         }
         modelo.actualizarJugador();
+        esNueva = false;
         iniciarTurno();
     }
 
@@ -419,5 +422,9 @@ public class Partida implements Serializable {
 
     public void volverAlMenu() {
         salirAlMenu = true;
+    }
+
+    public boolean esNueva() {
+        return esNueva;
     }
 }

@@ -12,8 +12,10 @@ public class Jugador implements Serializable {
     private int posicion;
     private boolean esGanador;
     private boolean turnoJugador;
+    private boolean elegido;
 
     public Jugador(String nombre) {
+        this.elegido = false;
         this.idJugador = generarHashID(nombre);
         this.puntos = 0;
         this.manoJugador = new Mano();
@@ -74,6 +76,13 @@ public class Jugador implements Serializable {
 
     public void setTurnoJugador(boolean turnoJugador) {
         this.turnoJugador = turnoJugador;
+    }
+
+    public boolean isElegido() {
+        return elegido;
+    }
+    public void setElegido(boolean elegido) {
+        this.elegido = elegido;
     }
 
     //Funcion que retorna el nombre SI EXISTE y sino entonces el ID

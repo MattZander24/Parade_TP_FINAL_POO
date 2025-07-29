@@ -17,6 +17,8 @@ public interface IModelo extends IObservableRemoto {
     void generarPartida () throws RemoteException;
     //void terminarPartida () throws RemoteException;
     void iniciarPartida () throws RemoteException;
+    void reiniciarPartida() throws RemoteException;
+    boolean esNuevaPartida() throws RemoteException;
     void menuTurno () throws RemoteException;
     void menuTurnoFinal () throws RemoteException;
     void evaluarCarta() throws RemoteException;

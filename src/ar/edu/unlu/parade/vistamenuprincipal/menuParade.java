@@ -53,7 +53,7 @@ public class menuParade extends JFrame {
             }
 
             try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(archivo))) {
-                RegistroConjuntoPartidas partidas = (RegistroConjuntoPartidas) objectInputStream.readObject();
+                ConjuntoPartidas partidas = (ConjuntoPartidas) objectInputStream.readObject();
 
                 if (partidas == null) {
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);

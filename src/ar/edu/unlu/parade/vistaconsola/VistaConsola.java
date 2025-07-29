@@ -166,7 +166,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     @Override
-    public void iniciarVista() {
+    public void iniciarVista() throws RemoteException {
         new menuPrePartida(c);
     }
 
