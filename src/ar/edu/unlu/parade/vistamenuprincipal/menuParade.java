@@ -92,7 +92,7 @@ public class menuParade extends JFrame {
             File archivo = new File("jugadores.txt");
 
             if (!archivo.exists()) {
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado participaciones de jugadores guardadas", "Jugadores no encontrados", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 

@@ -11,14 +11,10 @@ import java.time.format.DateTimeFormatter;
 public class menuRankingJugadores extends JFrame {
     private JPanel generalPanel;
     private JLabel lTitulo;
-    private JLabel lTop1;
-    private JLabel lTop2;
-    private JLabel lTop3;
-    private JLabel lTop4;
-    private JLabel lTop5;
     private JButton bSalir;
     private JPanel topPanel;
-    private JPanel centerPanel;
+    private JScrollPane top5PanelScroll;
+    private JPanel top5Panel;
 
     private Image icono;
 
@@ -40,6 +36,7 @@ public class menuRankingJugadores extends JFrame {
         //Eventos
         bSalir.addActionListener(e -> {
             dispose();
+            new menuParade();
         });
     }
 
@@ -49,53 +46,34 @@ public class menuRankingJugadores extends JFrame {
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
 
-        //Ver Top 5
-        /*FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-        RegistroConjuntoJugadores jugadores = null;
-        try {
-            fileInputStream = new FileInputStream("jugadores.txt");
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            jugadores = (RegistroConjuntoJugadores) objectInputStream.readObject();
-            objectInputStream.close();
-        }
-        catch (FileNotFoundException e) {
-            ArrayList<RegistroJugadores> registroJugadores = new ArrayList<RegistroJugadores>();
-            jugadores = new RegistroConjuntoJugadores(registroJugadores);
-            c.mensajeCreacionArchivo();
-            fileOutputStream = new FileOutputStream("jugadores.txt");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(jugadores);
-            objectOutputStream.close();
-        }
-        catch (IOException e) {
-            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException");
-            throw new RuntimeException(e);
-        }
-        finally {*/
-            //TODO: MOSTRAR EN FORMATO SWING Y NO CON SOUT
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
-            String fechaHoraFormateada;
-            if (!(jugadores.getJugadores().isEmpty())) {
-                //Hacer solo el top 5
-                for (int i = 0; i < 5; i++) {
-                    fechaHoraFormateada = jugadores.getJugadores().get(i).getFechaYHoraPartida().format(formato);
-                    System.out.print("\n");
-                    System.out.println(i+1 + "- Partida jugada el " + fechaHoraFormateada + ":");
-                    System.out.println("\t" + jugadores.getJugadores().get(i).getDefinicionJugador() + " - " + jugadores.getJugadores().get(i).getPuntosJugador() + "pts.");
-                    System.out.print("\n");
+        top5Panel = new JPanel();
+        top5Panel.setLayout(new BoxLayout(top5Panel, BoxLayout.Y_AXIS));
 
-                }
-                System.out.print("\n");
-                //FuncionesConsola.PulseEnter();
+        top5PanelScroll.setViewportView(top5Panel);
+        top5PanelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        top5PanelScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        //Ver Top 5
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
+        top5Panel.setLayout(new BoxLayout(top5Panel, BoxLayout.Y_AXIS));
+
+        if (!(jugadores.getJugadores().isEmpty())) {
+            int limite = Math.min(5, jugadores.getJugadores().size());
+            for (int i = 0; i < limite; i++) {
+                RegistroJugadores jugador = jugadores.getJugadores().get(i);
+                String fechaHoraFormateada = jugador.getFechaYHoraPartida().format(formato);
+
+                JLabel tituloPartida = new JLabel((i + 1) + "- Partida jugada el " + fechaHoraFormateada + ":");
+                top5Panel.add(tituloPartida);
+
+                JLabel infoJugador = new JLabel("   " + jugador.getDefinicionJugador() + " - " + jugador.getPuntosJugador() + " pts.");
+                top5Panel.add(infoJugador);
+
+                top5Panel.add(Box.createVerticalStrut(30)); // Espaciado
             }
-            else {
-                System.out.println("\nEl Top 5 de mejores puntajes esta vacío...\n");
-            }
-        //}
+        } else {
+            JLabel mensaje = new JLabel("El Top 5 de mejores puntajes está vacío...");
+            top5Panel.add(mensaje);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
-import ar.edu.unlu.parade.modelo.persistencia.ConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
@@ -8,12 +7,12 @@ import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
 import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class menuHistorialPartidas extends JFrame {
     private JPanel topPanel;
     private JLabel lTitulo;
     private JButton bSalir;
+    private JScrollPane listaPartidasScroll;
     private JPanel listaPartidas;
     private JPanel generalPanel;
 
@@ -37,6 +36,7 @@ public class menuHistorialPartidas extends JFrame {
         //Eventos
         bSalir.addActionListener(e -> {
             dispose();
+            new menuParade();
         });
     }
 
@@ -46,53 +46,41 @@ public class menuHistorialPartidas extends JFrame {
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         icono = new ImageIcon(scaledImage).getImage();
 
+        listaPartidas = new JPanel();
+        listaPartidas.setLayout(new BoxLayout(listaPartidas, BoxLayout.Y_AXIS));
+
+        listaPartidasScroll.setViewportView(listaPartidas);
+        listaPartidasScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        listaPartidasScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
         //Ver Historial Partidas
-        /*FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-        RegistroConjuntoPartidas partidas = null;
-        try {
-            fileInputStream = new FileInputStream("partidas.txt");
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            partidas = (RegistroConjuntoPartidas) objectInputStream.readObject();
-            objectInputStream.close();
-        }
-        catch (FileNotFoundException e) {
-            ArrayList<RegistroPartida> registroPartidas = new ArrayList<RegistroPartida>();
-            partidas = new RegistroConjuntoPartidas(registroPartidas);
-            c.mensajeCreacionArchivo();
-            fileOutputStream = new FileOutputStream("partidas.txt");
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(partidas);
-            objectOutputStream.close();
-        }
-        catch (IOException e) {
-            System.err.println("Se produjo un error de entrada/salida: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException");
-            throw new RuntimeException(e);
-        } finally {*/
-            //TODO: MOSTRAR EN FORMATO SWING Y NO CON SOUT
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
-            String fechaHoraFormateada;
-            assert partidas != null;
-            if (!(partidas.getPartidas().isEmpty())) {
-                for (RegistroPartida partida : partidas.getPartidas()) {
-                    fechaHoraFormateada = partida.getFechaYHoraPartida().format(formato);
-                    System.out.print("\n");
-                    System.out.println("- Partida jugada el " + fechaHoraFormateada + "...");
-                    System.out.println("  (jugadores ordenados por puesto)");
-                    for (RegistroJugadores jugador : partida.getRankingJugador()) {
-                        System.out.println("\t" + jugador.getPosicionJugador() + "- " + jugador.getDefinicionJugador() + " (" + jugador.getPuntosJugador() + "pts.)");
-                    }
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy 'a las' HH:mm");
+        String fechaHoraFormateada;
+        assert partidas != null;
+
+        if (!(partidas.getPartidas().isEmpty())) {
+            for (RegistroPartida partida : partidas.getPartidas()) {
+                fechaHoraFormateada = partida.getFechaYHoraPartida().format(formato);
+
+                JLabel tituloPartida = new JLabel("- Partida jugada el " + fechaHoraFormateada + "...");
+                listaPartidas.add(tituloPartida);
+
+                JLabel subtitulo = new JLabel("  (jugadores ordenados por puesto)");
+                listaPartidas.add(subtitulo);
+
+                for (RegistroJugadores jugador : partida.getRankingJugador()) {
+                    String info = "\t" + jugador.getPosicionJugador() + "- " +
+                            jugador.getDefinicionJugador() + " (" +
+                            jugador.getPuntosJugador() + " pts.)";
+                    JLabel jugadorLabel = new JLabel(info);
+                    listaPartidas.add(jugadorLabel);
                 }
-                System.out.print("\n");
-                //FuncionesConsola.PulseEnter();
+
+                listaPartidas.add(Box.createVerticalStrut(15));
             }
-            else {
-                System.out.println("\nEl historial de partidas esta vacío...\n");
-            }
-        //}
+        } else {
+            JLabel vacioLabel = new JLabel("El historial de partidas está vacío...");
+            listaPartidas.add(vacioLabel);
+        }
     }
 }
