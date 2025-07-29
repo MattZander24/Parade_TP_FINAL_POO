@@ -55,9 +55,13 @@ public class menuPrePartida extends JFrame {
 
         } else {
             // Ocultar elementos
-            textField1.setVisible(false);
+            /*textField1.setVisible(false);
             bSeleccionar.setVisible(false);
-            textArea.setVisible(false);
+            textArea.setVisible(false);*/
+
+            panel.remove(textArea);
+            panel.remove(textField1);
+            panel.remove(bSeleccionar);
 
             ArrayList<Jugador> jugadores = c.getJugadores();
             int indice = 1;
@@ -66,17 +70,16 @@ public class menuPrePartida extends JFrame {
                 if (!jugador.isElegido()) {
                     StringBuilder texto = new StringBuilder();
                     texto.append("<html>");
-                    texto.append(indice).append(". ").append(jugador.definicionJugador("", ""));
+                    texto.append("  ").append(indice).append(": ").append(jugador.definicionJugador("", ""));
                     texto.append("</html>");
 
                     JButton botonJugador = new JButton(texto.toString());
-                    botonJugador.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    /*botonJugador.setAlignmentX(Component.CENTER_ALIGNMENT);
                     botonJugador.setBackground(Color.WHITE);
-                    botonJugador.setHorizontalAlignment(SwingConstants.LEFT);
+                    botonJugador.setHorizontalAlignment(SwingConstants.CENTER);*/
 
                     botonJugador.addActionListener(e -> {
                         try {
-                            //jugador.setElegido(true); //TODO esto no funciona
                             c.elegirJugador(jugador.getIdJugador());
                             c.reanudarJugador(jugador);
                         } catch (RemoteException ex) {
@@ -90,9 +93,14 @@ public class menuPrePartida extends JFrame {
                         }
                     });
 
-                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                    panel.add(Box.createVerticalStrut(20));
-                    panel.add(botonJugador);
+                    panel.setLayout(new GridBagLayout());
+
+                    JPanel contenedorBoton = new JPanel();
+                    contenedorBoton.setOpaque(false);
+                    contenedorBoton.add(botonJugador);
+
+                    panel.add(contenedorBoton);
+
                     indice++;
                 }
             }
