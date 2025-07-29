@@ -1,11 +1,15 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
+import ar.edu.unlu.parade.modelo.persistencia.ConjuntoPartidas;
+import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
+import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
+import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.online.ClienteParade;
 import ar.edu.unlu.parade.online.ServidorParade;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.io.*;
 public class menuParade extends JFrame {
     private JPanel panel1;
     private JLabel titulo;
@@ -40,35 +44,71 @@ public class menuParade extends JFrame {
             dispose();
             new ClienteParade();
         });
-        bReanudar.addActionListener(e -> {/*
-            ArrayList<PartidaGuardada> partidasGuardadas = Persistencia.cargarPartidasGuardadas();
-            if (partidasGuardadas.isEmpty()) {
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas en el ordenador", "¡AVISO!", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                dispose();
-                new ListaPartidasGuardadas(partidasGuardadas);
-            }*/
-            //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
-            dispose();
-            new menuCargarPartida(/*partidasGuardadas*/);
+        bReanudar.addActionListener(e -> {
+            File archivo = new File("partidas_guardadas.txt");
+
+            if (!archivo.exists()) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(archivo))) {
+                RegistroConjuntoPartidas partidas = (RegistroConjuntoPartidas) objectInputStream.readObject();
+
+                if (partidas == null) {
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    dispose();
+                    new menuCargarPartida(partidas);
+                }
+            }
+            catch (IOException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Ocurrió un error al intentar cargar las partidas", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
         bHistorialPartidas.addActionListener(e -> {
-            /*
-                //TODO ACÁ SE DEBE APLICAR LA MISMA LOGICA QUE LOS OTROS 2 BOTONES
-            */
-            //dispose();
-            new menuHistorialPartidas(/**/);
+            File archivo = new File("partidas.txt");
+
+            if (!archivo.exists()) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(archivo))) {
+                RegistroConjuntoPartidas partidas = (RegistroConjuntoPartidas) objectInputStream.readObject();
+
+                if (partidas == null) {
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    dispose();
+                    new menuHistorialPartidas(partidas);
+                }
+            }
+            catch (IOException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Ocurrió un error al intentar cargar las partidas", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
-        bTopJugadores.addActionListener(e -> {/*
-            ArrayList<Jugador> mejoresJugadores = Persistencia.cargarJugadoresHistorico();
-            if (mejoresJugadores.isEmpty()) {
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado Jugadores en este ordenador.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                new MejoresJugadoresDialog(null, mejoresJugadores);
-            }*/
-            //TODO ESTA LOGICA HAY QUE APLICARLA, YO LO OMITÍ POR AHORA
-            //dispose();
-            new menuRankingJugadores(/*null, mejoresJugadores*/);
+        bTopJugadores.addActionListener(e -> {
+            File archivo = new File("jugadores.txt");
+
+            if (!archivo.exists()) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado partidas guardadas", "Partidas no encontradas", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(archivo))) {
+                RegistroConjuntoJugadores jugadores = (RegistroConjuntoJugadores) objectInputStream.readObject();
+
+                if (jugadores == null) {
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se han encontrado participaciones de jugadores guardadas", "Jugadores no encontrados", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    dispose();
+                    new menuRankingJugadores(jugadores);
+                }
+            }
+            catch (IOException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Ocurrió un error al intentar cargar las partidas", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
         bReglas.addActionListener(e -> {
             String[] paginas = {
