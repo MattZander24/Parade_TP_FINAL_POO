@@ -1,10 +1,7 @@
 package ar.edu.unlu.parade.modelo;
 
 import ar.edu.unlu.parade.enumerados.Color;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroPartida;
+import ar.edu.unlu.parade.modelo.persistencia.*;
 
 import java.io.*;
 import java.rmi.RemoteException;
@@ -20,7 +17,6 @@ public class Partida implements Serializable {
     Desfile desfileJuego;
 
     private boolean esNueva;
-    private static int iDPartidaGen = 1;
     private int iDPartida;
     private int indiceTurno;
     private int indiceFinal;
@@ -41,8 +37,7 @@ public class Partida implements Serializable {
         this.pilaPartida = new PilaDeDescarte();
         this.mazoJuego = new Mazo();
         this.desfileJuego = new Desfile();
-        this.iDPartida = iDPartidaGen;
-        iDPartidaGen++;
+        this.iDPartida = calcularNuevoId();
         this.indiceTurno = 0;
         this.fechaYHoraGuardado = LocalDateTime.now();
     }
@@ -426,5 +421,39 @@ public class Partida implements Serializable {
 
     public boolean esNueva() {
         return esNueva;
+    }
+
+    private int calcularNuevoId() {
+        int nuevoID = 1;
+
+        FileInputStream fileInputStream;
+        ObjectInputStream objectInputStream;
+        ConjuntoPartidas partidas;
+        int partidasInconclusas = 0;
+        try {
+            fileInputStream = new FileInputStream("partidas_guardadas.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            partidas = (ConjuntoPartidas) objectInputStream.readObject();
+            objectInputStream.close();
+            partidasInconclusas = partidas.getPartidas().size();
+        }
+        catch (IOException | ClassNotFoundException ignored) {
+        }
+        nuevoID += partidasInconclusas;
+
+        RegistroConjuntoPartidas partidas2;
+        int partidasTerminadas = 0;
+
+        try {
+            fileInputStream = new FileInputStream("partidas.txt");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            partidas2 = (RegistroConjuntoPartidas) objectInputStream.readObject();
+            objectInputStream.close();
+            partidasTerminadas = partidas2.getPartidas().size();
+        }
+        catch (IOException | ClassNotFoundException ignored) {
+        }
+        nuevoID += partidasTerminadas;
+        return nuevoID;
     }
 }
