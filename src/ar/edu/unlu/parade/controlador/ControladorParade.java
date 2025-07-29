@@ -239,6 +239,10 @@ public class ControladorParade implements IControladorRemoto {
         v.bienvenidaYEspera(jugadorLocal);
     }
 
+    public void elegirJugador (int idJugador) throws RemoteException {
+        m.elegirJugador(idJugador);
+    }
+
     public boolean esNuevaPartida() throws RemoteException {
         return m.esNuevaPartida();
     }

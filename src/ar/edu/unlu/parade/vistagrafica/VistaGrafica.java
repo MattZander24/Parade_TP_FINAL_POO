@@ -84,8 +84,10 @@ public class VistaGrafica extends JFrame implements IVista {
     private String msgRanking = "";
 
     boolean manoTerminada;
+    boolean puedeGuardar;
 
     public VistaGrafica() {
+        this.puedeGuardar = true;
 
         initComponents();
         setLocationRelativeTo(null);
@@ -166,8 +168,13 @@ public class VistaGrafica extends JFrame implements IVista {
         });
         bGuardarYSalir1.addActionListener(e -> {
             if (c.getJugadorLocal().isTurnoJugador()) {
-                CardLayout cl = (CardLayout)(generalPanel.getLayout());
-                cl.show(generalPanel, "Card4");
+                if (puedeGuardar) {
+                    CardLayout cl = (CardLayout) (generalPanel.getLayout());
+                    cl.show(generalPanel, "Card4");
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Una vez llegado al ultimo turno no se puede guardar la partida, debe ser terminada. Animo! Ya se termina.", "Atención!", JOptionPane.WARNING_MESSAGE);
+                }
             }
             else {
                 JOptionPane.showMessageDialog(this, "Actualmente no es tu turno, espera el tuyo para ingresar opciones.", "Atención!", JOptionPane.WARNING_MESSAGE);
@@ -537,6 +544,11 @@ public class VistaGrafica extends JFrame implements IVista {
     public void menuTurnoFinal() {
         if (c.getJugadorLocal().isTurnoJugador()) {
             indiceInput = 2;
+            puedeGuardar = false;
+            ImageIcon iconoGuardarYSalir2 = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/BotonGuardarYSalir - Prohibido.png"));
+            Image imagenEscaladaGuardarYSalir2 = iconoGuardarYSalir2.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+            ImageIcon iconoEscaladoGuardarYSalir2 = new ImageIcon(imagenEscaladaGuardarYSalir2);
+            bGuardarYSalir1.setIcon(iconoEscaladoGuardarYSalir2);
             mostrarDialogo("Es tu ÚLTIMO turno!\n" +
                             "Luego deberás descartar 2 de las 4 cartas que te no jugaste.\n" +
                             "Las 2 cartas que no hayas descartado se agregarán a tu área de juego para la puntuación final.",

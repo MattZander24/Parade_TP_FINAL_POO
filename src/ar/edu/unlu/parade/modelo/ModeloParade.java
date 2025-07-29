@@ -75,6 +75,15 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     }
 
     @Override
+    public void elegirJugador(int idJugador) throws RemoteException {
+        for (Jugador jugador : partida.getJugadores()) {
+            if (jugador.getIdJugador() == idJugador) {
+                jugador.setElegido(true);
+            }
+        }
+    }
+
+    @Override
     public boolean esNuevaPartida() throws RemoteException {
         return partida.esNueva();
     }

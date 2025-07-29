@@ -18,6 +18,7 @@ public interface IModelo extends IObservableRemoto {
     //void terminarPartida () throws RemoteException;
     void iniciarPartida () throws RemoteException;
     void reiniciarPartida() throws RemoteException;
+    void elegirJugador(int idJugador) throws RemoteException;
     boolean esNuevaPartida() throws RemoteException;
     void menuTurno () throws RemoteException;
     void menuTurnoFinal () throws RemoteException;

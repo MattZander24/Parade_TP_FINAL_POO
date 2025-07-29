@@ -76,7 +76,8 @@ public class menuPrePartida extends JFrame {
 
                     botonJugador.addActionListener(e -> {
                         try {
-                            jugador.setElegido(true); //TODO esto no funciona
+                            //jugador.setElegido(true); //TODO esto no funciona
+                            c.elegirJugador(jugador.getIdJugador());
                             c.reanudarJugador(jugador);
                         } catch (RemoteException ex) {
                             throw new RuntimeException(ex);
