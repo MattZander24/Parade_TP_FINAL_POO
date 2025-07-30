@@ -42,11 +42,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     }
 
     @Override
-    public void mensajeGuardarYSalir () throws RemoteException {
-        notificarObservadores(Opcion.MENSAJE_GUARDAR_Y_SALIR);
-    }
-
-    @Override
     public void generarPartida () throws RemoteException {
         partida = new Partida(this);
     }
@@ -96,16 +91,6 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     @Override
     public void menuTurnoFinal () throws RemoteException {
         notificarObservadores(Opcion.MENU_TURNO_FINAL);
-    }
-
-    @Override
-    public void evaluarCarta() throws RemoteException {
-        notificarObservadores(Opcion.SELECICON_EVALUAR);
-    }
-
-    @Override
-    public void descartarCarta() throws RemoteException {
-        notificarObservadores(Opcion.SELECICON_DESCARTAR);
     }
 
     @Override

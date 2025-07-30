@@ -20,31 +20,15 @@ public class RegistroJugadores implements Serializable {
         return definicionJugador;
     }
 
-    public void setDefinicionJugador(String definicionJugador) {
-        this.definicionJugador = definicionJugador;
-    }
-
     public int getPuntosJugador() {
         return puntosJugador;
-    }
-
-    public void setPuntosJugador(int puntosJugador) {
-        this.puntosJugador = puntosJugador;
     }
 
     public int getPosicionJugador() {
         return posicionJugador;
     }
 
-    public void setPosicionJugador(int posicionJugador) {
-        this.posicionJugador = posicionJugador;
-    }
-
     public LocalDateTime getFechaYHoraPartida() {
         return fechaYHoraPartida;
-    }
-
-    public void setFechaYHoraPartida(LocalDateTime fechaYHoraPartida) {
-        this.fechaYHoraPartida = fechaYHoraPartida;
     }
 }

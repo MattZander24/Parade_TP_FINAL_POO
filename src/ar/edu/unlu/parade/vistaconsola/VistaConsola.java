@@ -13,8 +13,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -79,8 +77,9 @@ public class VistaConsola extends JFrame implements IVista {
 
         JButton botonEnviarMovimiento = new JButton("Enviar opcion");
         botonEnviarMovimiento.addActionListener(e -> {
-            inputOpcion(Integer.parseInt(opcion.getText()));
-            //Reiniciamos el contenido
+            if (!opcion.getText().isEmpty()) {
+                inputOpcion(Integer.parseInt(opcion.getText()));
+            }
             opcion.setText("");
         });
         optionsPanel.add(textFieldsPanel);
@@ -88,44 +87,6 @@ public class VistaConsola extends JFrame implements IVista {
         bottomPanel.add(optionsPanel, BorderLayout.SOUTH);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                // TODO QUE PASA CON ESTO?
-                /*try {
-                    if (controlador.partidaHaComenzado()) {
-                        if (controlador.partidaSigueActiva()) {
-                            int confirm = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(),
-                                    "¿Quiere guardar la partida para reanudarla en otra ocación?\nNOTA: Si presiona 'NO' se le contará como abandono y perderás la partida :/",
-                                    "Confirmar salida", JOptionPane.YES_NO_OPTION);
-                            if (confirm == JOptionPane.YES_OPTION) {
-                                controlador.guardarPartida();
-                                System.exit(0); // Termina la aplicación
-                            }
-                            if (confirm == JOptionPane.NO_OPTION) {
-                                // Si el usuario confirma, cierra la aplicación.
-                                controlador.jugadorAbandona();
-                                System.exit(0); // Termina la aplicación
-                            }
-                        } else {
-                            System.exit(0); // Termina la aplicación
-                        }
-                    } else {
-                        int confirm = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(),
-                                "¿Estás seguro de que quieres cerrar la aplicación? El juego todavía no ha comenzado.",
-                                "Confirmar salida", JOptionPane.YES_NO_OPTION);
-                        if (confirm == JOptionPane.YES_OPTION) {
-                            // Si el usuario confirma, cierra la aplicación.
-                            controlador.aplicacionCerrada();
-                            System.exit(0); // Termina la aplicación
-                        }
-                    }
-                } catch (RemoteException ex) {
-                    ex.printStackTrace();
-                    System.exit(0); // Termina la aplicación
-                }*/
-            }
-        });
         setVisible(true);
     }
 
@@ -170,7 +131,7 @@ public class VistaConsola extends JFrame implements IVista {
         new menuPrePartida(c);
     }
 
-    //Método privado. No debe pertenecer a IVista.
+    //Método privado. No pertenece a IVista.
     private void initComponents() {
         icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/LogoParade.png")).getImage();
         Image originalImage = icono;
@@ -218,7 +179,7 @@ public class VistaConsola extends JFrame implements IVista {
     public void menuTurnoOpcion (int opcion) {
         switch (opcion) {
             case 1:
-                c.seleccionarCarta();
+                seleccionCarta(c.getJugadorLocal(), DestinoCarta.EVALUAR);
                 break;
             case 2:
                 c.mostrarMano();
@@ -233,11 +194,10 @@ public class VistaConsola extends JFrame implements IVista {
                 c.mostrarJugadores();
                 break;
             case 6:
-                //c.mensajeGuardarYSalir();
                 mensajeGuardar(false);
                 break;
             default:
-                println("\nPor favor, seleccione una opción correcta. DEFAULT.\n");
+                println("\nPor favor, seleccione una opción correcta.\n");
                 break;
         }
     }
@@ -270,7 +230,7 @@ public class VistaConsola extends JFrame implements IVista {
     public void menuTurnoFinalOpcion(int opcion) {
         switch (opcion) {
             case 1:
-                c.seleccionarCarta();
+                seleccionCarta(c.getJugadorLocal(), DestinoCarta.EVALUAR);
                 break;
             case 2:
                 c.mostrarMano();
@@ -290,7 +250,6 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
-    @Override
     public void seleccionCarta (Jugador j, DestinoCarta d) {
         String verbo;
         if (d == DestinoCarta.EVALUAR) {
@@ -315,24 +274,25 @@ public class VistaConsola extends JFrame implements IVista {
         if (indiceInput == 3) { d = DestinoCarta.EVALUAR; }
         else if (indiceInput == 4) { d = DestinoCarta.DESCARTAR; }
         if (j.isTurnoJugador()) {
-            while (opcion < 1 || opcion > j.getManoJugador().cantidadMano()) {
-                println("Opcion incorrecta...");
-                println("Seleccione la carta a jugar: ");
+            if (opcion < 1 || opcion > j.getManoJugador().cantidadMano()) {
+                println("Opcion incorrecta... Seleccione la carta a jugar: ");
             }
-            c.devolverCarta(j, --opcion, d);
+            else{
+                c.devolverCarta(j, --opcion, d);
 
-            switch (indiceRetorno) {
-                case 1 -> {
-                    indiceInput = 0;
-                    c.finalizarTurno();
-                }
-                case 2 -> {
-                    indiceInput = 0;
-                    c.finalizarUltimoTurno();
-                }
-                case 3 -> {
-                    indiceInput = 0;
-                    c.finalizarDescarte();
+                switch (indiceRetorno) {
+                    case 1 -> {
+                        indiceInput = 0;
+                        c.finalizarTurno();
+                    }
+                    case 2 -> {
+                        indiceInput = 0;
+                        c.finalizarUltimoTurno();
+                    }
+                    case 3 -> {
+                        indiceInput = 0;
+                        c.finalizarDescarte();
+                    }
                 }
             }
         }
@@ -347,6 +307,7 @@ public class VistaConsola extends JFrame implements IVista {
             println("----------------------------------------------------------------------------------------------------");
             println(j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar");
             println("(las otras dos se añadirán al area de juego para contarse en la puntuación)");
+            seleccionCarta(c.getJugadorLocal(), DestinoCarta.DESCARTAR);
         }
         else {
             indiceInput = 0;

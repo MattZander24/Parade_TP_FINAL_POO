@@ -4,7 +4,6 @@ import ar.edu.unlu.parade.modelo.Jugador;
 import ar.edu.unlu.parade.modelo.ModeloParade;
 import ar.edu.unlu.parade.modelo.Partida;
 import ar.edu.unlu.parade.modelo.persistencia.ConjuntoPartidas;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.online.ServidorParade;
 
 import javax.swing.*;

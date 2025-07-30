@@ -6,8 +6,6 @@ public enum Opcion implements Serializable {
     CREACION_ARCHIVO,
     MENU_TURNO,
     MENU_TURNO_FINAL,
-    SELECICON_EVALUAR,
-    SELECICON_DESCARTAR,
     RANKING,
     HABILITAR_SALIR,
     MOSTRAR_AREA,
@@ -18,7 +16,6 @@ public enum Opcion implements Serializable {
     EMPATE_JUGADORES,
     DESCARTE_Y_FINAL,
     MENSAJE_GUARDAR_Y_SALIR,
-    GUARDAR_Y_SALIR,
     ACTUALIZAR_JUGADOR
 
 }

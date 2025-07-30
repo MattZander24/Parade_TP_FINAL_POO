@@ -3,7 +3,6 @@ package ar.edu.unlu.parade.vistamenuprincipal;
 import ar.edu.unlu.parade.modelo.persistencia.ConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 import ar.edu.unlu.parade.online.ClienteParade;
 import ar.edu.unlu.parade.online.ServidorParade;
 

@@ -13,17 +13,13 @@ public interface IModelo extends IObservableRemoto {
     void setPartida(Partida partida) throws RemoteException;
     void iniciarAplicacion() throws RemoteException;
     void mensajeCreacionArchivo () throws RemoteException;
-    void mensajeGuardarYSalir () throws RemoteException;
     void generarPartida () throws RemoteException;
-    //void terminarPartida () throws RemoteException;
     void iniciarPartida () throws RemoteException;
     void reiniciarPartida() throws RemoteException;
     void elegirJugador(int idJugador) throws RemoteException;
     boolean esNuevaPartida() throws RemoteException;
     void menuTurno () throws RemoteException;
     void menuTurnoFinal () throws RemoteException;
-    void evaluarCarta() throws RemoteException;
-    void descartarCarta() throws RemoteException;
     void devolverCarta(Jugador j, int opcionCarta, DestinoCarta d) throws RemoteException;
     void finalizarTurno() throws IOException, ClassNotFoundException;
     void finalizarUltimoTurno() throws IOException, ClassNotFoundException;

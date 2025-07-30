@@ -46,10 +46,6 @@ public class Partida implements Serializable {
         return fechaYHoraGuardado;
     }
 
-    public void setFechaYHoraPartida(LocalDateTime fechaYHoraPartida) {
-        this.fechaYHoraGuardado = fechaYHoraPartida;
-    }
-
     public int getIdPartida() {
         return iDPartida;
     }
@@ -74,16 +70,8 @@ public class Partida implements Serializable {
         return ganadores;
     }
 
-    public void setGanadores(ArrayList<Jugador> ganadores) {
-        this.ganadores = ganadores;
-    }
-
     public Desfile getDesfileJuego() {
         return desfileJuego;
-    }
-
-    public void setDesfileJuego(Desfile desfileJuego) {
-        this.desfileJuego = desfileJuego;
     }
 
     public void agregarJugador (Jugador jugador) throws RemoteException {
@@ -235,7 +223,6 @@ public class Partida implements Serializable {
 
     public void descarteFinal () throws RemoteException {
         modelo.mensajeDescarteFinal();
-        modelo.descartarCarta();
     }
 
     public void descarteUltimasCartas (Jugador j) throws RemoteException {

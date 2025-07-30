@@ -7,6 +7,7 @@ import java.util.Stack;
 
 public class PilaCartas implements ConjuntoCartas, Serializable {
     Stack<Carta> cartas;
+
     public PilaCartas() {
         this.cartas = new Stack<>();
     }
@@ -31,5 +32,4 @@ public class PilaCartas implements ConjuntoCartas, Serializable {
     public void enviarCarta(Carta carta) {
         this.cartas.push(carta);
     }
-
 }

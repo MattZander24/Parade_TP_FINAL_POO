@@ -14,7 +14,4 @@ public class RegistroConjuntoPartidas implements Serializable {
         return partidas;
     }
 
-    public void setPartidas(ArrayList<RegistroPartida> partidas) {
-        this.partidas = partidas;
-    }
 }

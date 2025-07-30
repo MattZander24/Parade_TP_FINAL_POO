@@ -10,8 +10,6 @@ import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,45 +98,6 @@ public class VistaGrafica extends JFrame implements IVista {
         setContentPane(generalPanel);
 
         //Eventos
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                // TODO QUE PASA CON ESTO?
-                /*try {
-                    if (controlador.partidaHaComenzado()) {
-                        if (controlador.partidaSigueActiva()) {
-                            int confirm = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(),
-                                    "¿Quiere guardar la partida para reanudarla en otra ocación?\nNOTA: Si presiona 'NO' se le contará como abandono y perderás la partida :/",
-                                    "Confirmar salida", JOptionPane.YES_NO_OPTION);
-                            if (confirm == JOptionPane.YES_OPTION) {
-                                controlador.guardarPartida();
-                                System.exit(0); // Termina la aplicación
-                            }
-                            if (confirm == JOptionPane.NO_OPTION) {
-                                // Si el usuario confirma, cierra la aplicación.
-                                controlador.jugadorAbandona();
-                                System.exit(0); // Termina la aplicación
-                            }
-                        } else {
-                            System.exit(0); // Termina la aplicación
-                        }
-                    } else {
-                        int confirm = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(),
-                                "¿Estás seguro de que quieres cerrar la aplicación? El juego todavía no ha comenzado.",
-                                "Confirmar salida", JOptionPane.YES_NO_OPTION);
-                        if (confirm == JOptionPane.YES_OPTION) {
-                            // Si el usuario confirma, cierra la aplicación.
-                            controlador.aplicacionCerrada();
-                            System.exit(0); // Termina la aplicación
-                        }
-                    }
-                } catch (RemoteException ex) {
-                    ex.printStackTrace();
-                    System.exit(0); // Termina la aplicación
-                }*/
-            }
-        });
-
         bVerAreaDeJuego1.addActionListener(e -> {
             if (c.getJugadorLocal().isTurnoJugador()) {
                 displayCartasAreaDeJuego(areaDeJuego2, c.getJugadorLocal().getAreaJugador(), 2);
@@ -232,12 +191,12 @@ public class VistaGrafica extends JFrame implements IVista {
             cl.show(generalPanel, "Card1");
         });
 
-        setModoTurno(false);
         indiceInput = 1;
         manoTerminada = false;
         setVisible(true);
     }
 
+    //Método privado. No pertenece a IVista.
     private void initComponents() {
         icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/LogoParade.png")).getImage();
         Image originalImage = icono;
@@ -377,19 +336,9 @@ public class VistaGrafica extends JFrame implements IVista {
         //GENERAL
         CardLayout cl = (CardLayout)(generalPanel.getLayout());
         cl.show(generalPanel, "Card1");
-
     }
 
-    public void setModoTurno(boolean turno) {
-        //Ponemos un fondo gris si no es el turno
-        float r = turno ? 1f : 0.6f;
-        float g = turno ? 1f : 0.5f;
-        float b = turno ? 1f : 0.5f;
-        java.awt.Color filtro = new java.awt.Color(r, g, b);
-        generalPanel.setBackground(filtro);
-        String debugColor = turno ? "COLOR TRUE" : "COLOR FALSE";
-    }
-
+    //Método interno del modo gráfico. No pertenece a IVista.
     public void displayCartasDesfile(JPanel panelCartas, ListaCartas listaCartas) {
         panelCartas.removeAll();
         panelCartas.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
@@ -406,6 +355,7 @@ public class VistaGrafica extends JFrame implements IVista {
         panelCartas.repaint();
     }
 
+    //Método interno del modo gráfico. No pertenece a IVista.
     public void displayCartasMano(JPanel panelCartas, ListaCartas listaCartas) {
         panelCartas.removeAll();
         panelCartas.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
@@ -434,14 +384,7 @@ public class VistaGrafica extends JFrame implements IVista {
         panelCartas.repaint();
     }
 
-    public void ocultarUltimaCarta(JPanel panelCartas) {
-        panelCartas.setVisible(false);
-        panelCartas.setEnabled(false);
-        /*panelCartas.revalidate();
-        panelCartas.repaint();*/
-        manoTerminada = true;
-    }
-
+    //Método interno del modo gráfico. No pertenece a IVista.
     public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
         int anchoCarta = 0;
         int altoCarta = 0;
@@ -500,6 +443,13 @@ public class VistaGrafica extends JFrame implements IVista {
         panelArea.repaint();
     }
 
+    //Método interno del modo gráfico. No pertenece a IVista.
+    public void ocultarUltimaCarta(JPanel panelCartas) {
+        panelCartas.setVisible(false);
+        panelCartas.setEnabled(false);
+        manoTerminada = true;
+    }
+
     @Override
     public ControladorParade getC() {
         return c;
@@ -537,7 +487,6 @@ public class VistaGrafica extends JFrame implements IVista {
             throw new RuntimeException(ex);
         }
         mostrarADJ(c.getJugadorLocal());
-        setModoTurno(c.getJugadorLocal().isTurnoJugador());
     }
 
     @Override
@@ -557,11 +506,7 @@ public class VistaGrafica extends JFrame implements IVista {
         menuTurno();
     }
 
-    @Override
-    public void seleccionCarta(Jugador j, DestinoCarta d) {
-        //TODO Y ESTO?
-    }
-
+    //Método interno del modo gráfico. No pertenece a IVista.
     public void seleccionCartaOpcion (int indiceCartaJugada) {
         Jugador j = c.getJugadorLocal();
         DestinoCarta d = null;
@@ -675,7 +620,6 @@ public class VistaGrafica extends JFrame implements IVista {
 
     @Override
     public void mostrarADJTodos () {
-        //TODO Y ESTO?
     }
 
     @Override
@@ -693,6 +637,7 @@ public class VistaGrafica extends JFrame implements IVista {
         JOptionPane.showMessageDialog(this, "Bienvenido " + jugadorLocal.definicionJugador("", "") + ", estamos esperando a que se unan todos los jugadores para empezar la partida.", "Bienvenida", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    //Método interno del modo gráfico. No pertenece a IVista.
     public void mostrarDialogo(String mensaje, String titulo) {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);

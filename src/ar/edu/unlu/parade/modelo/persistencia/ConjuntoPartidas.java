@@ -16,10 +16,6 @@ public class ConjuntoPartidas implements Serializable {
         return partidas;
     }
 
-    public void setPartidas(ArrayList<Partida> partidas) {
-        this.partidas = partidas;
-    }
-
     public void agregarOActualizarPartida(Partida partida) {
         for (int i = 0; i < partidas.size(); i++) {
             if (partidas.get(i).getIdPartida() == partida.getIdPartida()) {

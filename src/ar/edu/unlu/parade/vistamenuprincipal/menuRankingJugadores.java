@@ -1,7 +1,6 @@
 package ar.edu.unlu.parade.vistamenuprincipal;
 
 import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoJugadores;
-import ar.edu.unlu.parade.modelo.persistencia.RegistroConjuntoPartidas;
 import ar.edu.unlu.parade.modelo.persistencia.RegistroJugadores;
 
 import javax.swing.*;

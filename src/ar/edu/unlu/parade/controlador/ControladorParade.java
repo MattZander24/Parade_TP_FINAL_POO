@@ -47,15 +47,6 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void seleccionarCarta() {
-        try {
-            m.evaluarCarta();
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void devolverCarta(Jugador j, int opcionCarta, DestinoCarta d) {
         try {
             m.devolverCarta(j, opcionCarta, d);
@@ -95,15 +86,6 @@ public class ControladorParade implements IControladorRemoto {
             e.printStackTrace();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public void mensajeGuardarYSalir () {
-        try {
-            m.mensajeGuardarYSalir();
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
@@ -172,9 +154,6 @@ public class ControladorParade implements IControladorRemoto {
                 case MENSAJE_GUARDAR_Y_SALIR:
                     v.mensajeGuardarYSalir();
                     break;
-                case GUARDAR_Y_SALIR:
-                    //v.mensajeGuardarYSalir();
-                    break;
                 case MENU_TURNO:
                     v.menuTurno();
                     break;
@@ -207,12 +186,6 @@ public class ControladorParade implements IControladorRemoto {
                     break;
                 case HABILITAR_SALIR:
                     v.habilitarSalir();
-                    break;
-                case SELECICON_EVALUAR:
-                    v.seleccionCarta(jugadorLocal, DestinoCarta.EVALUAR);
-                    break;
-                case SELECICON_DESCARTAR:
-                    v.seleccionCarta(jugadorLocal, DestinoCarta.DESCARTAR);
                     break;
                 case ACTUALIZAR_JUGADOR:
                     actualizarJugador();

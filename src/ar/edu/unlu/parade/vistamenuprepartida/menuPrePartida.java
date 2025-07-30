@@ -54,11 +54,7 @@ public class menuPrePartida extends JFrame {
             });
 
         } else {
-            // Ocultar elementos
-            /*textField1.setVisible(false);
-            bSeleccionar.setVisible(false);
-            textArea.setVisible(false);*/
-
+            // Eliminar elementos
             panel.remove(textArea);
             panel.remove(textField1);
             panel.remove(bSeleccionar);
@@ -74,9 +70,6 @@ public class menuPrePartida extends JFrame {
                     texto.append("</html>");
 
                     JButton botonJugador = new JButton(texto.toString());
-                    /*botonJugador.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    botonJugador.setBackground(Color.WHITE);
-                    botonJugador.setHorizontalAlignment(SwingConstants.CENTER);*/
 
                     botonJugador.addActionListener(e -> {
                         try {

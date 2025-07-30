@@ -18,15 +18,7 @@ public class RegistroPartida implements Serializable {
         return rankingJugador;
     }
 
-    public void setRankingJugador(ArrayList<RegistroJugadores> rankingJugador) {
-        this.rankingJugador = rankingJugador;
-    }
-
     public LocalDateTime getFechaYHoraPartida() {
         return fechaYHoraPartida;
-    }
-
-    public void setFechaYHoraPartida(LocalDateTime fechaYHoraPartida) {
-        this.fechaYHoraPartida = fechaYHoraPartida;
     }
 }
