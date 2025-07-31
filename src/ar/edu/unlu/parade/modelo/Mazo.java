@@ -18,7 +18,7 @@ public class Mazo extends PilaCartas implements Serializable {
         for (int v = 0; v <= 10; v++) {
             for (Color c : EnumSet.allOf(Color.class)) {
                 Carta carta = new Carta(v, c);
-                cartas.push(carta);
+                this.getCartas().push(carta);
             }
         }
         generado = true;
@@ -26,12 +26,12 @@ public class Mazo extends PilaCartas implements Serializable {
 
     public void mezclarMazo () {
         if (generado) {
-            Collections.shuffle(cartas);
+            Collections.shuffle(this.getCartas());
         }
     }
 
     public boolean estaTerminado () {
-        return cartas.empty();
+        return this.getCartas().empty();
     }
 
 }

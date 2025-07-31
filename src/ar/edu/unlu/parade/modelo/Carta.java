@@ -19,16 +19,8 @@ public class Carta implements Serializable {
         return valor;
     }
 
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
-
     public Color getColor() {
         return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public void anularCarta () {

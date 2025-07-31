@@ -97,10 +97,10 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     public void devolverCarta(Jugador jugador, int opcionCarta, DestinoCarta d) throws RemoteException {
         for (Jugador j : partida.getJugadores()) {
             if (j.equals(jugador)) {
-                Carta cartaSeleccionada = j.manoJugador.cartas.get(opcionCarta);
+                Carta cartaSeleccionada = j.getManoJugador().getCartas().get(opcionCarta);
                 switch (d) {
                     case EVALUAR -> partida.evaluarDesfile(cartaSeleccionada, j);
-                    case DESCARTAR -> j.manoJugador.transferirCartas(partida.pilaPartida, cartaSeleccionada);
+                    case DESCARTAR -> j.getManoJugador().transferirCartas(partida.getPilaPartida(), cartaSeleccionada);
                 }
             }
         }

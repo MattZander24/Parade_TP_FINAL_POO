@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ListaCartas implements ConjuntoCartas, Serializable {
-    ArrayList<Carta> cartas;
+    private ArrayList<Carta> cartas;
 
     public ListaCartas() {
         this.cartas = new ArrayList<Carta>();

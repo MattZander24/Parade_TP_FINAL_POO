@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Partida implements Serializable {
-    transient ModeloParade modelo;
-    ArrayList<Jugador> jugadoresPartida;
-    ArrayList<Jugador> ganadores;
-    PilaDeDescarte pilaPartida;
-    Mazo mazoJuego;
-    Desfile desfileJuego;
+    private transient ModeloParade modelo;
+    private ArrayList<Jugador> jugadoresPartida;
+    private ArrayList<Jugador> ganadores;
+    private PilaDeDescarte pilaPartida;
+    private Mazo mazoJuego;
+    private Desfile desfileJuego;
 
     private boolean esNueva;
-    private int iDPartida;
+    private int idPartida;
     private int indiceTurno;
     private int indiceFinal;
     private int contadorUltimoTurno;
@@ -25,7 +25,7 @@ public class Partida implements Serializable {
     private boolean salirAlMenu = false;
     private Jugador jugadorEnTurno;
     private Jugador jugadorFinal;
-    private boolean finturnos = false;
+    private boolean finTurnos = false;
     private int cantidadJugadores;
     private LocalDateTime fechaYHoraGuardado;
 
@@ -37,7 +37,7 @@ public class Partida implements Serializable {
         this.pilaPartida = new PilaDeDescarte();
         this.mazoJuego = new Mazo();
         this.desfileJuego = new Desfile();
-        this.iDPartida = calcularNuevoId();
+        this.idPartida = calcularNuevoId();
         this.indiceTurno = 0;
         this.fechaYHoraGuardado = LocalDateTime.now();
     }
@@ -47,7 +47,7 @@ public class Partida implements Serializable {
     }
 
     public int getIdPartida() {
-        return iDPartida;
+        return idPartida;
     }
 
     public ArrayList<Jugador> getJugadores() {
@@ -74,6 +74,10 @@ public class Partida implements Serializable {
         return desfileJuego;
     }
 
+    public PilaDeDescarte getPilaPartida() {
+        return pilaPartida;
+    }
+
     public void agregarJugador (Jugador jugador) throws RemoteException {
         this.jugadoresPartida.add(jugador);
     }
@@ -83,7 +87,7 @@ public class Partida implements Serializable {
         mazoJuego.mezclarMazo();
         mazoJuego.transferirCartas(desfileJuego, 6);
         for (Jugador j: jugadoresPartida) {
-            mazoJuego.transferirCartas(j.manoJugador, 5);
+            mazoJuego.transferirCartas(j.getManoJugador(), 5);
         }
     }
 
@@ -96,8 +100,8 @@ public class Partida implements Serializable {
         iniciarTurno();
     }
 
-    public void iniciarTurno () throws IOException, ClassNotFoundException {
-        if (!finturnos) {
+    private void iniciarTurno () throws IOException, ClassNotFoundException {
+        if (!finTurnos) {
             jugadorEnTurno = jugadoresPartida.get(indiceTurno);
             jugadorEnTurno.setTurnoJugador(true);
             modelo.actualizarJugador();
@@ -111,14 +115,14 @@ public class Partida implements Serializable {
     //Despues de que el jugador mueve invoca esta funcion (vista)
     public void finalizarTurno () throws IOException, ClassNotFoundException {
         if (!salirAlMenu) {
-            mazoJuego.transferirCartas(jugadorEnTurno.manoJugador, 1);
-            if (jugadorEnTurno.areaJugador.tieneSeisColores()) {
+            mazoJuego.transferirCartas(jugadorEnTurno.getManoJugador(), 1);
+            if (jugadorEnTurno.getAreaJugador().tieneSeisColores()) {
                 jugadorFinal = jugadorEnTurno;
-                finturnos = true;
+                finTurnos = true;
             }
             if (mazoJuego.estaTerminado()) {
                 jugadorFinal = jugadorEnTurno;
-                finturnos = true;
+                finTurnos = true;
             }
             if (indiceTurno == jugadoresPartida.size() - 1) {
                 indiceTurno = 0;
@@ -130,7 +134,7 @@ public class Partida implements Serializable {
         }
     }
 
-    public void iniciarSecuenciaFinal () throws IOException, ClassNotFoundException {
+    private void iniciarSecuenciaFinal () throws IOException, ClassNotFoundException {
         if (!salirAlMenu) {
             indiceFinal = jugadoresPartida.indexOf(jugadorFinal);
             contadorUltimoTurno = 0;
@@ -138,7 +142,7 @@ public class Partida implements Serializable {
         }
     }
 
-    public void secuenciaUltimoTurno () throws IOException, ClassNotFoundException {
+    private void secuenciaUltimoTurno () throws IOException, ClassNotFoundException {
         if (contadorUltimoTurno < jugadoresPartida.size()) {
             jugadorEnTurno = jugadoresPartida.get(indiceFinal);
             jugadorEnTurno.setTurnoJugador(true);
@@ -162,7 +166,7 @@ public class Partida implements Serializable {
         secuenciaUltimoTurno();
     }
 
-    public void secuenciaDescarte () throws IOException, ClassNotFoundException {
+    private void secuenciaDescarte () throws IOException, ClassNotFoundException {
         if (contadorUltimoTurno < jugadoresPartida.size()) {
             jugadorEnTurno = jugadoresPartida.get(indiceFinal);
             jugadorEnTurno.setTurnoJugador(true);
@@ -171,7 +175,7 @@ public class Partida implements Serializable {
         }
         else{
             puntuacion();
-            modelo.finalizarPartida(iDPartida);
+            modelo.finalizarPartida(idPartida);
             registrarPartida();
             registrarJugadores();
             modelo.habilitarSalir();
@@ -196,49 +200,49 @@ public class Partida implements Serializable {
         secuenciaDescarte();
     }
 
-    public void turno () throws RemoteException {
+    private void turno () throws RemoteException {
         modelo.menuTurno();
     }
 
-    public void turnoFinal () throws RemoteException {
+    private void turnoFinal () throws RemoteException {
         modelo.menuTurnoFinal();
     }
 
     public void evaluarDesfile (Carta cartaSeleccionada, Jugador j) {
         int cartasEliminadas = 0;
-        if (cartaSeleccionada.getValor() < desfileJuego.cartas.size()) {
-            int topeAEvaluar = desfileJuego.cartas.size() - cartaSeleccionada.getValor();
+        if (cartaSeleccionada.getValor() < desfileJuego.getCartas().size()) {
+            int topeAEvaluar = desfileJuego.getCartas().size() - cartaSeleccionada.getValor();
             for (int i = 0; i < topeAEvaluar; i++) {
-                Carta cartaEvaluada = desfileJuego.cartas.get(i- cartasEliminadas);
+                Carta cartaEvaluada = desfileJuego.getCartas().get(i- cartasEliminadas);
                 if (cartaEvaluada.getValor() <= cartaSeleccionada.getValor() ||
                         cartaEvaluada.getColor().equals(cartaSeleccionada.getColor())) {
-                    desfileJuego.transferirCartas(j.areaJugador, cartaEvaluada);
-                    j.areaJugador.ordenar();
+                    desfileJuego.transferirCartas(j.getAreaJugador(), cartaEvaluada);
+                    j.getAreaJugador().ordenar();
                     cartasEliminadas++;
                 }
             }
         }
-        j.manoJugador.transferirCartas(desfileJuego, cartaSeleccionada);
+        j.getManoJugador().transferirCartas(desfileJuego, cartaSeleccionada);
     }
 
-    public void descarteFinal () throws RemoteException {
+    private void descarteFinal () throws RemoteException {
         modelo.mensajeDescarteFinal();
     }
 
-    public void descarteUltimasCartas (Jugador j) throws RemoteException {
-        for (Carta c : j.manoJugador.cartas) {
-            j.manoJugador.transferirCartas(j.areaJugador, c);
+    private void descarteUltimasCartas (Jugador j) {
+        for (Carta c : j.getManoJugador().getCartas()) {
+            j.getManoJugador().transferirCartas(j.getAreaJugador(), c);
         }
-        j.areaJugador.ordenar();
+        j.getAreaJugador().ordenar();
     }
 
-    public void puntuacion () throws RemoteException {
+    private void puntuacion () throws RemoteException {
         //Anular las cartas del color X si el jugador es el que mas cartas tiene del color X en su area de juego:
         anularCartas();
 
         //Recuento de puntos: Por cada carta anulada +1pt y de las no anuladas +carta.valor
         for (Jugador j:jugadoresPartida) {
-            j.setPuntos(j.areaJugador.sumarArea());
+            j.setPuntos(j.getAreaJugador().sumarArea());
         }
 
         //Seleccion de jugador ganador: El que menos puntos tiene
@@ -283,7 +287,7 @@ public class Partida implements Serializable {
         modelo.mensajeGanadorYRanking();
     }
 
-    public void anularCartas () {
+    private void anularCartas () {
         if (jugadoresPartida.size() == 2) {
             Jugador j1 = jugadoresPartida.get(0);
             Jugador j2 = jugadoresPartida.get(1);
@@ -302,7 +306,7 @@ public class Partida implements Serializable {
             for (Color c : Color.values()) {
                 int maxCantColor = 0;
                 for (Jugador j : jugadoresPartida) {
-                    j.areaJugador.ordenar();
+                    j.getAreaJugador().ordenar();
                     int cantidadActual = cantidadCartasColorJugador(j, c);
                     if (cantidadActual > maxCantColor) {
                         maxCantColor = cantidadActual;
@@ -319,17 +323,17 @@ public class Partida implements Serializable {
 
     }
 
-    public void anularColor (Jugador j, Color color) {
-        for (Carta c : j.areaJugador.cartas) {
+    private void anularColor (Jugador j, Color color) {
+        for (Carta c : j.getAreaJugador().getCartas()) {
             if (c.getColor() == color) {
                 c.anularCarta();
             }
         }
     }
 
-    public int cantidadCartasColorJugador(Jugador j, Color color) {
+    private int cantidadCartasColorJugador(Jugador j, Color color) {
         int cantidad = 0;
-        for (Carta c : j.areaJugador.cartas) {
+        for (Carta c : j.getAreaJugador().getCartas()) {
             if (c.getColor() == color) {
                 cantidad++;
             }
@@ -337,7 +341,7 @@ public class Partida implements Serializable {
         return cantidad;
     }
 
-    public void registrarPartida() throws IOException, ClassNotFoundException {
+    private void registrarPartida() throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
         FileOutputStream fileOutputStream;
@@ -370,7 +374,7 @@ public class Partida implements Serializable {
         }
     }
 
-    public void registrarJugadores() throws IOException, ClassNotFoundException {
+    private void registrarJugadores() throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
         FileOutputStream fileOutputStream;

@@ -17,7 +17,7 @@ public class AreaDeJuego extends ListaCartas implements Serializable {
         );
         Set<Color> coloresEncontrados = new HashSet<>();
 
-        for (Carta carta : cartas) {
+        for (Carta carta : this.getCartas()) {
             coloresEncontrados.add(carta.getColor());
         }
 
@@ -33,7 +33,7 @@ public class AreaDeJuego extends ListaCartas implements Serializable {
             colorOrdenMap.put(ordenColores.get(i), i);
         }
 
-        cartas.sort(new Comparator<Carta>() {
+        this.getCartas().sort(new Comparator<Carta>() {
             @Override
             public int compare(Carta carta1, Carta carta2) {
                 int colorComparison = colorOrdenMap.get(carta1.getColor()).compareTo(colorOrdenMap.get(carta2.getColor()));
@@ -48,7 +48,7 @@ public class AreaDeJuego extends ListaCartas implements Serializable {
 
     public int sumarArea () {
         int puntaje = 0;
-        for (Carta c : cartas) {
+        for (Carta c : this.getCartas()) {
              if (c.isAnulada()) {
                  puntaje++;
              }
@@ -60,7 +60,7 @@ public class AreaDeJuego extends ListaCartas implements Serializable {
     }
 
     public void actualizarArea(AreaDeJuego nuevaArea) {
-        this.cartas.clear();
-        this.cartas.addAll(nuevaArea.cartas);
+        this.getCartas().clear();
+        this.getCartas().addAll(nuevaArea.getCartas());
     }
 }

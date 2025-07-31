@@ -81,8 +81,8 @@ public class VistaGrafica extends JFrame implements IVista {
     private String msgEmpate = "";
     private String msgRanking = "";
 
-    boolean manoTerminada;
-    boolean puedeGuardar;
+    private boolean manoTerminada;
+    private boolean puedeGuardar;
 
     public VistaGrafica() {
         this.puedeGuardar = true;
@@ -339,7 +339,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     //Método interno del modo gráfico. No pertenece a IVista.
-    public void displayCartasDesfile(JPanel panelCartas, ListaCartas listaCartas) {
+    private void displayCartasDesfile(JPanel panelCartas, ListaCartas listaCartas) {
         panelCartas.removeAll();
         panelCartas.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
 
@@ -356,7 +356,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     //Método interno del modo gráfico. No pertenece a IVista.
-    public void displayCartasMano(JPanel panelCartas, ListaCartas listaCartas) {
+    private void displayCartasMano(JPanel panelCartas, ListaCartas listaCartas) {
         panelCartas.removeAll();
         panelCartas.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
@@ -385,7 +385,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     //Método interno del modo gráfico. No pertenece a IVista.
-    public void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
+    private void displayCartasAreaDeJuego(JPanel panelArea, ListaCartas listaCartas, int modo) {
         int anchoCarta = 0;
         int altoCarta = 0;
         int offY = 0;
@@ -444,7 +444,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     //Método interno del modo gráfico. No pertenece a IVista.
-    public void ocultarUltimaCarta(JPanel panelCartas) {
+    private void ocultarUltimaCarta(JPanel panelCartas) {
         panelCartas.setVisible(false);
         panelCartas.setEnabled(false);
         manoTerminada = true;
@@ -507,7 +507,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     //Método interno del modo gráfico. No pertenece a IVista.
-    public void seleccionCartaOpcion (int indiceCartaJugada) {
+    private void seleccionCartaOpcion (int indiceCartaJugada) {
         Jugador j = c.getJugadorLocal();
         DestinoCarta d = null;
         if (indiceInput == 1 || indiceInput == 2) { d = DestinoCarta.EVALUAR; }
@@ -638,7 +638,7 @@ public class VistaGrafica extends JFrame implements IVista {
     }
 
     //Método interno del modo gráfico. No pertenece a IVista.
-    public void mostrarDialogo(String mensaje, String titulo) {
+    private void mostrarDialogo(String mensaje, String titulo) {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
         });

@@ -16,10 +16,6 @@ public class menuPrePartida extends JFrame {
     private JTextArea textArea;
     private JTextField textField1;
     private JButton bSeleccionar;
-    private JButton bSeleccionarJugadorPorPos;
-    private JButton iniciarPartidaButton;
-    private JButton bCrearNuevoJugador;
-    private JButton bSeleccionarExistente;
     private Image icono;
 
     public menuPrePartida(ControladorParade c) throws RemoteException {
@@ -54,7 +50,6 @@ public class menuPrePartida extends JFrame {
             });
 
         } else {
-            // Eliminar elementos
             panel.remove(textArea);
             panel.remove(textField1);
             panel.remove(bSeleccionar);

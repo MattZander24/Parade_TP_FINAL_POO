@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class RegistroPartida implements Serializable {
 
-    private ArrayList <RegistroJugadores> rankingJugador;
+    private ArrayList<RegistroJugadores> rankingJugador;
     private LocalDateTime fechaYHoraPartida;
 
     public RegistroPartida(ArrayList<RegistroJugadores> rankingJugador) {

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Jugador implements Serializable {
-    Mano manoJugador;
-    AreaDeJuego areaJugador;
+    private Mano manoJugador;
+    private AreaDeJuego areaJugador;
     private int puntos;
     private final Integer idJugador;
     private String nombre;

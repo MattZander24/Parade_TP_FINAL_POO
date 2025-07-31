@@ -17,5 +17,4 @@ public enum Opcion implements Serializable {
     DESCARTE_Y_FINAL,
     MENSAJE_GUARDAR_Y_SALIR,
     ACTUALIZAR_JUGADOR
-
 }

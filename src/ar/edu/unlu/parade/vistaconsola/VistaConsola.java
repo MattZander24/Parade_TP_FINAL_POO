@@ -91,7 +91,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     //Método interno del modo consola. No pertenece a IVista.
-    public void inputOpcion (int opcion) {
+    private void inputOpcion (int opcion) {
         switch (indiceInput) {
             case 1:
                 menuTurnoOpcion(opcion);
@@ -176,7 +176,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     //Método interno del modo consola. No pertenece a IVista.
-    public void menuTurnoOpcion (int opcion) {
+    private void menuTurnoOpcion (int opcion) {
         switch (opcion) {
             case 1:
                 seleccionCarta(c.getJugadorLocal(), DestinoCarta.EVALUAR);
@@ -227,7 +227,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     //Método interno del modo consola. No pertenece a IVista.
-    public void menuTurnoFinalOpcion(int opcion) {
+    private void menuTurnoFinalOpcion(int opcion) {
         switch (opcion) {
             case 1:
                 seleccionCarta(c.getJugadorLocal(), DestinoCarta.EVALUAR);
@@ -250,7 +250,8 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
-    public void seleccionCarta (Jugador j, DestinoCarta d) {
+    //Método interno del modo consola. No pertenece a IVista.
+    private void seleccionCarta (Jugador j, DestinoCarta d) {
         String verbo;
         if (d == DestinoCarta.EVALUAR) {
             indiceInput = 3;
@@ -268,7 +269,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     //Método interno del modo consola. No pertenece a IVista.
-    public void seleccionCartaOpcion (int opcion) {
+    private void seleccionCartaOpcion (int opcion) {
         Jugador j = c.getJugadorLocal();
         DestinoCarta d = null;
         if (indiceInput == 3) { d = DestinoCarta.EVALUAR; }
@@ -316,7 +317,8 @@ public class VistaConsola extends JFrame implements IVista {
         }
     }
 
-    public void mensajeGuardar (boolean msgOpcionIncorrecta) {
+    //Método interno del modo consola. No pertenece a IVista.
+    private void mensajeGuardar (boolean msgOpcionIncorrecta) {
         if (c.getJugadorLocal().isTurnoJugador()) {
             limpiarPantalla();
             indiceInput = 6;
@@ -337,7 +339,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     //Método interno del modo consola. No pertenece a IVista.
-    public void guardarPartida (int opcion) {
+    private void guardarPartida (int opcion) {
         switch (opcion) {
             case 1:
                 c.guardarYSalir();
@@ -395,7 +397,7 @@ public class VistaConsola extends JFrame implements IVista {
     }
 
     //Método interno del modo consola. No pertenece a IVista.
-    public void evaluarSalirAlMenu(int opcion) {
+    private void evaluarSalirAlMenu(int opcion) {
         if (opcion == 0) {
             dispose();
             new menuParade();

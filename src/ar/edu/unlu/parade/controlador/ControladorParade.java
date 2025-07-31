@@ -33,7 +33,7 @@ public class ControladorParade implements IControladorRemoto {
         this.jugadorLocal = jugadorLocal;
     }
 
-    public Desfile getDesfile () throws RemoteException {
+    public Desfile getDesfile() throws RemoteException {
         return m.getPartida().getDesfileJuego();
     }
 
@@ -56,7 +56,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void finalizarTurno () {
+    public void finalizarTurno() {
         try {
             m.finalizarTurno();
         }
@@ -67,7 +67,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void finalizarUltimoTurno () {
+    public void finalizarUltimoTurno() {
         try {
             m.finalizarUltimoTurno();
         }
@@ -78,7 +78,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void finalizarDescarte () {
+    public void finalizarDescarte() {
         try {
             m.finalizarDescarte();
         }
@@ -89,7 +89,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void mostrarDesfile () {
+    public void mostrarDesfile() {
         try {
             m.mostrarDesfile();
         }
@@ -98,7 +98,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void mostrarAreaDeJuego () {
+    public void mostrarAreaDeJuego() {
         try {
             m.mostrarAreaDeJuego();
         }
@@ -107,7 +107,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void mostrarJugadores () {
+    public void mostrarJugadores() {
         try {
             m.mostrarJugadores();
         }
@@ -116,7 +116,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void mostrarMano () {
+    public void mostrarMano() {
         try {
             m.mostrarMano();
         }
@@ -125,7 +125,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void guardarYSalir () {
+    public void guardarYSalir() {
         try {
             m.guardarYSalir();
         }
@@ -134,7 +134,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void menuTurno () {
+    public void menuTurno() {
         try {
             m.menuTurno();
         }
@@ -212,7 +212,7 @@ public class ControladorParade implements IControladorRemoto {
         v.bienvenidaYEspera(jugadorLocal);
     }
 
-    public void elegirJugador (int idJugador) throws RemoteException {
+    public void elegirJugador(int idJugador) throws RemoteException {
         m.elegirJugador(idJugador);
     }
 
@@ -229,7 +229,7 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
-    public void actualizarJugador () throws RemoteException {
+    public void actualizarJugador() throws RemoteException {
         for (Jugador j : m.getPartida().getJugadores()) {
             if (jugadorLocal.equals(j)){
                 jugadorLocal.setPuntos(j.getPuntos());
