@@ -100,7 +100,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
                 Carta cartaSeleccionada = j.getManoJugador().getCartas().get(opcionCarta);
                 switch (d) {
                     case EVALUAR -> partida.evaluarDesfile(cartaSeleccionada, j);
-                    case DESCARTAR -> j.getManoJugador().transferirCartas(partida.getPilaPartida(), cartaSeleccionada);
+                    case DESCARTAR -> j.getManoJugador().transferirCartas(partida.getPilaJuego(), cartaSeleccionada);
                 }
             }
         }

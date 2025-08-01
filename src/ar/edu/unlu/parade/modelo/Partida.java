@@ -12,7 +12,7 @@ public class Partida implements Serializable {
     private transient ModeloParade modelo;
     private ArrayList<Jugador> jugadoresPartida;
     private ArrayList<Jugador> ganadores;
-    private PilaDeDescarte pilaPartida;
+    private PilaDeDescarte pilaJuego;
     private Mazo mazoJuego;
     private Desfile desfileJuego;
 
@@ -34,7 +34,7 @@ public class Partida implements Serializable {
         this.jugadoresPartida = new ArrayList<Jugador>();
         this.ganadores = new ArrayList<Jugador>();
         this.modelo = modelo;
-        this.pilaPartida = new PilaDeDescarte();
+        this.pilaJuego = new PilaDeDescarte();
         this.mazoJuego = new Mazo();
         this.desfileJuego = new Desfile();
         this.idPartida = calcularNuevoId();
@@ -74,8 +74,8 @@ public class Partida implements Serializable {
         return desfileJuego;
     }
 
-    public PilaDeDescarte getPilaPartida() {
-        return pilaPartida;
+    public PilaDeDescarte getPilaJuego() {
+        return pilaJuego;
     }
 
     public void agregarJugador (Jugador jugador) throws RemoteException {
