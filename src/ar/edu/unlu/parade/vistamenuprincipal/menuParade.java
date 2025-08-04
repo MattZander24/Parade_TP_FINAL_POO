@@ -16,9 +16,6 @@ public class menuParade extends JFrame {
     private JButton bReanudar;
     private JButton bUnirseRed;
     private JButton bIniciarRed;
-    private JButton sobreIniciarRed;
-    private JButton sobreUnirseRed;
-    private JButton sobreReanudar;
     private JButton bTopJugadores;
     private JButton bHistorialPartidas;
     private Image icono;
@@ -192,16 +189,6 @@ public class menuParade extends JFrame {
                 if (opcion == -1) break;
                 indice++;
             }
-        });
-
-        sobreIniciarRed.addActionListener(e -> {
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "IMPORTANTE: Al iniciar el servidor desde este menu, primero se tiene que unir otra persona desde\notra computadora. Una vez que se haya unido, ahí recién nos podremos unir nosotros,\ncolocando nuestra IP que hayamos seleccionado.", "Sobre... iniciar un servidor", JOptionPane.INFORMATION_MESSAGE);
-        });
-        sobreUnirseRed.addActionListener(e -> {
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Si otra persona desde otra computadora inició el servidor, simplemente iniciamos esta opción y colocamos\nlos datos necesarios para poder unirmos. Si vos creaste el servidor, primero esperá a que otra\npersona se una, y luego te unis vos.", "Sobre... unirse a una partida en red", JOptionPane.INFORMATION_MESSAGE);
-        });
-        sobreReanudar.addActionListener(e -> {
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Si se encuentra una partida guardada en nuestro ordenador, se podrá reanudar.", "Sobre... reaunudar una partida", JOptionPane.INFORMATION_MESSAGE);
         });
     }
 

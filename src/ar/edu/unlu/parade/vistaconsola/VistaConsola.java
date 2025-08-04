@@ -141,9 +141,9 @@ public class VistaConsola extends JFrame implements IVista {
 
     @Override
     public void mensajeCreacionArchivo () {
-        println("\n----------------------------------------------");
+        println("\n----------------------------------------------------------------------------");
         println("NO SE ENCONTRO EL ARCHIVO, SE CREO UNO VACÍO");
-        println("----------------------------------------------\n");
+        println("----------------------------------------------------------------------------\n");
     }
 
     @Override
@@ -206,9 +206,9 @@ public class VistaConsola extends JFrame implements IVista {
     public void menuTurnoFinal () {
         limpiarPantalla();
         if (c.getJugadorLocal().isTurnoJugador()) {
-            println("----------------------------------------------------------------------------------------------------");
+            println("----------------------------------------------------------------------------");
             println("\n \t - ULTIMO TURNO DE " + c.getJugadorLocal().definicionJugador("L ", " ") + " -\n");
-            println("----------------------------------------------------------------------------------------------------");
+            println("----------------------------------------------------------------------------");
             indiceInput = 2;
             indiceRetorno = 2;
             println("\n");
@@ -303,9 +303,9 @@ public class VistaConsola extends JFrame implements IVista {
     public void mensajeDescarteFinal (Jugador j) {
         limpiarPantalla();
         if (c.getJugadorLocal().isTurnoJugador()) {
-            println("----------------------------------------------------------------------------------------------------");
+            println("----------------------------------------------------------------------------");
             println("\n \t - DESCARTE DE " + c.getJugadorLocal().definicionJugador("L ", " ") + " -\n");
-            println("----------------------------------------------------------------------------------------------------");
+            println("----------------------------------------------------------------------------");
             println(j.definicionJugador("El ", "") + " debe seleccionar 2 cartas para descartar");
             println("(las otras dos se añadirán al area de juego para contarse en la puntuación)");
             seleccionCarta(c.getJugadorLocal(), DestinoCarta.DESCARTAR);
@@ -374,7 +374,7 @@ public class VistaConsola extends JFrame implements IVista {
 
     @Override
     public void mensajeRanking(ArrayList<Jugador> jugadoresPartida) {
-        println("----------------------------------------------------------------------------------------------------");
+        println("----------------------------------------------------------------------------");
         println("\n");
         println("Jugadores ordenados por puesto");
         int i = 1;
@@ -388,12 +388,12 @@ public class VistaConsola extends JFrame implements IVista {
     @Override
     public void habilitarSalir() {
         indiceInput = 5;
-        println("----------------------------------------------------------------------------------------------------");
+        println("----------------------------------------------------------------------------");
         println("\n");
         println("Para volver al menú principal ingrese '0'");
         println("Para salir del juego ingrese '1'");
         println("\n");
-        println("----------------------------------------------------------------------------------------------------");
+        println("----------------------------------------------------------------------------");
     }
 
     //Método interno del modo consola. No pertenece a IVista.
