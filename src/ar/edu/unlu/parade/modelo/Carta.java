@@ -31,7 +31,4 @@ public class Carta implements Serializable {
         return anulada;
     }
 
-    public String nombreImagen () {
-        return String.valueOf(this.valor) + String.valueOf(this.color);
-    }
 }

@@ -167,7 +167,13 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     }
 
     @Override
-    public void guardarYSalir () throws IOException, ClassNotFoundException, RemoteException {
+    public void salirSinGuardar() throws IOException {
+        partida.volverAlMenu();
+        notificarObservadores(Opcion.HABILITAR_SALIR);
+    }
+
+    @Override
+    public void guardarYSalir () throws IOException, ClassNotFoundException {
         for (Jugador j : partida.getJugadores()) {
             j.setElegido(false);
         }
@@ -205,7 +211,7 @@ public class ModeloParade extends ObservableRemoto implements IModelo {
     }
 
     @Override
-    public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException, RemoteException {
+    public void finalizarPartida(int idPartida) throws IOException, ClassNotFoundException {
 
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;

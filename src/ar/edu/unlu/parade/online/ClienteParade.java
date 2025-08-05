@@ -10,6 +10,9 @@ import ar.edu.unlu.rmimvc.Util;
 import ar.edu.unlu.rmimvc.cliente.Cliente;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -60,6 +63,23 @@ public class ClienteParade {
                 opciones.toArray(),
                 null
         );
+
+        try (Socket ignored = new Socket(ipServidor, Integer.parseInt(portServidor))) {
+            //Si llega hasta acá la conexión fue exitosa
+        } catch (ConnectException e) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar al servidor en el puerto " + portServidor + ". Verifique que esté activo.\nVolviendo al menú principal", "Error", JOptionPane.ERROR_MESSAGE);
+            new menuParade();
+            return;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese un número válido para el puerto.\nVolviendo al menú principal", "Error", JOptionPane.ERROR_MESSAGE);
+            new menuParade();
+            return;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al intentar conectarse.\nVerifique estar iniciando el juego correctamente.\nVolviendo al menú principal", "Error", JOptionPane.ERROR_MESSAGE);
+            new menuParade();
+            return;
+        }
+
         ControladorParade controlador = new ControladorParade();
         IVista vista;
 
@@ -72,7 +92,9 @@ public class ClienteParade {
             vista.setC(controlador);
             controlador.setV(vista);
         }
+
         Cliente cliente = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
+
         try {
             cliente.iniciar(controlador);
             vista.iniciarVista();

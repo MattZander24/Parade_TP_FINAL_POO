@@ -10,6 +10,8 @@ import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +100,18 @@ public class VistaGrafica extends JFrame implements IVista {
         setContentPane(generalPanel);
 
         //Eventos
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcSalirSinGuardar = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(),
+                        "¿Desea salir sin guardar?",
+                        "Salir", JOptionPane.YES_NO_OPTION);
+                if (opcSalirSinGuardar == JOptionPane.YES_OPTION) {
+                    c.salirSinGuardar();
+                }
+            }
+        });
+
         bVerAreaDeJuego1.addActionListener(e -> {
             if (c.getJugadorLocal().isTurnoJugador()) {
                 displayCartasAreaDeJuego(areaDeJuego2, c.getJugadorLocal().getAreaJugador(), 2);
@@ -344,7 +358,7 @@ public class VistaGrafica extends JFrame implements IVista {
         panelCartas.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
 
         for (Carta carta : listaCartas.getCartas()) {
-            String nombreImagen = carta.nombreImagen();
+            String nombreImagen = nombreImagen(carta);
             ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
 
             Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
@@ -366,7 +380,7 @@ public class VistaGrafica extends JFrame implements IVista {
             Carta carta = cartas.get(i);
             final int indiceCarta = i;
 
-            String nombreImagen = carta.nombreImagen();
+            String nombreImagen = nombreImagen(carta);
             ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
             Image imagenEscalada = icono.getImage().getScaledInstance(103, 160, Image.SCALE_SMOOTH);
             JButton bCarta = new JButton(new ImageIcon(imagenEscalada));
@@ -428,7 +442,7 @@ public class VistaGrafica extends JFrame implements IVista {
             int offsetX = 10;
             for (int i = cartasDelColor.size() - 1; i >= 0; i--) {
                 Carta carta = cartasDelColor.get(i);
-                String nombreImagen = carta.nombreImagen();
+                String nombreImagen = nombreImagen(carta);
                 ImageIcon icono = new ImageIcon(getClass().getResource("/ar/edu/unlu/parade/imagenes/" + nombreImagen + ".png"));
                 Image imagenEscalada = icono.getImage().getScaledInstance(anchoCarta, altoCarta, Image.SCALE_SMOOTH);
                 JLabel cartaLabel = new JLabel(new ImageIcon(imagenEscalada));
@@ -588,14 +602,18 @@ public class VistaGrafica extends JFrame implements IVista {
         SwingUtilities.invokeLater(() -> {
             String[] opciones = {"Volver al Menú Principal", "Salir del Juego"};
 
+            StringBuilder mensaje = new StringBuilder();
+            if (!msgCreacionArchivo.isEmpty()) mensaje.append(msgCreacionArchivo).append("\n");
+            if (!msgGuardarYSalir.isEmpty()) mensaje.append(msgGuardarYSalir).append("\n");
+            if (!msgGanador.isEmpty()) mensaje.append(msgGanador).append("\n");
+            if (!msgEmpate.isEmpty()) mensaje.append(msgEmpate).append("\n");
+            if (!msgRanking.isEmpty()) mensaje.append(msgRanking).append("\n");
+            mensaje.append("\n");
+            mensaje.append(msgHabilitarSalir).append("\n");
+
             int eleccion = JOptionPane.showOptionDialog(
                     this,
-                    msgCreacionArchivo + "\n" +
-                    msgGuardarYSalir + "\n" +
-                    msgGanador + "\n" +
-                    msgEmpate + "\n" +
-                    msgRanking + "\n\n\n" +
-                    msgHabilitarSalir + "\n",
+                    mensaje.toString(),
                     "Confirmar salida",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
@@ -642,6 +660,10 @@ public class VistaGrafica extends JFrame implements IVista {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
         });
+    }
+
+    private String nombreImagen (Carta c) {
+        return String.valueOf(c.getValor()) + String.valueOf(c.getColor());
     }
 
 }

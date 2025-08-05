@@ -125,6 +125,15 @@ public class ControladorParade implements IControladorRemoto {
         }
     }
 
+    public  void salirSinGuardar() {
+        try {
+            m.salirSinGuardar();
+        }
+        catch (IOException e) {
+            //Nada porque ya lo controla la funcion interna
+        }
+    }
+
     public void guardarYSalir() {
         try {
             m.guardarYSalir();

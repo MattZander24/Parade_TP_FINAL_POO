@@ -13,6 +13,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -39,10 +41,23 @@ public class VistaConsola extends JFrame implements IVista {
 
         setIconImage(icono);
         setResizable(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
+        //Eventos
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcSalirSinGuardar = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(),
+                        "¿Desea salir sin guardar?",
+                        "Salir", JOptionPane.YES_NO_OPTION);
+                if (opcSalirSinGuardar == JOptionPane.YES_OPTION) {
+                    c.salirSinGuardar();
+                }
+            }
+        });
 
         textArea = new JTextArea();
         textArea.setEditable(false);
