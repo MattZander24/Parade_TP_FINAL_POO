@@ -1,7 +1,7 @@
 package ar.edu.unlu.parade.online;
 
 import ar.edu.unlu.parade.modelo.ModeloParade;
-import ar.edu.unlu.parade.modelo.Partida;
+import ar.edu.unlu.parade.vistamenuprincipal.menuParade;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
 import ar.edu.unlu.rmimvc.servidor.Servidor;
@@ -44,14 +44,20 @@ public class ServidorParade {
                 null
         );
         ModeloParade modelo = new ModeloParade();
-        ar.edu.unlu.rmimvc.servidor.Servidor servidor = new ar.edu.unlu.rmimvc.servidor.Servidor(ip, Integer.parseInt(port));
+
         try {
-            servidor.iniciar(modelo);
-            modelo.setJugadoresPartida(Integer.parseInt(cantidadJugadores));
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se ha iniciado correctamente el servidor.\nPara unirte a la partida, volvé al menú principal y seleccioná la opción 'Unirse a un servidor',\ncompletando con los datos de tu computadora/red.'", "Servidor iniciado.", JOptionPane.INFORMATION_MESSAGE);
-        } catch (RemoteException | RMIMVCException e) {
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se ha podido iniciar correctamente el servidor. Vuelva a intentar.", "Error al iniciar el servidor", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            Servidor servidor = new Servidor(ip, Integer.parseInt(port));
+            try {
+                servidor.iniciar(modelo);
+                modelo.setJugadoresPartida(Integer.parseInt(cantidadJugadores));
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se ha iniciado correctamente el servidor.\nPara unirte a la partida, iniciá un nuevo menú principal y seleccioná la opción 'Unirse a un servidor',\ncompletando con los datos de tu computadora/red.'", "Servidor iniciado.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (RemoteException | RMIMVCException e) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se ha podido iniciar correctamente el servidor. Vuelva a intentar.", "Error al iniciar el servidor", JOptionPane.ERROR_MESSAGE);
+                new menuParade();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se detectaron valores incorrectos para iniciar el servidor. Vuelva a intentarlo.", "Error al iniciar el servidor", JOptionPane.ERROR_MESSAGE);
+            new menuParade();
         }
     }
 
@@ -79,14 +85,19 @@ public class ServidorParade {
                 null,
                 8888
         );
-        Servidor servidor = new Servidor(ip, Integer.parseInt(port));
         try {
-            servidor.iniciar(modelo);
-            modelo.setJugadoresPartida(modelo.getPartida().getJugadores().size());
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se ha iniciado correctamente el servidor.\nPara unirte a la partida, volvé al menú principal y seleccioná la opción 'Unirse a un servidor',\ncompletando con los datos de tu computadora/red.'", "Servidor iniciado.", JOptionPane.INFORMATION_MESSAGE);
-        } catch (RMIMVCException | RemoteException e) {
-            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se ha podido iniciar correctamente el servidor. Vuelva a intentar.", "Error al iniciar el servidor", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            Servidor servidor = new Servidor(ip, Integer.parseInt(port));
+            try {
+                servidor.iniciar(modelo);
+                modelo.setJugadoresPartida(modelo.getPartida().getJugadores().size());
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se ha iniciado correctamente el servidor.\nPara unirte a la partida, iniciá un nuevo menú principal y seleccioná la opción 'Unirse a un servidor',\ncompletando con los datos de tu computadora/red.'", "Servidor iniciado.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (RMIMVCException | RemoteException e) {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No se ha podido iniciar correctamente el servidor. Vuelva a intentar.", "Error al iniciar el servidor", JOptionPane.ERROR_MESSAGE);
+                new menuParade();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Se detectaron valores incorrectos para iniciar el servidor. Vuelva a intentarlo.", "Error al iniciar el servidor", JOptionPane.ERROR_MESSAGE);
+            new menuParade();
         }
     }
 
